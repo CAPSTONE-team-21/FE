@@ -11,7 +11,7 @@ export default {
           DEFAULT: 'rgb(var(--color-main) / <alpha-value>)',
           hover: 'rgb(var(--color-main-hover) / <alpha-value>)',
           buttonStroke: 'rgba(59, 104, 239, 0.3)', // 버튼 테두리 고정값
-          buttonHover: 'rgba(59, 104, 239, 0.8)', // 버튼 테두리 고정값
+          buttonHover: 'rgba(59, 104, 239, 0.)', // 버튼 테두리 고정값
           buttonFill: 'rgba(59, 104, 239, 0.05)', // 버튼 fill 고정값
           typeStroke: 'rgba(59, 104, 239, 0.1)', // TypeStroke 고정값
           typeBackground: 'rgba(59, 104, 239, 0.04)', // TypeStroke 고정값
