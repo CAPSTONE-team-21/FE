@@ -4,10 +4,17 @@ import BotChat from './BotChat';
 
 const ChatMessageList = ({ sessionMessages }) => {
   return (
-    <div>
+    <div className="flex flex-col">
       {sessionMessages.map((item, idx) => {
         return item.sender === 'USER' ? (
-          <UserChat key={idx} message={item.message} />
+          <>
+            <div>
+              <UserChat key={idx} message={item.message} />
+            </div>
+            <div>
+              <BotChat key={idx} message={item.message} />
+            </div>
+          </>
         ) : (
           <BotChat key={idx} message={item.message} />
         );
