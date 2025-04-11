@@ -3,7 +3,6 @@ import TextareaAutosize from 'react-textarea-autosize';
 const ChatTextInput = ({ input, setInput }) => {
   const onChangeInput = (e) => {
     setInput(e.target.value);
-    console.log(input);
   };
 
   return (
