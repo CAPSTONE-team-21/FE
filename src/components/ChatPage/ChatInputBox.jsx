@@ -1,9 +1,10 @@
 // import { useNavigate } from 'react-router-dom';
+
 import { useChat } from '../../contexts/ChatContextsh';
 import ChatTextInput from './ChatTextInput';
 import SendButton from './SendButton';
 import TypeSelectorBox from './TypeSelectorBox';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 // 채팅 입력창 컨테이너
 const ChatInputBox = () => {
@@ -18,6 +19,9 @@ const ChatInputBox = () => {
     chatSessions,
   } = useChat();
   const nav = useNavigate();
+  // dropdown 위로 열지 아래로 열지 판단
+  const location = useLocation();
+  const isDetailPage = location.pathname.includes('/chat/');
 
   const onSend = () => {
     handleSend();
@@ -28,7 +32,7 @@ const ChatInputBox = () => {
     <section className="w-full pb-3">
       <div
         className="
-      fixed flex flex-col w-[760px]
+      flex flex-col w-[760px]
       rounded-[20px]
       border border-gray-stroke07 focus-within:border-gray-stroke10
       shadow-[0_2px_10px_rgba(0,0,0,0.03)] focus-within:shadow-[0_2px_10px_rgba(0,0,0,0.05)]
@@ -45,6 +49,7 @@ const ChatInputBox = () => {
             setIsDropdownOpen={setIsDropdownOpen}
             selectedTypes={selectedTypes}
             setSelectedTypes={setSelectedTypes}
+            direction={isDetailPage ? 'up' : 'down'}
           />
         </div>
       </div>

@@ -8,8 +8,10 @@ const TypeSelectorBox = ({
   selectedTypes,
   setSelectedTypes,
   chatSessions,
+  direction = 'up',
 }) => {
   const ref = useRef(null);
+  const dropdownPositionClass = direction === 'up' ? 'bottom-full mb-2' : 'top-full mt-2'; // 아래 방향은 top 기준!
 
   const onClick = () => {
     setIsDropdownOpen(true);
@@ -37,6 +39,8 @@ const TypeSelectorBox = ({
           isDropdownOpen={isDropdownOpen}
           selectedTypes={selectedTypes}
           setSelectedTypes={setSelectedTypes}
+          dropdownPositionClass={dropdownPositionClass}
+          direction={direction}
         />
       </div>
       <div className="flex">
