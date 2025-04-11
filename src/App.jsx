@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import { ChatProvider } from './contexts/ChatContextsh';
 import ChatMainPage from './pages/ChatMainPage';
 import ChatDetailPage from './pages/ChatDetailPage';
 import MyPage from './pages/MyPage';
@@ -7,15 +8,9 @@ import NotFound from './pages/NotFound';
 // import LoginPage from './pages/LoginPage';
 // import SignUpPage from './pages/SignUpPage';
 
-// 세션별 메시지를 저장하는 state
-const [allChatSessions, setAllChatSessions] = useState({
-  1: [{ message: '1번 메시지', skinTypes: ['DRY'] }],
-  2: [{ message: '2번 메시지', skinTypes: ['OILY'] }],
-});
-
 function App() {
   return (
-    <>
+    <ChatProvider>
       <Routes>
         {/* 1. 메인 (대시보드 or 초기화면 - 챗봇 세션 목록) */}
         <Route path="/" element={<ChatMainPage />} />
@@ -44,7 +39,7 @@ function App() {
         {/* 7. 템플릿 (추후 기능)
         <Route path="/templates" element={<TemplatePage />} /> */}
       </Routes>
-    </>
+    </ChatProvider>
   );
 }
 

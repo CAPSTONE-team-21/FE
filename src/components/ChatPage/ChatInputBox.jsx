@@ -1,55 +1,25 @@
-import { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useChat } from '../../contexts/ChatContextsh';
 import ChatTextInput from './ChatTextInput';
 import SendButton from './SendButton';
-import TypeSelector from './TypeSelector';
 import TypeSelectorBox from './TypeSelectorBox';
-
-const mockData = [
-  {
-    id: 1,
-    skinTypes: ['SENSITIVE', 'DRY'],
-    message: '1번 메세지',
-  },
-  {
-    id: 2,
-    skinTypes: ['SENSITIVE'],
-    message: '2번 메세지',
-  },
-];
 
 // 채팅 입력창 컨테이너
 const ChatInputBox = () => {
-  const [input, setInput] = useState(''); // 채팅 입력 작성
-  const [selectedTypes, setSelectedTypes] = useState([]); // 피부 타입 선택
-  const [chatMessages, setChatMessages] = useState(mockData); // 메세지, 피부 타입 선택 저장
-  // 채팅 id 혹시 몰라 작성
-  const idRef = useRef(3);
+  const {
+    input,
+    setInput,
+    selectedTypes,
+    setSelectedTypes,
+    isDropdownOpen,
+    setIsDropdownOpen,
+    handleSend,
+    chatSessions,
+  } = useChat();
+  // const nav = useNavigate();
 
-  // 피부 타입 선택 모달창 open, close
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const nav = useNavigate();
-
-  // 채팅 메세지 전송
-  const handleSend = () => {
-    if (!input.trim()) return;
-
-    const sessionId = idRef.current++;
-
-    const newMessage = {
-      id: sessionId,
-      skinTypes:
-        selectedTypes.length > 0 ? selectedTypes : ['DRY', 'OILY', 'SENSITIVE', 'COMBINATION'], // 기본값 설정
-      message: input,
-    };
-
-    // 기존 메시지 + 새 메시지
-    setChatMessages((prev) => [...prev, newMessage]);
-    nav(`/chat/${sessionId}`);
-
-    // 입력창 초기화
-    setInput('');
-  };
+  useEffect(() => console.log(chatSessions), [chatSessions]);
 
   return (
     <section className="w-full pb-3">
@@ -67,7 +37,7 @@ const ChatInputBox = () => {
         </div>
         <div className="flex w-full items-center p-[10px]">
           <TypeSelectorBox
-            chatMessages={chatMessages}
+            chatSessions={chatSessions}
             isDropdownOpen={isDropdownOpen}
             setIsDropdownOpen={setIsDropdownOpen}
             selectedTypes={selectedTypes}
