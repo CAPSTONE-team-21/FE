@@ -29,6 +29,7 @@ const ChatTitle = ({ isHeader = false }) => {
   useEffect(() => {
     if (isEditing && inputRef.current) {
       inputRef.current.focus();
+      inputRef.current.select(); // 전체 선택
     }
   }, [isEditing]);
 
