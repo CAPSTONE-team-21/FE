@@ -1,8 +1,14 @@
-// 채팅을 리스트로 감싸기 (type을 보고 user, bot 챗 렌더링)
-import UserChat from './UserChat';
+import { useEffect, useRef } from 'react';
 import BotChat from './BotChat';
+import UserChat from './UserChat';
 
 const ChatMessageList = ({ sessionMessages }) => {
+  const bottomRef = useRef(null);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [sessionMessages]);
+
   return (
     <div className="flex flex-col">
       {sessionMessages.map((item, idx) => {
@@ -20,9 +26,12 @@ const ChatMessageList = ({ sessionMessages }) => {
         ) : (
           <div>
             <BotChat key={idx} message={item.message} />
+            {/* 확인용 코드 추후 삭제 예정 */}
           </div>
         );
       })}
+      {/* ⬇️ 맨 아래 요소 */}
+      <div ref={bottomRef} />
     </div>
   );
 };
