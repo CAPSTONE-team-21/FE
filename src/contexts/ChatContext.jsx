@@ -14,7 +14,7 @@ export const ChatProvider = ({ children }) => {
     },
     {
       id: uuidv4(),
-      title: '나의 스킨케어 챗',
+      title: '나의 스킨케어 챗나의 스킨케어 챗',
       is_bookmark: true,
     },
     {
