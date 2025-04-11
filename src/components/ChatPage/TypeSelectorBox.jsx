@@ -7,7 +7,7 @@ const TypeSelectorBox = ({
   setIsDropdownOpen,
   selectedTypes,
   setSelectedTypes,
-  chatSessions,
+  sessionMessages,
   direction = 'up',
 }) => {
   const ref = useRef(null);
@@ -44,7 +44,7 @@ const TypeSelectorBox = ({
         />
       </div>
       <div className="flex">
-        <TypeFilterList selectedTypes={selectedTypes} chatSessions={chatSessions} />
+        <TypeFilterList selectedTypes={selectedTypes} sessionMessages={sessionMessages} />
       </div>
     </div>
   );

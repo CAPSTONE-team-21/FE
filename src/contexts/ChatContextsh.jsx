@@ -3,7 +3,7 @@ import { createContext, useContext, useState, useRef } from 'react';
 export const ChatContextsh = createContext();
 
 export const ChatProvider = ({ children }) => {
-  const [chatSessions, setChatSessions] = useState([]); // 채팅방 별 메세지
+  const [sessionMessages, setSessionMessages] = useState([]); // 채팅방 별 메세지
   const [input, setInput] = useState('');
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -36,7 +36,7 @@ export const ChatProvider = ({ children }) => {
 
     // 메시지 합쳐서 세션에 저장
     // 꼭 합쳐주어야 되나? 세션에 저장하려고 하긴 햇는데...
-    setChatSessions((prev) => ({
+    setSessionMessages((prev) => ({
       ...prev,
       [sessionId]: [...(prev[sessionId] || []), userMessage, ...botMessages],
     }));
@@ -54,8 +54,8 @@ export const ChatProvider = ({ children }) => {
         setSelectedTypes,
         isDropdownOpen, // 드롭다운 박스
         setIsDropdownOpen,
-        chatSessions, // 객체에 채팅 메세지가 배열로 저장됨
-        setChatSessions,
+        sessionMessages, // 객체에 채팅 메세지가 배열로 저장됨
+        setSessionMessages,
         handleSend, // 새로운 메세지 전송
       }}
     >

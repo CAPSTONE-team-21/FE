@@ -4,7 +4,7 @@ import { useChat } from '../../contexts/ChatContextsh';
 import ChatTextInput from './ChatTextInput';
 import SendButton from './SendButton';
 import TypeSelectorBox from './TypeSelectorBox';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 // 채팅 입력창 컨테이너
 const ChatInputBox = () => {
@@ -16,16 +16,16 @@ const ChatInputBox = () => {
     isDropdownOpen,
     setIsDropdownOpen,
     handleSend,
-    chatSessions,
+    sessionMessages,
   } = useChat();
-  const nav = useNavigate();
+  // const nav = useNavigate();
   // dropdown 위로 열지 아래로 열지 판단
   const location = useLocation();
   const isDetailPage = location.pathname.includes('/chat/');
 
   const onSend = () => {
     handleSend();
-    nav('/chat/1'); // 예시: sessionId를 1번으로 가정
+    // nav('/chat/1'); // 예시: sessionId를 1번으로 가정
   };
 
   return (
@@ -44,7 +44,7 @@ const ChatInputBox = () => {
         </div>
         <div className="flex w-full items-center p-[10px]">
           <TypeSelectorBox
-            chatSessions={chatSessions}
+            sessionMessages={sessionMessages}
             isDropdownOpen={isDropdownOpen}
             setIsDropdownOpen={setIsDropdownOpen}
             selectedTypes={selectedTypes}
