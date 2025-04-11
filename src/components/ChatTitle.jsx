@@ -75,6 +75,10 @@ const ChatTitle = ({ isHeader = false }) => {
     return Math.max(width + 20, 60); // 여유 패딩 + 최소 너비 보장
   };
 
+  if (!currentSession) {
+    return <div className="text-gray/80 text-[16px] px-4 ">채팅을 준비 중입니다...</div>;
+  }
+
   return (
     <div
       className={`
