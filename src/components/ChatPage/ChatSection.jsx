@@ -1,7 +1,8 @@
 import ChatInputBox from './ChatInputBox';
-import { useChat } from '../../contexts/ChatContextsh';
-import Header from '../Header';
 import UserChat from './UserChat';
+import BotChat from './BotChat';
+
+import { useChat } from '../../contexts/ChatContextsh';
 
 const ChatSection = () => {
   const {
@@ -19,6 +20,7 @@ const ChatSection = () => {
     <div className="flex-col w-[760px] h-full bg-white ">
       <div className="overflow-y-auto h-full pb-[100px] px-4 pt-4 space-y-5">
         <UserChat sessionMessages={sessionMessages} />
+        <BotChat sessionMessages={sessionMessages} />
         {Object.entries(sessionMessages).map(([sessionId, messages]) => (
           <div key={sessionId}>
             {messages.map((msg, index) => (
