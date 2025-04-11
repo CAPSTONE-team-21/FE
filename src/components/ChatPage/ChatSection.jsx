@@ -21,22 +21,6 @@ const ChatSection = () => {
       <div className="overflow-y-auto h-full pb-[100px] px-4 pt-4 space-y-5">
         <UserChat sessionMessages={sessionMessages} />
         <BotChat sessionMessages={sessionMessages} />
-        {Object.entries(sessionMessages).map(([sessionId, messages]) => (
-          <div key={sessionId}>
-            {messages.map((msg, index) => (
-              <div
-                key={index}
-                className={`rounded-lg max-w-[70%] ${
-                  msg.sender === 'BOT'
-                    ? 'bg-gray-200 text-left'
-                    : 'bg-blue-500 text-white ml-auto text-right'
-                }`}
-              >
-                <p className="text-sm whitespace-pre-line">{msg.message}</p>
-              </div>
-            ))}
-          </div>
-        ))}
       </div>
 
       {/* 입력창 - 고정 */}
