@@ -1,9 +1,9 @@
-import { createContext, useContext, useState, useRef } from 'react';
+import { createContext, useContext, useState } from 'react';
 
 export const ChatContextsh = createContext();
 
 export const ChatProvider = ({ children }) => {
-  const [sessionMessages, setSessionMessages] = useState([]); // 채팅방 별 메세지
+  const [sessionMessages, setSessionMessages] = useState([]); // 채팅방 별 메세지 (봇, 유저 구분)
   const [input, setInput] = useState('');
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -15,13 +15,14 @@ export const ChatProvider = ({ children }) => {
     // const sessionId = idRef.current; // 이미 만들어진 세션 ID가 있다고 가정
 
     const userMessage = {
+      sender: 'USER',
       skinTypes:
         selectedTypes.length > 0 ? selectedTypes : ['DRY', 'OILY', 'SENSITIVE', 'COMBINATION'], // 기본값 설정
       message: input,
     };
 
-    // 메시지 합쳐서 세션에 저장
-    // 꼭 합쳐주어야 되나? 세션에 저장하려고 하긴 햇는데...
+    // 메시지 합쳐서 저장
+    // 세션 - 백한테 코드 받고, 봇 메세지를 이 sessionMessages에 추가해줄 것 -> 필터링하여 보여줌
     setSessionMessages((prev) => [...prev, userMessage]);
     // 입력 초기화
     setInput('');
