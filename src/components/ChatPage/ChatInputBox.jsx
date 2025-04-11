@@ -80,3 +80,25 @@ const ChatInputBox = () => {
 };
 
 export default ChatInputBox;
+
+// // 연결 참고 코드
+// const handleSend = async () => {
+//   if (!input.trim()) return;
+
+//   // 예: 백엔드 요청
+//   const res = await fetch('/api/chat', {
+//     method: 'POST',
+//     headers: { 'Content-Type': 'application/json' },
+//     body: JSON.stringify({
+//       message: input,
+//       skinTypes: selectedTypes.length > 0 ? selectedTypes : ['DRY', 'OILY', 'SENSITIVE', 'COMBINATION'],
+//     }),
+//   });
+
+//   const data = await res.json();
+//   const newSessionId = data.sessionId;
+
+//   // 페이지 이동만 하면 됨!
+//   nav(`/chat/${newSessionId}`);
+//   setInput('');
+// };
