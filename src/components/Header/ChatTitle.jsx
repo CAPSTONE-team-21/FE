@@ -1,48 +1,56 @@
-// ✅ ChatTitle.jsx
-import { useContext, useState } from 'react';
+// ✅ ChatTitle.jsx (백엔드 연동 기준, 메시지 전까지는 타이틀 없음 + 메인에서 제외)
+import { useContext, useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { ChatContext } from '../../contexts/ChatContext';
 import TextOrInput from '../TextOrInput';
 import { IconEdit } from '../../utils/icons';
 
-const ChatTitle = ({ isHeader = false }) => {
+const ChatTitle = () => {
   const { chatSessions, currentSessionId, setChatSessions } = useContext(ChatContext);
+
+  const location = useLocation();
   const currentSession = chatSessions.find((s) => s.id === currentSessionId);
-
   const [isEditing, setIsEditing] = useState(false);
-  const [inputValue, setInputValue] = useState(currentSession?.title || '');
+  const [inputValue, setInputValue] = useState('');
 
-  const isPlaceholder = currentSession?.title === '제목을 입력해주세요.';
+  useEffect(() => {
+    if (currentSession && !isEditing) {
+      setInputValue(currentSession.title || '');
+    }
+  }, [currentSession?.title, isEditing]);
+
+  // ✅ 메인(/chat)에서는 타이틀 숨김, 메시지 없으면 숨김
+  if (
+    location.pathname === '/chat' ||
+    !currentSession ||
+    !currentSession.messages ||
+    currentSession.messages.length === 0
+  )
+    return null;
+
+  const isPlaceholder = !currentSession.title || currentSession.title === '제목을 입력해주세요.';
 
   const handleSave = () => {
     const trimmed = inputValue.trim();
     if (trimmed === '') return;
+
     setChatSessions((prev) =>
       prev.map((s) => (s.id === currentSessionId ? { ...s, title: trimmed } : s))
     );
     setIsEditing(false);
   };
 
-  const calculateInputWidth = (text) => {
+  const calculateInputWidth = (text = '') => {
     let width = 0;
-    for (let char of text) {
-      if (/[ㄱ-ㅎㅏ-ㅣ가-힣]/.test(char)) {
-        width += 13; // 한글
-      } else if (/[A-Z]/.test(char)) {
-        width += 10; // 영어 대문자
-      } else if (/[a-z]/.test(char)) {
-        width += 8; // 영어 소문자
-      } else if (/\d/.test(char)) {
-        width += 9; // 숫자
-      } else {
-        width += 10; // 특수문자 등 기타
-      }
+    for (let char of text.toString()) {
+      if (/[ㄱ-ㅎㅏ-ㅣ가-힣]/.test(char)) width += 13;
+      else if (/[A-Z]/.test(char)) width += 10;
+      else if (/[a-z]/.test(char)) width += 8;
+      else if (/\d/.test(char)) width += 9;
+      else width += 10;
     }
-    return Math.max(width + 20, 60); // 여유 패딩 + 최소 너비 보장
+    return Math.max(width + 20, 60);
   };
-
-  if (!currentSession) {
-    return <div className="text-gray/80 text-[16px] px-4 ">채팅을 준비 중입니다...</div>;
-  }
 
   return (
     <div
@@ -58,30 +66,27 @@ const ChatTitle = ({ isHeader = false }) => {
     >
       <div className="flex-1" style={{ width: `${calculateInputWidth(inputValue)}px` }}>
         <TextOrInput
-          value={inputValue}
+          value={inputValue || '제목을 입력해주세요.'}
           isEditing={isEditing}
           onStartEdit={() => setIsEditing(true)}
           onChange={setInputValue}
           onSave={handleSave}
           onCancel={() => {
             setIsEditing(false);
-            setInputValue(currentSession.title);
+            setInputValue(currentSession.title || '');
           }}
           className="text-[16px] font-medium leading-[1] truncate min-w-[30px] max-w-[1000px] w-full"
         />
       </div>
-
-      {isHeader && (
-        <img
-          src={IconEdit}
-          alt="수정 아이콘"
-          className="w-[12px] h-auto cursor-pointer"
-          onClick={(e) => {
-            e.stopPropagation();
-            setIsEditing(true);
-          }}
-        />
-      )}
+      <img
+        src={IconEdit}
+        alt="수정 아이콘"
+        className="w-[12px] h-auto cursor-pointer"
+        onClick={(e) => {
+          e.stopPropagation();
+          setIsEditing(true);
+        }}
+      />
     </div>
   );
 };
