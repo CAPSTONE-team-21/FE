@@ -13,9 +13,9 @@ const ChatList = () => {
         <ChatGroup className=" gap-[10px]" title="내 채팅">
           {chatSessions.map((session) => (
             <ChatTitleItem
-              key={session.id}
+              key={session.sessionId}
               session={session}
-              isSelected={session.id === currentSessionId}
+              isSelected={session.sessionId === currentSessionId}
             />
           ))}
         </ChatGroup>

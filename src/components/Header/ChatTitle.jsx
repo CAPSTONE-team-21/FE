@@ -9,7 +9,7 @@ const ChatTitle = () => {
   const { chatSessions, currentSessionId, setChatSessions } = useContext(ChatContext);
 
   const location = useLocation();
-  const currentSession = chatSessions.find((s) => s.id === currentSessionId);
+  const currentSession = chatSessions.find((s) => s.sessionId === currentSessionId);
   const [isEditing, setIsEditing] = useState(false);
   const [inputValue, setInputValue] = useState('');
 
@@ -35,7 +35,7 @@ const ChatTitle = () => {
     if (trimmed === '') return;
 
     setChatSessions((prev) =>
-      prev.map((s) => (s.id === currentSessionId ? { ...s, title: trimmed } : s))
+      prev.map((s) => (s.sessionId === currentSessionId ? { ...s, title: trimmed } : s))
     );
     setIsEditing(false);
   };

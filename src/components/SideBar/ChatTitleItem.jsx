@@ -14,7 +14,7 @@ const ChatTitleItem = ({ session, isSelected }) => {
   useEffect(() => {
     if (isEditing) {
       const timer = setTimeout(() => {
-        const input = document.getElementById(`input-${session.id}`);
+        const input = document.getElementById(`input-${session.sessionId}`);
         if (input) {
           input.focus();
           input.select();
@@ -22,20 +22,20 @@ const ChatTitleItem = ({ session, isSelected }) => {
       }, 0);
       return () => clearTimeout(timer);
     }
-  }, [isEditing, session.id]);
+  }, [isEditing, session.sessionId]);
 
   const handleSave = () => {
     const trimmed = inputValue.trim();
     if (trimmed === '') return;
     setChatSessions((prev) =>
-      prev.map((s) => (s.id === session.id ? { ...s, title: trimmed } : s))
+      prev.map((s) => (s.sessionId === session.sessionId ? { ...s, title: trimmed } : s))
     );
     setIsEditing(false);
   };
 
   const handleSelectSession = () => {
-    setCurrentSessionId(session.id);
-    nav(`/chat/${session.id}`);
+    setCurrentSessionId(session.sessionId);
+    nav(`/chat/${session.sessionId}`);
     setSidebarOpen(false);
   };
 
@@ -54,7 +54,7 @@ const ChatTitleItem = ({ session, isSelected }) => {
     >
       <div className="flex-1">
         <TextOrInput
-          id={`input-${session.id}`}
+          id={`input-${session.sessionId}`}
           value={inputValue}
           isEditing={isEditing}
           onStartEdit={() => setIsEditing(true)}
@@ -70,7 +70,7 @@ const ChatTitleItem = ({ session, isSelected }) => {
 
       {/* 즐겨찾기 위치 확인용 */}
       {/*
-      {session.is_bookmark && (
+      {session.isBookmark && (
         <img className="w-[16px] h-[16px] ml-[8px]" src={IconStarG} alt="즐겨찾기" />
       )}*/}
     </div>
