@@ -19,7 +19,7 @@ const ChatSection = () => {
 
   return (
     <div className="flex-col w-[760px] h-full bg-white">
-      <div className="overflow-y-auto h-full pb-[100px] px-1 pt-4 space-y-5">
+      <div className="overflow-y-auto h-full pb-[100px] px-1 space-y-5">
         <ChatMessageList sessionMessages={sessionMessages} />
         {/* <UserChat sessionMessages={sessionMessages} />
         <BotChat sessionMessages={sessionMessages} /> */}
