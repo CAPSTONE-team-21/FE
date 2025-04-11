@@ -1,9 +1,9 @@
 // import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
 import { useChat } from '../../contexts/ChatContextsh';
 import ChatTextInput from './ChatTextInput';
 import SendButton from './SendButton';
 import TypeSelectorBox from './TypeSelectorBox';
+import { useNavigate } from 'react-router-dom';
 
 // 채팅 입력창 컨테이너
 const ChatInputBox = () => {
@@ -17,9 +17,12 @@ const ChatInputBox = () => {
     handleSend,
     chatSessions,
   } = useChat();
-  // const nav = useNavigate();
+  const nav = useNavigate();
 
-  useEffect(() => console.log(chatSessions), [chatSessions]);
+  const onSend = () => {
+    handleSend();
+    nav('/chat/1'); // 예시: sessionId를 1번으로 가정
+  };
 
   return (
     <section className="w-full pb-3">
@@ -33,7 +36,7 @@ const ChatInputBox = () => {
       >
         <div className="flex w-full px-[12px] py-[10px] border-b border-gray-stroke07">
           <ChatTextInput input={input} setInput={setInput} />
-          <SendButton onClick={handleSend} />
+          <SendButton onClick={onSend} />
         </div>
         <div className="flex w-full items-center p-[10px]">
           <TypeSelectorBox
