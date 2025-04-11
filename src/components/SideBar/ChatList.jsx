@@ -5,7 +5,7 @@ import ChatTitleItem from './ChatTitleItem';
 import { useContext } from 'react';
 
 const ChatList = () => {
-  const { chatSessions, currentSessionId, setCurrentSessionId } = useContext(ChatContext);
+  const { chatSessions, currentSessionId } = useContext(ChatContext);
 
   return (
     <div>

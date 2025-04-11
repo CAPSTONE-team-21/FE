@@ -9,7 +9,7 @@ const NewChatButton = () => {
 
   const handleNewChat = () => {
     // 새로운 임시 세션 생성 (백 response 대용)
-    const newId = createChatSession({
+    createChatSession({
       mode: 'product_detail',
       skin_type: '건성',
     });

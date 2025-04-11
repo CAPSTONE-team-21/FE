@@ -1,11 +1,11 @@
 // ✅ ChatTitleItem.jsx (TextOrInput만 적용, 나머지 원형 유지)
-import { useState, useRef, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChatContext } from '../../contexts/ChatContext';
 import { IconStarG, IconStarY } from '../../utils/icons';
 import TextOrInput from '../TextOrInput';
 
-const ChatTitleItem = ({ session, isSelected, onClick }) => {
+const ChatTitleItem = ({ session, isSelected }) => {
   const { setChatSessions, setCurrentSessionId, setSidebarOpen } = useContext(ChatContext);
   const [isEditing, setIsEditing] = useState(false);
   const [inputValue, setInputValue] = useState(session.title);
