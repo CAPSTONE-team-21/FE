@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { ChatContext } from '../contexts/ChatContext';
 
 import SidebarToggleButton from './SidebarToggleButton';
-import ChatTitle from './ChatTitle';
+import ChatTitle from '../components/Header/ChatTitle';
 import FilterButton from './Header/FilterButton';
 import SummaryButton from './Header/SummaryButton';
 import HeaderProfile from './Header/HeaderProfile';
