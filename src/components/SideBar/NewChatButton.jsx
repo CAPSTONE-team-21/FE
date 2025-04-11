@@ -9,16 +9,13 @@ const NewChatButton = () => {
 
   const handleNewChat = () => {
     // 새로운 임시 세션 생성 (백 response 대용)
-    createChatSession({
+    const newId = createChatSession({
       mode: 'product_detail',
       skin_type: '건성',
     });
 
-    // 사이드바 닫음
     setSidebarOpen(false);
-
-    // 메인 채팅 입력 화면으로 이동
-    nav('/chat');
+    nav(`/chat`);
   };
 
   return (

@@ -47,6 +47,7 @@ export const ChatProvider = ({ children }) => {
     };
     setChatSessions((prev) => [...prev, newSession]);
     setCurrentSessionId(newSession.id);
+    return newSession.id;
   };
 
   // ✅ 제목 수정
