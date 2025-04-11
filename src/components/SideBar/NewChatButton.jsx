@@ -5,7 +5,7 @@ import { IconPlus } from '../../utils/icons';
 
 const NewChatButton = () => {
   const { createChatSession, setSidebarOpen } = useContext(ChatContext);
-  const navigate = useNavigate();
+  const nav = useNavigate();
 
   const handleNewChat = () => {
     // 새로운 임시 세션 생성 (백 response 대용)
@@ -18,12 +18,12 @@ const NewChatButton = () => {
     setSidebarOpen(false);
 
     // 메인 채팅 입력 화면으로 이동
-    navigate('/chat');
+    nav('/chat');
   };
 
   return (
     <div
-      className="flex w-[220px] h-[38px] px-[10px] py-[8px]
+      className="flex w-full h-[38px] px-[10px] py-[8px]
         rounded-[15px] gap-[12px] text-main
         hover:bg-main-newChatHover cursor-pointer"
       onClick={handleNewChat}
