@@ -1,6 +1,6 @@
 // 채팅을 리스트로 감싸기
-const ChatList = () => {
+const ChatMessageList = () => {
   return <div>ChatList</div>;
 };
 
-export default ChatList;
+export default ChatMessageList;
