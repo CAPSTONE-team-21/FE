@@ -1,6 +1,7 @@
 import ChatInputBox from './ChatInputBox';
 import UserChat from './UserChat';
 import BotChat from './BotChat';
+import ChatMessageList from './ChatMessageList';
 
 import { useChat } from '../../contexts/ChatContextsh';
 
@@ -17,10 +18,11 @@ const ChatSection = () => {
   } = useChat();
 
   return (
-    <div className="flex-col w-[760px] h-full bg-white ">
+    <div className="flex-col w-[760px] h-full bg-white">
       <div className="overflow-y-auto h-full pb-[100px] px-4 pt-4 space-y-5">
-        <UserChat sessionMessages={sessionMessages} />
-        <BotChat sessionMessages={sessionMessages} />
+        <ChatMessageList sessionMessages={sessionMessages} />
+        {/* <UserChat sessionMessages={sessionMessages} />
+        <BotChat sessionMessages={sessionMessages} /> */}
       </div>
 
       {/* 입력창 - 고정 */}
