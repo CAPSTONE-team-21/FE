@@ -7,6 +7,12 @@ import NotFound from './pages/NotFound';
 // import LoginPage from './pages/LoginPage';
 // import SignUpPage from './pages/SignUpPage';
 
+// 세션별 메시지를 저장하는 state
+const [allChatSessions, setAllChatSessions] = useState({
+  1: [{ message: '1번 메시지', skinTypes: ['DRY'] }],
+  2: [{ message: '2번 메시지', skinTypes: ['OILY'] }],
+});
+
 function App() {
   return (
     <>
