@@ -31,7 +31,6 @@ export const ChatProvider = ({ children }) => {
   // ✅ 더미 세션 불러오기 (fetch 대신 사용)
   const fetchChatSessions = () => {
     setChatSessions(initialMockData);
-    setCurrentSessionId(initialMockData[0].id); // 기본 세션 선택
   };
 
   useEffect(() => {
