@@ -1,6 +1,7 @@
 import BotChatContainer from './BotChatContainer';
 // 챗봇 답변
 // 테스트용 응답 (백엔드 응답이 여기에 들어왔다고 가정)
+
 const botMessages = [
   {
     sender: 'BOT',
@@ -13,6 +14,7 @@ const botMessages = [
     message: '건성 피부에게는 괜찮은 성분입니다.',
   },
 ];
+
 const BotChat = ({ sessionMessages }) => {
   return (
     <section className="">
