@@ -15,7 +15,8 @@ export const ChatProvider = ({ children }) => {
     const sessionId = idRef.current; // 이미 만들어진 세션 ID가 있다고 가정
 
     const userMessage = {
-      sender: 'USER',
+      skinTypes:
+        selectedTypes.length > 0 ? selectedTypes : ['DRY', 'OILY', 'SENSITIVE', 'COMBINATION'], // 기본값 설정
       message: input,
     };
 
