@@ -7,12 +7,12 @@ export const ChatProvider = ({ children }) => {
   const [input, setInput] = useState('');
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const idRef = useRef(1);
+  // const idRef = useRef(1);
 
   const handleSend = () => {
     if (!input.trim()) return;
 
-    const sessionId = idRef.current; // 이미 만들어진 세션 ID가 있다고 가정
+    // const sessionId = idRef.current; // 이미 만들어진 세션 ID가 있다고 가정
 
     const userMessage = {
       skinTypes:
@@ -20,27 +20,9 @@ export const ChatProvider = ({ children }) => {
       message: input,
     };
 
-    // 테스트용 응답 (백엔드 응답이 여기에 들어왔다고 가정)
-    const botMessages = [
-      {
-        sender: 'BOT',
-        skinType: 'SENSITIVE',
-        message: '민감성 피부에게는 자극이 될 수 있습니다.',
-      },
-      {
-        sender: 'BOT',
-        skinType: 'DRY',
-        message: '건성 피부에게는 괜찮은 성분입니다.',
-      },
-    ];
-
     // 메시지 합쳐서 세션에 저장
     // 꼭 합쳐주어야 되나? 세션에 저장하려고 하긴 햇는데...
-    setSessionMessages((prev) => ({
-      ...prev,
-      [sessionId]: [...(prev[sessionId] || []), userMessage, ...botMessages],
-    }));
-
+    setSessionMessages((prev) => [...prev, userMessage]);
     // 입력 초기화
     setInput('');
   };
