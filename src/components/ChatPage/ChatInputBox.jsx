@@ -42,7 +42,7 @@ const ChatInputBox = () => {
           <ChatTextInput input={input} setInput={setInput} />
           <SendButton onClick={onSend} />
         </div>
-        <div className="flex w-full items-center p-[10px]">
+        <div className="flex w-full items-center p-[12px]">
           <TypeSelectorBox
             sessionMessages={sessionMessages}
             isDropdownOpen={isDropdownOpen}
