@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useRef } from 'react';
 
 export const ChatContextsh = createContext();
 
@@ -7,7 +7,7 @@ export const ChatProvider = ({ children }) => {
   const [input, setInput] = useState('');
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  // const idRef = useRef(1);
+  const idRef = useRef(1);
 
   const handleSend = () => {
     if (!input.trim()) return;
@@ -15,6 +15,7 @@ export const ChatProvider = ({ children }) => {
     // const sessionId = idRef.current; // 이미 만들어진 세션 ID가 있다고 가정
 
     const userMessage = {
+      id: idRef.current++,
       sender: 'USER',
       skinTypes:
         selectedTypes.length > 0 ? selectedTypes : ['DRY', 'OILY', 'SENSITIVE', 'COMBINATION'], // 기본값 설정
