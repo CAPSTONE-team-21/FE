@@ -7,7 +7,7 @@ export const ChatProvider = ({ children }) => {
   const [input, setInput] = useState('');
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const idRef = useRef(1);
+  const idRef = useRef(0);
 
   const handleSend = () => {
     if (!input.trim()) return;

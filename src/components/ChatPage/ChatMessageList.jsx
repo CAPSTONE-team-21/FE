@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import BotChat from './BotChat';
 import UserChat from './UserChat';
+import BotChatContainer from './BotChatContainer';
 
 const ChatMessageList = ({ sessionMessages }) => {
   const bottomRef = useRef(null);
@@ -18,14 +19,18 @@ const ChatMessageList = ({ sessionMessages }) => {
               <UserChat key={idx} message={item.message} />
             </div>
             <div className="border-t border-gray-stroke05"></div>
-            <div>
-              <BotChat key={idx} message={item.message} />
+            <div className="my-6">
+              <BotChatContainer
+                sessionMessages={sessionMessages}
+                key={idx}
+                message={item.message}
+              />
               {/* 확인용 코드 추후 삭제 예정 */}
             </div>
           </>
         ) : (
           <div>
-            <BotChat key={idx} message={item.message} />
+            <BotChat sessionMessages={sessionMessages} key={idx} message={item.message} />
             {/* 확인용 코드 추후 삭제 예정 */}
           </div>
         );
