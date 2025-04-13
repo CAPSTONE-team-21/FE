@@ -52,7 +52,7 @@ const ChatTitleItem = ({ session, isSelected }) => {
         if (!isEditing) handleSelectSession();
       }}
     >
-      <div className="flex-1">
+      <div className="flex-1 text-gray/80">
         <TextOrInput
           id={`input-${session.sessionId}`}
           value={inputValue}
