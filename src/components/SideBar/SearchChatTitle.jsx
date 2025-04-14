@@ -3,7 +3,7 @@ import { IconSearch } from '../../utils/icons';
 const SearchChatTitle = () => {
   return (
     <div
-      className="flex w-[220px] h-[38px] px-[10px] py-[8px] 
+      className="flex w-full h-[38px] px-[10px] py-[8px]
     rounded-[15px] gap-[12.2px]
     hover:bg-gray-stroke03"
     >

@@ -1,12 +1,12 @@
 import SidebarToggleButton from '../SidebarToggleButton';
 import NewChatButton from './NewChatButton';
 import SearchChatTitle from './SearchChatTitle';
-
+import ChatList from './ChatList';
 import { useContext, useEffect, useRef } from 'react';
 import { ChatContext } from '../../contexts/ChatContext';
 
 const SideBar = () => {
-  const { isSidebarOpen, setSidebarOpen } = useContext(ChatContext);
+  const { isSidebarOpen, setSidebarOpen, currentSessionId } = useContext(ChatContext);
   const sidebarRef = useRef(null);
 
   useEffect(() => {
@@ -41,15 +41,21 @@ const SideBar = () => {
          transition-all duration-500 ease-in-out transform -translate-x-full
       ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
-        {/* 메뉴 */}
-        {/* 왼쪽 버튼 */}
-        <div className="flex items-center h-[60px] mb-[10px]">
-          <SidebarToggleButton />
-        </div>
+        <div className="w-[220px]">
+          {/* 메뉴 */}
+          {/* 왼쪽 버튼 */}
+          <div className="flex items-center h-[60px] mb-[10px]">
+            <SidebarToggleButton />
+          </div>
 
-        {/* 새채팅 */}
-        <NewChatButton />
-        <SearchChatTitle />
+          {/* 새채팅 */}
+          <NewChatButton />
+          {/* 채팅제목 검색 */}
+          <SearchChatTitle />
+
+          {/* 채팅리스트 (그룹제목, 채팅제목리스트) */}
+          <ChatList key={currentSessionId} />
+        </div>
       </div>
     </>
   );
