@@ -9,12 +9,9 @@ const NewChatButton = () => {
 
   const handleNewChat = () => {
     // 새로운 임시 세션 생성 (백 response 대용)
-    createChatSession({
-      skinTypes: '건성',
-    });
-
+    const newSessionId = createChatSession();
     setSidebarOpen(false);
-    nav(`/chat`);
+    nav(`/chat/${newSessionId}`);
   };
 
   return (
