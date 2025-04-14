@@ -7,7 +7,7 @@ import TypeSelectorBox from './TypeSelectorBox';
 import { useLocation } from 'react-router-dom';
 
 // 채팅 입력창 컨테이너
-const ChatInputBox = () => {
+const ChatInputBox = ({ handleTestPost }) => {
   const {
     input,
     setInput,
@@ -15,7 +15,7 @@ const ChatInputBox = () => {
     setSelectedTypes,
     isDropdownOpen,
     setIsDropdownOpen,
-    handleSend,
+    // handleSend,
     sessionMessages,
   } = useChat();
   // const nav = useNavigate();
@@ -23,10 +23,10 @@ const ChatInputBox = () => {
   const location = useLocation();
   const isDetailPage = location.pathname.includes('/chat/');
 
-  const onSend = () => {
-    handleSend();
-    // nav('/chat/1'); // 예시: sessionId를 1번으로 가정
-  };
+  // const onSend = () => {
+  //   handleSend();
+  //   // nav('/chat/1'); // 예시: sessionId를 1번으로 가정
+  // };
 
   return (
     <section className="w-full pb-3">
@@ -40,7 +40,7 @@ const ChatInputBox = () => {
       >
         <div className="flex w-full px-[12px] py-[10px] border-b border-gray-stroke07">
           <ChatTextInput input={input} setInput={setInput} />
-          <SendButton onClick={onSend} />
+          <SendButton onClick={handleTestPost} />
         </div>
         <div className="flex w-full items-center p-[12px]">
           <TypeSelectorBox

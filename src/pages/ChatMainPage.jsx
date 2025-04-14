@@ -2,8 +2,22 @@ import Header from '../components/Header';
 import ChatInputBox from '../components/ChatPage/ChatInputBox';
 import SideBar from '../components/SideBar/SideBar';
 import { ChatProvider } from '../contexts/ChatContextsh';
+// import { useChat } from '../contexts/ChatContextsh';
+import { createChatSession } from '../utils/chat';
+// import { useNavigate } from 'react-router-dom';
+// import api from '../utils/api'; // 다행
 
 const ChatMainPage = () => {
+  // const navigate = useNavigate();
+  const handleTestPost = async () => {
+    try {
+      const session = await createChatSession();
+      console.log('✅ 세션 생성 성공:', session); // 응답 확인!
+    } catch (error) {
+      console.error('❌ 세션 생성 실패:', error);
+    }
+  };
+
   return (
     <ChatProvider>
       <div className="flex flex-col h-screen w-screen items-center">
@@ -16,7 +30,7 @@ const ChatMainPage = () => {
             <span className="text-main">스포이드</span>로 추출하세요.
           </div>
 
-          <ChatInputBox />
+          <ChatInputBox handleTestPost={handleTestPost} />
         </div>
       </div>
     </ChatProvider>
