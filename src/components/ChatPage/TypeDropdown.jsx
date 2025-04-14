@@ -1,18 +1,13 @@
 // import { useRef, useEffect } from 'react';
-import { useEffect } from 'react';
 import { IconCheckNoBgInactive } from '../../utils/icons';
 import { IconCheckNoBgActive } from '../../utils/icons';
 // 드롭다운 목록 (건성, 지성 등)
-const TypeDropDown = ({ selectedTypes, setSelectedTypes }) => {
+const TypeDropDown = ({ setSelectedTypes }) => {
   const onClickTypes = (type) => {
     setSelectedTypes((prev) =>
       prev.includes(type) ? prev.filter((item) => item !== type) : [...prev, type]
     );
   };
-
-  useEffect(() => {
-    console.log(selectedTypes);
-  }, [selectedTypes]); // 의존성 배열 추가
 
   return (
     <div>

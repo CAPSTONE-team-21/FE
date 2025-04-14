@@ -7,10 +7,11 @@ const TypeFilterList = ({ selectedTypes }) => {
     OILY: '지성',
     COMBINATION: '복합성',
   };
+  const toRender = selectedTypes.length === 0 ? Object.keys(typeLabels) : selectedTypes;
 
   return (
     <div className="flex flex-wrap gap-2">
-      {selectedTypes.map((type, index) => (
+      {toRender.map((type, index) => (
         <TypeFilterItem key={`${index}-${type}`} type={typeLabels[type]} />
       ))}
     </div>

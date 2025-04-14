@@ -1,61 +1,38 @@
-import { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
+
+import { useChat } from '../../contexts/ChatContextsh';
 import ChatTextInput from './ChatTextInput';
 import SendButton from './SendButton';
-import TypeSelector from './TypeSelector';
 import TypeSelectorBox from './TypeSelectorBox';
-
-const mockData = [
-  {
-    id: 1,
-    skinTypes: ['SENSITIVE', 'DRY'],
-    message: '1번 메세지',
-  },
-  {
-    id: 2,
-    skinTypes: ['SENSITIVE'],
-    message: '2번 메세지',
-  },
-];
+import { useLocation } from 'react-router-dom';
 
 // 채팅 입력창 컨테이너
 const ChatInputBox = () => {
-  const [input, setInput] = useState(''); // 채팅 입력 작성
-  const [selectedTypes, setSelectedTypes] = useState([]); // 피부 타입 선택
-  const [chatMessages, setChatMessages] = useState(mockData); // 메세지, 피부 타입 선택 저장
-  // 채팅 id 혹시 몰라 작성
-  const idRef = useRef(3);
+  const {
+    input,
+    setInput,
+    selectedTypes,
+    setSelectedTypes,
+    isDropdownOpen,
+    setIsDropdownOpen,
+    handleSend,
+    sessionMessages,
+  } = useChat();
+  // const nav = useNavigate();
+  // dropdown 위로 열지 아래로 열지 판단
+  const location = useLocation();
+  const isDetailPage = location.pathname.includes('/chat/');
 
-  // 피부 타입 선택 모달창 open, close
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const nav = useNavigate();
-
-  // 채팅 메세지 전송
-  const handleSend = () => {
-    if (!input.trim()) return;
-
-    const sessionId = idRef.current++;
-
-    const newMessage = {
-      id: sessionId,
-      skinTypes:
-        selectedTypes.length > 0 ? selectedTypes : ['DRY', 'OILY', 'SENSITIVE', 'COMBINATION'], // 기본값 설정
-      message: input,
-    };
-
-    // 기존 메시지 + 새 메시지
-    setChatMessages((prev) => [...prev, newMessage]);
-    nav(`/chat/${sessionId}`);
-
-    // 입력창 초기화
-    setInput('');
+  const onSend = () => {
+    handleSend();
+    // nav('/chat/1'); // 예시: sessionId를 1번으로 가정
   };
 
   return (
     <section className="w-full pb-3">
       <div
         className="
-      fixed flex flex-col w-[760px]
+      flex flex-col w-[760px]
       rounded-[20px]
       border border-gray-stroke07 focus-within:border-gray-stroke10
       shadow-[0_2px_10px_rgba(0,0,0,0.03)] focus-within:shadow-[0_2px_10px_rgba(0,0,0,0.05)]
@@ -63,15 +40,16 @@ const ChatInputBox = () => {
       >
         <div className="flex w-full px-[12px] py-[10px] border-b border-gray-stroke07">
           <ChatTextInput input={input} setInput={setInput} />
-          <SendButton onClick={handleSend} />
+          <SendButton onClick={onSend} />
         </div>
-        <div className="flex w-full items-center p-[10px]">
+        <div className="flex w-full items-center p-[12px]">
           <TypeSelectorBox
-            chatMessages={chatMessages}
+            sessionMessages={sessionMessages}
             isDropdownOpen={isDropdownOpen}
             setIsDropdownOpen={setIsDropdownOpen}
             selectedTypes={selectedTypes}
             setSelectedTypes={setSelectedTypes}
+            direction={isDetailPage ? 'up' : 'down'}
           />
         </div>
       </div>
@@ -80,3 +58,25 @@ const ChatInputBox = () => {
 };
 
 export default ChatInputBox;
+
+// // 연결 참고 코드
+// const handleSend = async () => {
+//   if (!input.trim()) return;
+
+//   // 예: 백엔드 요청
+//   const res = await fetch('/api/chat', {
+//     method: 'POST',
+//     headers: { 'Content-Type': 'application/json' },
+//     body: JSON.stringify({
+//       message: input,
+//       skinTypes: selectedTypes.length > 0 ? selectedTypes : ['DRY', 'OILY', 'SENSITIVE', 'COMBINATION'],
+//     }),
+//   });
+
+//   const data = await res.json();
+//   const newSessionId = data.sessionId;
+
+//   // 페이지 이동만 하면 됨!
+//   nav(`/chat/${newSessionId}`);
+//   setInput('');
+// };
