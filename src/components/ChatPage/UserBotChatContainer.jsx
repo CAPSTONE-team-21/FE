@@ -82,9 +82,9 @@ const BotChatContainer = () => {
         const showBot = visibleBotBlockIds.includes(block.userMessage.id);
 
         return (
-          <div key={block.userMessage.id} className="flex justify-center h-full py-[60px]">
+          <div key={block.userMessage.id} className="flex justify-center h-full py-[30px]">
             <div className="flex-col w-[760px] bg-white">
-              <div className="pb-[80px] px-1 space-y-5">
+              <div className=" px-1 space-y-5">
                 {/* 유저 메시지 */}
                 <div className="flex justify-end">
                   <div className="bg-gray-stroke03 font-normal text-gray-stroke70 pl-[18px] pr-[16px] py-[16px] rounded-[20px] max-w-[70%] whitespace-pre-line break-words my-6">
