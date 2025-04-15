@@ -40,7 +40,7 @@ const ChatInputBox = () => {
       >
         <div className="flex w-full px-[12px] py-[10px] border-b border-gray-stroke07">
           <ChatTextInput input={input} setInput={setInput} />
-          <SendButton onClick={onSend} />
+          <SendButton onClick={onSend} input={input} />
         </div>
         <div className="flex w-full items-center p-[12px]">
           <TypeSelectorBox
