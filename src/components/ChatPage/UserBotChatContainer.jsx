@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useChat } from '../../contexts/ChatContextsh';
 
 const MESSAGE_BLOCKS = [
@@ -25,8 +25,7 @@ const MESSAGE_BLOCKS = [
       {
         id: 7,
         skinType: 'DRY',
-        message:
-          '건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.건성 피부에게는 부드럽고 편안한 향이에요.',
+        message: '건성 피부에게는 부드럽고 편안한 향이에요.'.repeat(50),
       },
       { id: 8, skinType: 'OILY', message: '지성 피부에겐 약간 무거울 수 있어요.' },
       { id: 9, skinType: 'SENSITIVE', message: '민감성은 향료에 민감할 수 있어요.' },
@@ -45,6 +44,7 @@ const SkinTypeLabel = {
 const BotChatContainer = () => {
   const { sendCount } = useChat();
   const [activeFilters, setActiveFilters] = useState({});
+  const [visibleBotBlockIds, setVisibleBotBlockIds] = useState([]);
 
   const initializeFilter = (block) => {
     if (!(block.userMessage.id in activeFilters)) {
@@ -62,26 +62,58 @@ const BotChatContainer = () => {
     }));
   };
 
+  useEffect(() => {
+    if (sendCount > 0) {
+      const block = MESSAGE_BLOCKS[sendCount - 1];
+      const userId = block.userMessage.id;
+
+      const timer = setTimeout(() => {
+        setVisibleBotBlockIds((prev) => [...prev, userId]);
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [sendCount]);
+
   return (
     <div className="flex flex-col">
       {MESSAGE_BLOCKS.slice(0, sendCount).map((block) => {
         initializeFilter(block);
+        const showBot = visibleBotBlockIds.includes(block.userMessage.id);
 
         return (
-          <div className="flex justify-center h-full overflow-y-auto py-[60px]">
-            <div className="flex-col w-[760px] h-full bg-white">
-              <div className="overflow-y-auto h-full pb-[80px] px-1 space-y-5 scrollbar-hide">
-                <div key={block.userMessage.id} className="flex flex-col">
-                  {/* 사용자 질문 */}
-                  <div className="flex justify-end">
-                    <div className="bg-gray-stroke03 font-normal text-gray-stroke70 pl-[18px] pr-[16px] py-[16px] rounded-[20px] max-w-[70%] whitespace-pre-line break-words my-6">
-                      {block.userMessage.message}
-                    </div>
+          <div key={block.userMessage.id} className="flex justify-center h-full py-[60px]">
+            <div className="flex-col w-[760px] bg-white">
+              <div className="pb-[80px] px-1 space-y-5">
+                {/* 유저 메시지 */}
+                <div className="flex justify-end">
+                  <div className="bg-gray-stroke03 font-normal text-gray-stroke70 pl-[18px] pr-[16px] py-[16px] rounded-[20px] max-w-[70%] whitespace-pre-line break-words my-6">
+                    {block.userMessage.message}
                   </div>
-                  <div className="border-t border-gray-stroke05"></div>
-                  <div className="my-6">
-                    <div className="pb-4">🧪 추출 결과는 다음과 같습니다.</div>
-                    <div className="flex flex-col gap-6">
+                </div>
+                <div className="border-t border-gray-stroke05"></div>
+
+                <div className="my-6">
+                  {/* 상태 문구 */}
+                  <div className="pb-4 relative flex items-center justify-start">
+                    <span
+                      className={`transition-opacity duration-700 ease-in-out ${
+                        showBot ? 'opacity-0' : 'opacity-100'
+                      }`}
+                    >
+                      🧪 스포이드가 추출 중입니다...
+                    </span>
+                    <span
+                      className={`absolute transition-opacity duration-700 ease-in-out ${
+                        showBot ? 'opacity-100' : 'opacity-0'
+                      }`}
+                    >
+                      🧪 추출 결과는 다음과 같습니다.
+                    </span>
+                  </div>
+
+                  {showBot && (
+                    <>
                       {/* 타입 선택 버튼 */}
                       <div className="flex basis-1/4 gap-2 bg-main-buttonFill p-[4px] rounded-t-[10px] border border-main-typeStroke">
                         {block.userMessage.skinTypes.map((type) => (
@@ -98,17 +130,17 @@ const BotChatContainer = () => {
                           </button>
                         ))}
                       </div>
-                    </div>
 
-                    {/* 봇 응답 박스 - 타입 바로 아래에 딱 붙게! */}
-                    <div className="bg-white border-t-0 border-[1px] border-main-typeStroke font-normal text-gray-stroke70 pl-[18px] pr-[16px] py-[16px] rounded-b-[15px] max-w-[100%] whitespace-pre-line break-words">
-                      {block.botMessages
-                        .filter((msg) => msg.skinType === activeFilters[block.userMessage.id])
-                        .map((msg) => (
-                          <div key={msg.id}>🤖 {msg.message}</div>
-                        ))}
-                    </div>
-                  </div>
+                      {/* 봇 응답 */}
+                      <div className="bg-white border-t-0 border-[1px] border-main-typeStroke font-normal text-gray-stroke70 pl-[18px] pr-[16px] py-[16px] rounded-b-[15px] max-w-[100%] whitespace-pre-line break-words">
+                        {block.botMessages
+                          .filter((msg) => msg.skinType === activeFilters[block.userMessage.id])
+                          .map((msg) => (
+                            <div key={msg.id}>🤖 {msg.message}</div>
+                          ))}
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
