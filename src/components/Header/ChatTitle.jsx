@@ -2,11 +2,13 @@
 import { useContext, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ChatContext } from '../../contexts/ChatContext';
+import { useChat } from '../../contexts/ChatContextsh';
 import TextOrInput from '../TextOrInput';
 import { IconEdit } from '../../utils/icons';
 
 const ChatTitle = () => {
   const { chatSessions, currentSessionId, setChatSessions } = useContext(ChatContext);
+  const { sessionMessages } = useChat();
 
   const location = useLocation();
   const currentSession = chatSessions.find((s) => s.sessionId === currentSessionId);
@@ -20,13 +22,7 @@ const ChatTitle = () => {
   }, [currentSession?.title, isEditing]);
 
   // ✅ 메인(/chat)에서는 타이틀 숨김, 메시지 없으면 숨김
-  if (
-    location.pathname === '/chat' ||
-    !currentSession ||
-    !currentSession.messages ||
-    currentSession.messages.length === 0
-  )
-    return null;
+  if (location.pathname === '/chat' || sessionMessages.length === 0) return null;
 
   const isPlaceholder = !currentSession.title || currentSession.title === '제목을 입력해주세요.';
 
@@ -49,7 +45,7 @@ const ChatTitle = () => {
       else if (/\d/.test(char)) width += 9;
       else width += 10;
     }
-    return Math.max(width + 20, 60);
+    return Math.max(width + 20, 100);
   };
 
   return (
@@ -66,7 +62,7 @@ const ChatTitle = () => {
     >
       <div className="flex-1" style={{ width: `${calculateInputWidth(inputValue)}px` }}>
         <TextOrInput
-          value={inputValue || '제목을 입력해주세요.'}
+          value={inputValue}
           isEditing={isEditing}
           onStartEdit={() => setIsEditing(true)}
           onChange={setInputValue}

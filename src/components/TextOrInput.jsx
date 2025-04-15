@@ -1,4 +1,3 @@
-// ✅ TextOrInput.jsx
 import { useRef, useEffect } from 'react';
 
 const TextOrInput = ({
@@ -35,8 +34,8 @@ const TextOrInput = ({
       onKeyDown={handleKeyDown}
     />
   ) : (
-    <span className={`truncate cursor-pointer ${className}`} onDoubleClick={onStartEdit}>
-      {value}
+    <span className={`inline-block cursor-pointer ${className}`} onDoubleClick={onStartEdit}>
+      {value || '제목을 입력해주세요.'}
     </span>
   );
 };
