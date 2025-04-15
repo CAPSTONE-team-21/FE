@@ -54,15 +54,15 @@ export function createChatBlocksFrom(sessionMessages) {
     sessionMessages?.some((m) => m.sender === 'USER') &&
     sessionMessages?.some((m) => m.sender === 'BOT');
   const validatedMessages = hasUserAndBot ? sessionMessages : EXAMPLE_MESSAGES;
-  console.log('validatedMessages:', validatedMessages);
-
   const chatBlocks = [];
   let currentUserMessage = null;
   let currentBotGroup = [];
 
-  for (let i = 0; i < validatedMessages.length; i++) {
+  let i = 0;
+  while (i < validatedMessages.length) {
     const msg = validatedMessages[i];
 
+    // 사용자 메시지 처리
     if (msg.sender === 'USER') {
       if (currentUserMessage && currentBotGroup.length > 0) {
         chatBlocks.push({
@@ -73,13 +73,16 @@ export function createChatBlocksFrom(sessionMessages) {
       currentUserMessage = msg;
       currentBotGroup = [];
     } else if (msg.sender === 'BOT') {
-      if (currentUserMessage) {
+      // BOT 메시지는 skinTypes 개수만큼만 추가
+      if (currentUserMessage && currentBotGroup.length < currentUserMessage.skinTypes.length) {
         currentBotGroup.push(msg);
       }
     }
+
+    i++;
   }
 
-  // 마지막 user + bot 묶음 처리
+  // 마지막 묶음 처리
   if (currentUserMessage && currentBotGroup.length > 0) {
     chatBlocks.push({
       userMessage: currentUserMessage,

@@ -8,10 +8,11 @@ export const ChatProvider = ({ children }) => {
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const idRef = useRef(0);
+  const [sendCount, setSendCount] = useState(0);
 
   const handleSend = () => {
     if (!input.trim()) return;
-
+    setSendCount((prev) => prev + 1);
     // const sessionId = idRef.current; // 이미 만들어진 세션 ID가 있다고 가정
 
     const userMessage = {
@@ -41,6 +42,8 @@ export const ChatProvider = ({ children }) => {
         sessionMessages, // 객체에 채팅 메세지가 배열로 저장됨
         setSessionMessages,
         handleSend, // 새로운 메세지 전송
+        sendCount,
+        setSendCount,
       }}
     >
       {children}

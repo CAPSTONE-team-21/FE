@@ -16,11 +16,9 @@ const ChatTitle = () => {
   const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
-    if (currentSession && !isEditing) {
-      setInputValue(currentSession.title || '');
-    }
-  }, [currentSession?.title, isEditing]);
-
+    if (!currentSession || isEditing) return; // currentSession 없으면 return
+    setInputValue(currentSession.title || '');
+  }, [currentSession, isEditing]);
   // ✅ 메인(/chat)에서는 타이틀 숨김, 메시지 없으면 숨김
   if (location.pathname === '/chat' || sessionMessages.length === 0) return null;
 
