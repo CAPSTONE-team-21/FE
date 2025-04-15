@@ -38,7 +38,7 @@ export const ChatProvider = ({ children }) => {
   }, []);
 
   // ✅ 새로운 세션 생성
-  const createChatSession = ({ skinTypes }) => {
+  const createChatSession = () => {
     const newSession = {
       sessionId: uuidv4(),
       title: '제목을 입력해주세요.',
