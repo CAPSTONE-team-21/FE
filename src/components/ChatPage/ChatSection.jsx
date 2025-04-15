@@ -2,27 +2,29 @@ import ChatInputBox from './ChatInputBox';
 import UserChat from './UserChat';
 import BotChat from './BotChat';
 import ChatMessageList from './ChatMessageList';
+import UserBotChatContainer from './UserBotChatContainer';
 
 import { useChat } from '../../contexts/ChatContextsh';
 
 const ChatSection = () => {
-  const {
-    // input,
-    // setInput,
-    // selectedTypes,
-    // setSelectedTypes,
-    // isDropdownOpen,
-    // setIsDropdownOpen,
-    // handleSend,
-    sessionMessages,
-  } = useChat();
+  // const {
+  // input,
+  // setInput,
+  // selectedTypes,
+  // setSelectedTypes,
+  // isDropdownOpen,
+  // setIsDropdownOpen,
+  // handleSend,
+  //   sessionMessages,
+  // } = useChat();
 
   return (
     <div className="flex-col w-[760px] h-full bg-white">
       <div className="overflow-y-auto h-full pb-[80px] px-1 space-y-5 scrollbar-hide">
-        <ChatMessageList sessionMessages={sessionMessages} />
+        {/* <ChatMessageList sessionMessages={sessionMessages} /> */}
         {/* <UserChat sessionMessages={sessionMessages} />
         <BotChat sessionMessages={sessionMessages} /> */}
+        <UserBotChatContainer />
       </div>
 
       {/* 입력창 - 고정 */}

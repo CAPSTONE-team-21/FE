@@ -33,6 +33,17 @@ const EXAMPLE_MESSAGES = [
     skinType: 'COMBINATION',
     message: '복합성은 부위별로 달라요.',
   },
+  // 두 번째 질문 + 봇 응답들
+  {
+    id: 6,
+    sender: 'USER',
+    skinTypes: ['DRY', 'OILY', 'SENSITIVE', 'COMBINATION'],
+    message: '향은 어때요?',
+  },
+  { id: 7, sender: 'BOT', skinType: 'DRY', message: '건성 피부에게는 부드럽고 편안한 향이에요.' },
+  { id: 8, sender: 'BOT', skinType: 'OILY', message: '지성 피부에겐 약간 무거울 수 있어요.' },
+  { id: 9, sender: 'BOT', skinType: 'SENSITIVE', message: '민감성은 향료에 민감할 수 있어요.' },
+  { id: 10, sender: 'BOT', skinType: 'COMBINATION', message: '복합성에겐 보통 무난합니다.' },
 ];
 
 const SkinTypeLabel = {
@@ -43,17 +54,23 @@ const SkinTypeLabel = {
 };
 
 const BotChatContainer = () => {
-  const chatBlocks = createChatBlocksFrom(EXAMPLE_MESSAGES).slice(0, 1); // 첫 번째 블록만!
   const [activeFilters, setActiveFilters] = useState({});
+  const { sendCount } = useChat();
+  const allChatBlocks = createChatBlocksFrom(EXAMPLE_MESSAGES);
+  const chatBlocks = allChatBlocks.slice(0, sendCount); // N개만 보여주기
 
   // 필터 초기값 설정
   useEffect(() => {
     const initial = {};
     chatBlocks.forEach((block) => {
-      initial[block.userMessage.id] = block.userMessage.skinTypes[0]; // 첫 번째 타입 선택
+      initial[block.userMessage.id] = block.userMessage.skinTypes[0];
     });
-    setActiveFilters(initial);
-  }, []);
+
+    // 🔒 이미 필터가 존재하면 setState 하지 않음
+    if (Object.keys(activeFilters).length !== chatBlocks.length) {
+      setActiveFilters(initial);
+    }
+  }, [chatBlocks]);
 
   const handleFilterSelect = (blockId, type) => {
     setActiveFilters((prev) => ({

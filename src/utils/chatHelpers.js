@@ -1,93 +1,29 @@
-export function createChatBlocksFrom(sessionMessages) {
-  const EXAMPLE_MESSAGES = [
-    {
-      id: 1,
-      sender: 'USER',
-      skinTypes: ['DRY', 'OILY', 'SENSITIVE', 'COMBINATION'],
-      message: '이 제품 어떤 피부에 좋아요?',
-    },
-    {
-      id: 2,
-      sender: 'BOT',
-      skinType: 'DRY',
-      message: '건성에게 괜찮습니다.',
-    },
-    {
-      id: 3,
-      sender: 'BOT',
-      skinType: 'OILY',
-      message: '지성 피부엔 피지 조절이 필요합니다.',
-    },
-    {
-      id: 4,
-      sender: 'BOT',
-      skinType: 'SENSITIVE',
-      message: '민감성에게는 자극이 될 수 있어요.',
-    },
-    {
-      id: 5,
-      sender: 'BOT',
-      skinType: 'COMBINATION',
-      message: '복합성은 부위별로 달라요.',
-    },
-    {
-      id: 6,
-      sender: 'USER',
-      skinTypes: ['SENSITIVE', 'OILY'],
-      message: '그럼 지성 피부엔 어때요?',
-    },
-    {
-      id: 7,
-      sender: 'BOT',
-      skinType: 'SENSITIVE',
-      message: '민감성은 주의가 필요합니다.',
-    },
-    {
-      id: 8,
-      sender: 'BOT',
-      skinType: 'OILY',
-      message: '지성에겐 피지 조절이 포인트예요.',
-    },
-  ];
-
-  const hasUserAndBot =
-    sessionMessages?.some((m) => m.sender === 'USER') &&
-    sessionMessages?.some((m) => m.sender === 'BOT');
-  const validatedMessages = hasUserAndBot ? sessionMessages : EXAMPLE_MESSAGES;
+export function createChatBlocksFrom(messages) {
   const chatBlocks = [];
-  let currentUserMessage = null;
-  let currentBotGroup = [];
-
   let i = 0;
-  while (i < validatedMessages.length) {
-    const msg = validatedMessages[i];
 
-    // 사용자 메시지 처리
-    if (msg.sender === 'USER') {
-      if (currentUserMessage && currentBotGroup.length > 0) {
-        chatBlocks.push({
-          userMessage: currentUserMessage,
-          botMessages: currentBotGroup,
-        });
+  while (i < messages.length) {
+    const current = messages[i];
+
+    if (current.sender === 'USER') {
+      const userMsg = current;
+      const botMessages = [];
+
+      let j = i + 1;
+      while (j < messages.length && messages[j].sender === 'BOT') {
+        botMessages.push(messages[j]);
+        j++;
       }
-      currentUserMessage = msg;
-      currentBotGroup = [];
-    } else if (msg.sender === 'BOT') {
-      // BOT 메시지는 skinTypes 개수만큼만 추가
-      if (currentUserMessage && currentBotGroup.length < currentUserMessage.skinTypes.length) {
-        currentBotGroup.push(msg);
-      }
+
+      chatBlocks.push({
+        userMessage: userMsg,
+        botMessages,
+      });
+
+      i = j; // 다음 USER부터 다시 시작
+    } else {
+      i++;
     }
-
-    i++;
-  }
-
-  // 마지막 묶음 처리
-  if (currentUserMessage && currentBotGroup.length > 0) {
-    chatBlocks.push({
-      userMessage: currentUserMessage,
-      botMessages: currentBotGroup,
-    });
   }
 
   return chatBlocks;

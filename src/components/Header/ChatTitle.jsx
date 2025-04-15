@@ -11,14 +11,19 @@ const ChatTitle = () => {
   const { sessionMessages } = useChat();
 
   const location = useLocation();
-  const currentSession = chatSessions.find((s) => s.sessionId === currentSessionId);
   const [isEditing, setIsEditing] = useState(false);
   const [inputValue, setInputValue] = useState('');
+  const currentSession = chatSessions?.find(
+    (s) => String(s.sessionId) === String(currentSessionId)
+  );
 
   useEffect(() => {
-    if (!currentSession || isEditing) return; // currentSession 없으면 return
-    setInputValue(currentSession.title || '');
+    if (!currentSession || isEditing) return;
+
+    // currentSession은 존재하니까 이제 안전하게 접근
+    setInputValue(currentSession?.title || '');
   }, [currentSession, isEditing]);
+
   // ✅ 메인(/chat)에서는 타이틀 숨김, 메시지 없으면 숨김
   if (location.pathname === '/chat' || sessionMessages.length === 0) return null;
 
@@ -67,7 +72,7 @@ const ChatTitle = () => {
           onSave={handleSave}
           onCancel={() => {
             setIsEditing(false);
-            setInputValue(currentSession.title || '');
+            setInputValue(currentSession?.title || '');
           }}
           className="text-[16px] font-medium leading-[1] truncate min-w-[30px] max-w-[1000px] w-full"
         />
