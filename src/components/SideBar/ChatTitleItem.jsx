@@ -11,6 +11,11 @@ const ChatTitleItem = ({ session, isSelected }) => {
   const [inputValue, setInputValue] = useState(session.title);
   const nav = useNavigate();
 
+  // ✅ session.title이 바뀌면 inputValue도 갱신
+  useEffect(() => {
+    setInputValue(session.title);
+  }, [session.title]);
+
   useEffect(() => {
     if (isEditing) {
       const timer = setTimeout(() => {
@@ -42,17 +47,20 @@ const ChatTitleItem = ({ session, isSelected }) => {
   return (
     <div
       className={`
-        flex items-center justify-between
-        px-[10px] py-[8px] rounded-[10px]
-        hover:bg-gray-stroke02 cursor-pointer
-        ${isSelected ? 'bg-gray-stroke04' : ''}
-      `}
+    flex items-center justify-between
+    px-[10px] py-[8px] rounded-[10px]
+    hover:bg-gray-stroke02 cursor-pointer
+    ${isSelected ? 'bg-gray-stroke04' : ''}
+  `}
       onDoubleClick={() => setIsEditing(true)}
       onClick={() => {
         if (!isEditing) handleSelectSession();
       }}
     >
-      <div className="flex-1 text-gray/80">
+      {/* ✅ 제목 영역 */}
+      <div className="flex items-center flex-1 min-w-0">
+        {' '}
+        {/* 핵심 */}
         <TextOrInput
           id={`input-${session.sessionId}`}
           value={inputValue}
@@ -64,15 +72,14 @@ const ChatTitleItem = ({ session, isSelected }) => {
             setIsEditing(false);
             setInputValue(session.title);
           }}
-          className="text-[15px] font-medium leading-[1.4] truncate w-full"
+          className="text-[15px] font-medium leading-[1.4] truncate overflow-hidden whitespace-nowrap"
         />
       </div>
 
-      {/* 즐겨찾기 위치 확인용 */}
-      {/*
-      {session.isBookmark && (
-        <img className="w-[16px] h-[16px] ml-[8px]" src={IconStarG} alt="즐겨찾기" />
-      )}*/}
+      {/* ✅ 즐겨찾기 아이콘 - 항상 오른쪽 */}
+      {/* {session.isBookmark && (
+        <img className="w-[16px] h-[16px] ml-[8px] shrink-0" src={IconStarG} alt="즐겨찾기" />
+      )} */}
     </div>
   );
 };
