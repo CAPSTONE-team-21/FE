@@ -24,14 +24,12 @@ const Header = () => {
           {isChatPage && <ChatTitle isHeader={true} />}
 
           <div className="flex ml-auto gap-[16px]">
-            <FilterButton />
-            <SummaryButton />
+            {/* <FilterButton /> */}
+            {/* <SummaryButton /> */}
           </div>
         </div>
         {/* 여기까지 */}
-        <div className="ml-auto pr-[26px]">
-          <HeaderProfile />
-        </div>
+        <div className="ml-auto pr-[26px]">{/* <HeaderProfile /> */}</div>
       </div>
     </div>
   );
