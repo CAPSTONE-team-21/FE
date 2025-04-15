@@ -1,8 +1,7 @@
-// ✅ ChatTitleItem.jsx (TextOrInput만 적용, 나머지 원형 유지)
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChatContext } from '../../contexts/ChatContext';
-import { IconStarG, IconStarY } from '../../utils/icons';
+import { IconStarG } from '../../utils/icons';
 import TextOrInput from '../TextOrInput';
 
 const ChatTitleItem = ({ session, isSelected }) => {
@@ -11,7 +10,8 @@ const ChatTitleItem = ({ session, isSelected }) => {
   const [inputValue, setInputValue] = useState(session.title);
   const nav = useNavigate();
 
-  // ✅ session.title이 바뀌면 inputValue도 갱신
+  const clickTimeout = useRef(null); // ✅ 클릭 타이머 관리
+
   useEffect(() => {
     setInputValue(session.title);
   }, [session.title]);
@@ -38,29 +38,47 @@ const ChatTitleItem = ({ session, isSelected }) => {
     setIsEditing(false);
   };
 
+  // ✅ 세션 선택 (페이지 이동)
   const handleSelectSession = () => {
     setCurrentSessionId(session.sessionId);
     nav(`/chat/${session.sessionId}`);
     setSidebarOpen(false);
   };
 
+  // ✅ 클릭 처리: 클릭과 더블클릭 분리
+  const handleClick = () => {
+    if (clickTimeout.current) {
+      clearTimeout(clickTimeout.current);
+      clickTimeout.current = null;
+    }
+
+    clickTimeout.current = setTimeout(() => {
+      if (!isEditing) {
+        handleSelectSession();
+      }
+    }, 200); // 200ms 안에 더블클릭 들어오면 아래에서 취소됨
+  };
+
+  const handleDoubleClick = () => {
+    if (clickTimeout.current) {
+      clearTimeout(clickTimeout.current); // ✅ 단일 클릭 취소
+      clickTimeout.current = null;
+    }
+    setIsEditing(true); // ✅ 제목 수정 시작
+  };
+
   return (
     <div
       className={`
-    flex items-center justify-between
-    px-[10px] py-[8px] rounded-[10px]
-    hover:bg-gray-stroke02 cursor-pointer
-    ${isSelected ? 'bg-gray-stroke04' : ''}
-  `}
-      onDoubleClick={() => setIsEditing(true)}
-      onClick={() => {
-        if (!isEditing) handleSelectSession();
-      }}
+        flex items-center justify-between
+        px-[10px] py-[8px] rounded-[10px]
+        hover:bg-gray-stroke02 cursor-pointer
+        ${isSelected ? 'bg-gray-stroke04' : ''}
+      `}
+      onClick={handleClick}
+      onDoubleClick={handleDoubleClick}
     >
-      {/* ✅ 제목 영역 */}
       <div className="flex items-center flex-1 min-w-0">
-        {' '}
-        {/* 핵심 */}
         <TextOrInput
           id={`input-${session.sessionId}`}
           value={inputValue}
@@ -76,7 +94,7 @@ const ChatTitleItem = ({ session, isSelected }) => {
         />
       </div>
 
-      {/* ✅ 즐겨찾기 아이콘 - 항상 오른쪽 */}
+      {/* 즐겨찾기 (선택 구현) */}
       {/* {session.isBookmark && (
         <img className="w-[16px] h-[16px] ml-[8px] shrink-0" src={IconStarG} alt="즐겨찾기" />
       )} */}
