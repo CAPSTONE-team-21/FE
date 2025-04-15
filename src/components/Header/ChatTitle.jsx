@@ -53,7 +53,7 @@ const ChatTitle = () => {
     <div
       className={`
         flex items-center gap-[8px] sm:gap-[10px] text-[14px] sm:text-[16px] leading-[1]        ${isPlaceholder ? 'text-gray/80' : 'text-gray'} font-medium
-        px-[12px] sm:px-[16px] py-[6px] sm:py-[7px] rounded-[10px]
+        px-[10px] sm:px-[14px] py-[6px] sm:py-[8px] rounded-[10px]
         max-w-full sm:max-w-[1000px]
         cursor-pointer transition-all duration-150 ease-in-out
         ${isEditing ? 'bg-gray-stroke03' : 'hover:bg-gray-stroke03'}
