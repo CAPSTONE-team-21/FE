@@ -68,43 +68,47 @@ const BotChatContainer = () => {
         initializeFilter(block);
 
         return (
-          <div className="flex-col w-[760px] h-full bg-white">
-            <div className="overflow-y-auto h-full pb-[80px] px-1 space-y-5 scrollbar-hide">
-              <div key={block.userMessage.id} className="flex flex-col">
-                {/* 사용자 질문 */}
-                <div className="flex justify-end">
-                  <div className="bg-gray-stroke03 font-normal text-gray-stroke70 pl-[18px] pr-[16px] py-[16px] rounded-[20px] max-w-[70%] whitespace-pre-line break-words my-6">
-                    {block.userMessage.message}
+          <div className="flex justify-center h-full overflow-y-auto py-[60px]">
+            <div className="flex-col w-[760px] h-full bg-white">
+              <div className="overflow-y-auto h-full pb-[80px] px-1 space-y-5 scrollbar-hide">
+                <div key={block.userMessage.id} className="flex flex-col">
+                  {/* 사용자 질문 */}
+                  <div className="flex justify-end">
+                    <div className="bg-gray-stroke03 font-normal text-gray-stroke70 pl-[18px] pr-[16px] py-[16px] rounded-[20px] max-w-[70%] whitespace-pre-line break-words my-6">
+                      {block.userMessage.message}
+                    </div>
                   </div>
-                </div>
+                  <div className="border-t border-gray-stroke05"></div>
+                  <div className="my-6">
+                    <div className="pb-4">🧪 추출 결과는 다음과 같습니다.</div>
+                    <div className="flex flex-col gap-6">
+                      {/* 타입 선택 버튼 */}
+                      <div className="flex basis-1/4 gap-2 bg-main-buttonFill p-[4px] rounded-t-[10px] border border-main-typeStroke">
+                        {block.userMessage.skinTypes.map((type) => (
+                          <button
+                            key={type}
+                            onClick={() => handleFilterSelect(block.userMessage.id, type)}
+                            className={`${
+                              activeFilters[block.userMessage.id] === type
+                                ? 'bg-white text-main'
+                                : 'text-main-buttonStroke'
+                            } basis-1/4 flex items-center justify-center py-1 rounded-[8px] text-[14px] hover:bg-main-buttonFill hover:text-main-buttonHover duration-200`}
+                          >
+                            {SkinTypeLabel[type]}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
 
-                <div className="flex flex-col gap-6">
-                  <div className="pb-4">🧪 추출 결과는 다음과 같습니다.</div>
-                  {/* 타입 선택 버튼 */}
-                  <div className="flex basis-1/4 gap-2 bg-main-buttonFill p-[4px] rounded-t-[10px] border border-main-typeStroke">
-                    {block.userMessage.skinTypes.map((type) => (
-                      <button
-                        key={type}
-                        onClick={() => handleFilterSelect(block.userMessage.id, type)}
-                        className={`${
-                          activeFilters[block.userMessage.id] === type
-                            ? 'bg-white text-main'
-                            : 'text-main-buttonStroke'
-                        } basis-1/4 flex items-center justify-center py-1 rounded-[8px] text-[14px] hover:bg-main-buttonFill hover:text-main-buttonHover duration-200`}
-                      >
-                        {SkinTypeLabel[type]}
-                      </button>
-                    ))}
+                    {/* 봇 응답 박스 - 타입 바로 아래에 딱 붙게! */}
+                    <div className="bg-white border-t-0 border-[1px] border-main-typeStroke font-normal text-gray-stroke70 pl-[18px] pr-[16px] py-[16px] rounded-b-[15px] max-w-[100%] whitespace-pre-line break-words">
+                      {block.botMessages
+                        .filter((msg) => msg.skinType === activeFilters[block.userMessage.id])
+                        .map((msg) => (
+                          <div key={msg.id}>🤖 {msg.message}</div>
+                        ))}
+                    </div>
                   </div>
-                </div>
-
-                {/* 봇 응답 박스 - 타입 바로 아래에 딱 붙게! */}
-                <div className="bg-white border-t-0 border-[1px] border-main-typeStroke font-normal text-gray-stroke70 pl-[18px] pr-[16px] py-[16px] rounded-b-[15px] max-w-[100%] whitespace-pre-line break-words">
-                  {block.botMessages
-                    .filter((msg) => msg.skinType === activeFilters[block.userMessage.id])
-                    .map((msg) => (
-                      <div key={msg.id}>🤖 {msg.message}</div>
-                    ))}
                 </div>
               </div>
             </div>
