@@ -44,7 +44,7 @@ const TypeSelectorBox = ({
         />
       </div>
       <div className="flex">
-        <TypeFilterList selectedTypes={selectedTypes} sessionMessages={sessionMessages} />
+        <TypeFilterList selectedTypes={selectedTypes} setSelectedTypes={setSelectedTypes} />
       </div>
     </div>
   );
