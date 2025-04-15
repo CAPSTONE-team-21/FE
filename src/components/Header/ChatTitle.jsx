@@ -45,7 +45,7 @@ const ChatTitle = () => {
       else if (/\d/.test(char)) width += 9;
       else width += 10;
     }
-    return Math.max(width + 20, 60);
+    return Math.max(width + 20, 100);
   };
 
   return (
@@ -62,7 +62,7 @@ const ChatTitle = () => {
     >
       <div className="flex-1" style={{ width: `${calculateInputWidth(inputValue)}px` }}>
         <TextOrInput
-          value={inputValue || '제목을 입력해주세요.'}
+          value={inputValue}
           isEditing={isEditing}
           onStartEdit={() => setIsEditing(true)}
           onChange={setInputValue}
