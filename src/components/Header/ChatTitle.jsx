@@ -43,17 +43,17 @@ const ChatTitle = () => {
       else if (/[A-Z]/.test(char)) width += 10;
       else if (/[a-z]/.test(char)) width += 8;
       else if (/\d/.test(char)) width += 9;
+      else if (char === ' ') width += 4;
       else width += 10;
     }
-    return Math.max(width + 20, 100);
+    return Math.max(width + 10, 100);
   };
 
   return (
     <div
       className={`
-        flex items-center gap-[8px] sm:gap-[10px] text-[14px] sm:text-[16px] leading-[1]
-        ${isPlaceholder ? 'text-gray/80' : 'text-gray'} font-medium
-        px-[12px] sm:px-[16px] py-[6px] sm:py-[7px] rounded-[10px]
+        flex items-center gap-[8px] sm:gap-[10px] text-[14px] sm:text-[16px] leading-[1]        ${isPlaceholder ? 'text-gray/80' : 'text-gray'} font-medium
+        px-[10px] sm:px-[14px] py-[6px] sm:py-[8px] rounded-[10px]
         max-w-full sm:max-w-[1000px]
         cursor-pointer transition-all duration-150 ease-in-out
         ${isEditing ? 'bg-gray-stroke03' : 'hover:bg-gray-stroke03'}
@@ -77,7 +77,7 @@ const ChatTitle = () => {
       <img
         src={IconEdit}
         alt="수정 아이콘"
-        className="w-[12px] h-auto cursor-pointer"
+        className="w-[12px] h-auto cursor-pointer self-center"
         onClick={(e) => {
           e.stopPropagation();
           setIsEditing(true);

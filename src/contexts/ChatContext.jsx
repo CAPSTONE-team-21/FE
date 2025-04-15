@@ -7,21 +7,21 @@ export const ChatContext = createContext();
 export const ChatProvider = ({ children }) => {
   // ✨ 초기 mock 세션 데이터
   const initialMockData = [
-    {
-      sessionId: uuidv4(),
-      title: '기본 세션',
-      isBookmark: false,
-    },
-    {
-      sessionId: uuidv4(),
-      title: '나의 스킨케어 챗나의 스킨케어 챗',
-      isBookmark: true,
-    },
-    {
-      sessionId: uuidv4(),
-      title: '제목을 입력해주세요.',
-      isBookmark: true,
-    },
+    // {
+    //   sessionId: uuidv4(),
+    //   title: '기본 세션',
+    //   isBookmark: false,
+    // },
+    // {
+    //   sessionId: uuidv4(),
+    //   title: '나의 스킨케어 챗나의 스킨케어 챗',
+    //   isBookmark: true,
+    // },
+    // {
+    //   sessionId: uuidv4(),
+    //   title: '제목을 입력해주세요.',
+    //   isBookmark: true,
+    // },
   ];
 
   const [chatSessions, setChatSessions] = useState([]);

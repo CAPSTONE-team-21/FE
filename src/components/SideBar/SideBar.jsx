@@ -51,7 +51,7 @@ const SideBar = () => {
           {/* 새채팅 */}
           <NewChatButton />
           {/* 채팅제목 검색 */}
-          <SearchChatTitle />
+          {/* <SearchChatTitle /> */}
 
           {/* 채팅리스트 (그룹제목, 채팅제목리스트) */}
           <ChatList key={currentSessionId} />

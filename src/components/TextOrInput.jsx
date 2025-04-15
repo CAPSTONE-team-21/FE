@@ -27,14 +27,17 @@ const TextOrInput = ({
     <input
       ref={inputRef}
       type="text"
-      className={`bg-transparent outline-none ${className}`}
+      className={`bg-transparent outline-none leading-[1] align-middle ${className}`}
       value={value}
       onChange={(e) => onChange(e.target.value)}
       onBlur={onSave}
       onKeyDown={handleKeyDown}
     />
   ) : (
-    <span className={`inline-block cursor-pointer ${className}`} onDoubleClick={onStartEdit}>
+    <span
+      className={`inline-block cursor-pointer leading-[1] align-middle ${className}`}
+      onDoubleClick={onStartEdit}
+    >
       {value || '제목을 입력해주세요.'}
     </span>
   );
