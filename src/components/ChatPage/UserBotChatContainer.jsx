@@ -40,43 +40,7 @@ const SkinTypeLabel = {
   SENSITIVE: '민감성',
   COMBINATION: '복합성',
 };
-const AnimatedTyping = ({ text }) => {
-  const [visibleText, setVisibleText] = useState('');
-  useEffect(() => {
-    let i = 0;
 
-    const interval = setInterval(() => {
-      console.log(`[tick] i=${i}`);
-
-      if (i >= text.length) {
-        clearInterval(interval);
-        return;
-      }
-
-      const char = text.charAt(i);
-
-      setVisibleText((prev) => {
-        const next = prev + char;
-        console.log('🔠 visibleText:', next);
-        return next;
-      });
-
-      i++;
-    }, 100);
-
-    return () => clearInterval(interval);
-  }, [text]);
-
-  return (
-    <div className="flex flex-wrap text-[16px] font-medium">
-      {visibleText.split('').map((char, idx) => (
-        <span key={`${char}-${idx}`} className="font-pretendard font-medium text-gray/80">
-          {char === ' ' ? '\u00A0' : char}
-        </span>
-      ))}
-    </div>
-  );
-};
 const AnimatedGradientText = ({ text }) => {
   const [startAnimation, setStartAnimation] = useState(false);
 
@@ -135,7 +99,7 @@ const BotChatContainer = () => {
 
       const timer = setTimeout(() => {
         setVisibleBotBlockIds((prev) => [...prev, userId]);
-      }, 5000);
+      }, 3000);
 
       return () => clearTimeout(timer);
     }
@@ -263,6 +227,7 @@ export default BotChatContainer;
 //   SENSITIVE: '민감성',
 //   COMBINATION: '복합성',
 // };
+
 // const AnimatedTyping = ({ text }) => {
 //   const [visibleText, setVisibleText] = useState('');
 //   useEffect(() => {
@@ -294,35 +259,6 @@ export default BotChatContainer;
 //     <div className="flex flex-wrap text-[16px] font-pretendard font-medium text-gray/80">
 //       {visibleText.split('').map((char, idx) => (
 //         <span key={`${char}-${idx}`} className="font-pretendard font-medium">
-//           {char === ' ' ? '\u00A0' : char}
-//         </span>
-//       ))}
-//     </div>
-//   );
-// };
-// const AnimatedGradientText = ({ text }) => {
-//   const [startAnimation, setStartAnimation] = useState(false);
-
-//   useEffect(() => {
-//     const timer = setTimeout(() => {
-//       setStartAnimation(true);
-//     }, 500); // 애니메이션 적용 시작 지연 시간
-
-//     return () => clearTimeout(timer);
-//   }, []);
-
-//   return (
-//     <div className="flex flex-wrap font-pretendard text-[16px] font-medium text-gray/80">
-//       {text.split('').map((char, idx) => (
-//         <span
-//           key={`${char}-${idx}`}
-//           className="animate-gradientFade"
-//           style={{
-//             animationDelay: `${idx * 0.15}s`,
-//             animationFillMode: 'backwards', // 💥 핵심!
-//             display: 'inline-block',
-//           }}
-//         >
 //           {char === ' ' ? '\u00A0' : char}
 //         </span>
 //       ))}
