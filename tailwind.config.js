@@ -40,8 +40,38 @@ export default {
           DEFAULT: 'rgb(var(--color-bubble) / <alpha-value>)',
         },
       },
+      keyframes: {
+        flicker: {
+          '0%': { opacity: '1' },
+          '25%': { opacity: '0.7' },
+          '50%': { opacity: '0.4' },
+          '75%': { opacity: '0.1' },
+          '100%': { opacity: '0' },
+        },
+        soloFlicker: {
+          '0%': { opacity: '1' },
+          '49.9%': { opacity: '1' },
+          '50%': { opacity: '0' },
+          '100%': { opacity: '0' },
+        },
+        shimmer: {
+          '0%, 100%': { opacity: '0.3' },
+          '50%': { opacity: '1' },
+        },
+        gradientFade: {
+          '0%, 100%': { opacity: '0.2' },
+          '50%': { opacity: '1' },
+        },
+      },
+      animation: {
+        flicker: 'flicker 1s infinite alternate',
+        soloFlicker: 'soloFlicker 0.6s linear infinite',
+        shimmer: 'shimmer 1.2s ease-in-out infinite',
+        gradientFade: 'gradientFade 2.5s ease-in-out infinite',
+      },
     },
   },
+
   plugins: [],
   experimental: {
     // Tailwind가 className 내부의 동적 표현식을 더 잘 감지하게 해주는 설정

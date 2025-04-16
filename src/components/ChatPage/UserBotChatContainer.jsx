@@ -25,7 +25,7 @@ const MESSAGE_BLOCKS = [
       {
         id: 7,
         skinType: 'DRY',
-        message: '건성 피부에게는 부드럽고 편안한 향이에요.'.repeat(50),
+        message: '건성 피부에게는 부드럽고 편안한 향이에요.'.repeat(30),
       },
       { id: 8, skinType: 'OILY', message: '지성 피부에겐 약간 무거울 수 있어요.' },
       { id: 9, skinType: 'SENSITIVE', message: '민감성은 향료에 민감할 수 있어요.' },
@@ -39,6 +39,72 @@ const SkinTypeLabel = {
   OILY: '지성',
   SENSITIVE: '민감성',
   COMBINATION: '복합성',
+};
+const AnimatedTyping = ({ text }) => {
+  const [visibleText, setVisibleText] = useState('');
+  useEffect(() => {
+    let i = 0;
+
+    const interval = setInterval(() => {
+      console.log(`[tick] i=${i}`);
+
+      if (i >= text.length) {
+        clearInterval(interval);
+        return;
+      }
+
+      const char = text.charAt(i);
+
+      setVisibleText((prev) => {
+        const next = prev + char;
+        console.log('🔠 visibleText:', next);
+        return next;
+      });
+
+      i++;
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, [text]);
+
+  return (
+    <div className="flex flex-wrap text-[16px] font-medium">
+      {visibleText.split('').map((char, idx) => (
+        <span key={`${char}-${idx}`} className="font-pretendard font-medium text-gray/80">
+          {char === ' ' ? '\u00A0' : char}
+        </span>
+      ))}
+    </div>
+  );
+};
+const AnimatedGradientText = ({ text }) => {
+  const [startAnimation, setStartAnimation] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setStartAnimation(true);
+    }, 500); // 애니메이션 적용 시작 지연 시간
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <div className="flex flex-wrap font-pretendard text-[16px] font-medium text-gray-stroke70">
+      {text.split('').map((char, idx) => (
+        <span
+          key={`${char}-${idx}`}
+          className="animate-gradientFade"
+          style={{
+            animationDelay: `${idx * 0.15}s`,
+            animationFillMode: 'backwards', // 💥 핵심!
+            display: 'inline-block',
+          }}
+        >
+          {char === ' ' ? '\u00A0' : char}
+        </span>
+      ))}
+    </div>
+  );
 };
 
 const BotChatContainer = () => {
@@ -97,14 +163,15 @@ const BotChatContainer = () => {
                   {/* 상태 문구 */}
                   <div className="pb-4 relative flex items-center justify-start">
                     <span
-                      className={`transition-opacity duration-700 ease-in-out ${
+                      className={`transition-opacity duration-500 ease-in-out ${
                         showBot ? 'opacity-0' : 'opacity-100'
-                      }`}
+                      } flex items-center gap-[2px]`}
                     >
-                      🧪 스포이드가 추출 중입니다...
+                      🧪 <AnimatedGradientText text="스포이드가 추출 중 입니다..." />
                     </span>
+
                     <span
-                      className={`absolute transition-opacity duration-700 ease-in-out ${
+                      className={`absolute left-0 transition-opacity duration-500 ease-in-out ${
                         showBot ? 'opacity-100' : 'opacity-0'
                       }`}
                     >
