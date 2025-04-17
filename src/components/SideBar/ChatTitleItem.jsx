@@ -78,7 +78,7 @@ const ChatTitleItem = ({ session, isSelected }) => {
       onClick={handleClick}
       onDoubleClick={handleDoubleClick}
     >
-      <div className="flex items-center flex-1 min-w-0">
+      <div className="flex items-center flex-1 min-w-0" title={session.title}>
         <TextOrInput
           id={`input-${session.sessionId}`}
           value={inputValue}
