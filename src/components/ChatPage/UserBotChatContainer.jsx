@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useChat } from '../../contexts/ChatContextsh';
 
 const MESSAGE_BLOCKS = [
@@ -169,6 +169,8 @@ const BotChatContainer = () => {
   const { sendCount } = useChat();
   const [activeFilters, setActiveFilters] = useState({});
   const [visibleBotBlockIds, setVisibleBotBlockIds] = useState([]);
+  const botScrollRef = useRef(null);
+  const userScrollRefs = useRef({});
 
   const initializeFilter = (block) => {
     if (!(block.userMessage.id in activeFilters)) {
@@ -199,6 +201,21 @@ const BotChatContainer = () => {
     }
   }, [sendCount]);
 
+  useEffect(() => {
+    if (botScrollRef.current) {
+      botScrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [visibleBotBlockIds]);
+  useEffect(() => {
+    if (sendCount > 0) {
+      const block = MESSAGE_BLOCKS[sendCount - 1];
+      const el = userScrollRefs.current[block.userMessage.id];
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  }, [sendCount]);
+
   return (
     <div className="flex flex-col">
       {MESSAGE_BLOCKS.slice(0, sendCount).map((block) => {
@@ -206,16 +223,21 @@ const BotChatContainer = () => {
         const showBot = visibleBotBlockIds.includes(block.userMessage.id);
 
         return (
-          <div key={block.userMessage.id} className="flex justify-center h-full py-[30px]">
+          <div key={block.userMessage.id} className="flex justify-center h-full pb-[30px]">
             <div className="flex-col w-[760px] bg-white">
               <div className=" px-1 space-y-5">
                 {/* 유저 메시지 */}
                 <div className="flex justify-end">
-                  <div className="bg-gray-stroke03 font-normal text-gray-stroke70 pl-[18px] pr-[16px] py-[16px] rounded-[20px] max-w-[70%] whitespace-pre-line break-words my-6">
+                  <div
+                    ref={(el) => {
+                      if (el) userScrollRefs.current[block.userMessage.id] = el;
+                    }}
+                    className="bg-gray-stroke03 font-normal text-gray-stroke70 pl-[18px] pr-[16px] py-[16px] rounded-[20px] max-w-[70%] whitespace-pre-line break-words my-6"
+                  >
                     {block.userMessage.message}
                   </div>
                 </div>
-                <div className="border-t border-gray-stroke05"></div>
+                <div ref={botScrollRef} className="border-t border-gray-stroke05"></div>
 
                 <div className="my-6">
                   {/* 상태 문구 */}
