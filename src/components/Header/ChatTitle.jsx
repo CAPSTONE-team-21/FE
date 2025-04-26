@@ -46,7 +46,7 @@ const ChatTitle = () => {
       else if (char === ' ') width += 4;
       else width += 10;
     }
-    return Math.max(width + 10, 100);
+    return Math.max(width + 15, 100);
   };
 
   return (
