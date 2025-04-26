@@ -72,8 +72,8 @@ const ChatTitleItem = ({ session, isSelected }) => {
       className={`
         flex items-center justify-between
         px-[10px] py-[8px] rounded-[10px] text-gray/80
-        hover:bg-gray-stroke02 cursor-pointer
-        ${isSelected ? 'bg-gray-stroke04' : ''}
+         cursor-pointer
+        ${isSelected ? 'bg-gray-stroke04' : 'hover:bg-gray-stroke02'}
       `}
       onClick={handleClick}
       onDoubleClick={handleDoubleClick}
