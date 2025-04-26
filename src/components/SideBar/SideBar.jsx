@@ -2,13 +2,23 @@ import SidebarToggleButton from '../SidebarToggleButton';
 import NewChatButton from './NewChatButton';
 import SearchChatTitle from './SearchChatTitle';
 import ChatList from './ChatList';
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { ChatContext } from '../../contexts/ChatContext';
 
 const SideBar = () => {
-  const { isSidebarOpen, setSidebarOpen, currentSessionId } = useContext(ChatContext);
+  const { isSidebarOpen, setSidebarOpen, currentSessionId, chatSessions } = useContext(ChatContext);
   const sidebarRef = useRef(null);
 
+  const [search, setSearch] = useState(''); // 검색어 상태 추가
+
+  // 검색필터함수
+  const normalize = (text) => text.replace(/\s+/g, '').toLowerCase();
+
+  const filteredSessions = chatSessions.filter((session) =>
+    normalize(session.title).includes(normalize(search))
+  );
+
+  // 외부 혹은 사이드바 아이콘 클릭 시 사이드바 여닫음
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (sidebarRef.current && !sidebarRef.current.contains(e.target)) {
@@ -51,10 +61,10 @@ const SideBar = () => {
           {/* 새채팅 */}
           <NewChatButton />
           {/* 채팅제목 검색 */}
-          {/* <SearchChatTitle /> */}
+          <SearchChatTitle search={search} setSearch={setSearch} />
 
           {/* 채팅리스트 (그룹제목, 채팅제목리스트) */}
-          <ChatList key={currentSessionId} />
+          <ChatList sessions={filteredSessions} search={search} key={currentSessionId} />
         </div>
       </div>
     </>
