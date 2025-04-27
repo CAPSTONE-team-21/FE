@@ -52,7 +52,7 @@ const ChatTitle = () => {
   return (
     <div
       className={`
-        flex items-center gap-[8px] sm:gap-[10px] text-[14px] sm:text-[16px] leading-[1]        ${isPlaceholder ? 'text-gray/80' : 'text-gray'} font-medium
+        flex items-center gap-[8px] sm:gap-[10px] text-[14px] sm:text-[16px] leading-[1.4]        ${isPlaceholder ? 'text-gray/80' : 'text-gray'} font-medium
         px-[10px] sm:px-[14px] py-[6px] sm:py-[8px] rounded-[10px]
         max-w-full sm:max-w-[1000px]
         cursor-pointer transition-all duration-150 ease-in-out
@@ -71,7 +71,7 @@ const ChatTitle = () => {
             setIsEditing(false);
             setInputValue(currentSession.title || '');
           }}
-          className="text-[16px] font-medium leading-[1] truncate min-w-[30px] max-w-[1000px] w-full"
+          className="text-[16px] font-medium leading-[1.4] truncate min-w-[30px] max-w-[1000px] w-full"
         />
       </div>
       <img
