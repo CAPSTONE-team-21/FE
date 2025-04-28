@@ -57,3 +57,30 @@ export const ChatProvider = ({ children }) => {
   );
 };
 export const useChat = () => useContext(ChatContextsh);
+// 연결 코드
+
+// const createChatSession = async () => {
+//   // 1. 백엔드에 세션 생성 요청
+//   const res = await fetch("http://localhost:8000/api/chat/sessions", {
+//     method: "POST",
+//   });
+//   const data = await res.json();
+//   const newSessionId = data.sessionId; // ✅ 백엔드가 넘겨준 sessionId
+
+//   // 2. 사용자 메시지 저장
+//   const newMessage = {
+//     sender: 'USER',
+//     message: input,
+//     skinTypes:
+//       selectedTypes.length > 0
+//         ? selectedTypes
+//         : ['DRY', 'OILY', 'SENSITIVE', 'COMBINATION'],
+//   };
+
+//   setAllChatSessions((prev) => ({
+//     ...prev,
+//     [newSessionId]: [newMessage],
+//   }));
+
+//   return newSessionId;
+// };
