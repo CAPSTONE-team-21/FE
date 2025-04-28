@@ -3,12 +3,14 @@ import TypeSelector from './TypeSelector';
 import TypeFilterList from './TypeFilterList';
 
 const TypeSelectorBox = ({
+  skinTypes,
   isDropdownOpen,
   setIsDropdownOpen,
   selectedTypes,
   setSelectedTypes,
   sessionMessages,
   direction = 'up',
+  onDelete,
 }) => {
   const ref = useRef(null);
   const dropdownPositionClass = direction === 'up' ? 'bottom-full mb-2' : 'top-full mt-2'; // 아래 방향은 top 기준!
@@ -41,10 +43,16 @@ const TypeSelectorBox = ({
           setSelectedTypes={setSelectedTypes}
           dropdownPositionClass={dropdownPositionClass}
           direction={direction}
+          skinTypes={skinTypes}
         />
       </div>
       <div className="flex">
-        <TypeFilterList selectedTypes={selectedTypes} sessionMessages={sessionMessages} />
+        <TypeFilterList
+          selectedTypes={selectedTypes}
+          skinTypes={skinTypes}
+          sessionMessages={sessionMessages}
+          onDelete={onDelete}
+        />
       </div>
     </div>
   );
