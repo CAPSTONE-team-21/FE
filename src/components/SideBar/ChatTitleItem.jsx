@@ -71,14 +71,14 @@ const ChatTitleItem = ({ session, isSelected }) => {
     <div
       className={`
         flex items-center justify-between
-        px-[10px] py-[8px] rounded-[10px]
-        hover:bg-gray-stroke02 cursor-pointer
-        ${isSelected ? 'bg-gray-stroke04' : ''}
+        px-[10px] py-[8px] rounded-[10px] text-gray/80
+         cursor-pointer
+        ${isSelected ? 'bg-gray-stroke04' : 'hover:bg-gray-stroke02'}
       `}
       onClick={handleClick}
       onDoubleClick={handleDoubleClick}
     >
-      <div className="flex items-center flex-1 min-w-0">
+      <div className="flex items-center flex-1 min-w-0" title={session.title}>
         <TextOrInput
           id={`input-${session.sessionId}`}
           value={inputValue}
