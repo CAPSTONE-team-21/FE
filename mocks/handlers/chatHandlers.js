@@ -1,5 +1,5 @@
 import { HttpResponse, http } from 'msw';
-import chatSessions_allView from './dummy/chatSessions_allView.json';
+import chatSessions_allView from '../dummy/chatSessions_allView.json';
 
 let initSessionId = 3;
 
@@ -9,6 +9,7 @@ export const handlers = [
     return HttpResponse.json(chatSessions_allView);
   }),
 
+  // 새 세션 생성
   http.post('/chat/sessions', async ({ request }) => {
     const { title } = await request.json();
 
