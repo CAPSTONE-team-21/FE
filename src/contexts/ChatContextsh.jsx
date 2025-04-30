@@ -7,6 +7,13 @@ export const ChatProvider = ({ children }) => {
   const [input, setInput] = useState('');
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [skinTypes, setSkinTypes] = useState([
+    'DRY',
+    'OILY',
+    'SENSITIVE',
+    'COMBINED', // ✅ 선택할 수 있는 전체 타입 목록
+  ]);
+
   const idRef = useRef(0);
 
   const handleSend = () => {
@@ -18,7 +25,7 @@ export const ChatProvider = ({ children }) => {
       id: idRef.current++,
       sender: 'USER',
       skinTypes:
-        selectedTypes.length > 0 ? selectedTypes : ['DRY', 'OILY', 'SENSITIVE', 'COMBINATION'], // 기본값 설정
+        selectedTypes.length > 0 ? selectedTypes : ['DRY', 'OILY', 'SENSITIVE', 'COMBINED'], // 기본값 설정
       message: input,
     };
 
@@ -41,6 +48,8 @@ export const ChatProvider = ({ children }) => {
         sessionMessages, // 객체에 채팅 메세지가 배열로 저장됨
         setSessionMessages,
         handleSend, // 새로운 메세지 전송
+        skinTypes, // 모든 피부 스킨 타입
+        setSkinTypes,
       }}
     >
       {children}
