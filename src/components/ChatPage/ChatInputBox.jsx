@@ -81,20 +81,21 @@ const ChatInputBox = ({ sessionId, fetchMessagesAgain }) => {
   };
 
   return (
-    <section className="w-full pb-3">
+    <section className="w-full pb-3 ">
       <div
         className="
-      flex flex-col w-[760px]
+        bg-white
+      flex flex-col w-[740px]
       rounded-[20px]
       border border-gray-stroke07 focus-within:border-gray-stroke10
       shadow-[0_2px_10px_rgba(0,0,0,0.03)] focus-within:shadow-[0_2px_10px_rgba(0,0,0,0.05)]
     "
       >
-        <div className="flex w-full px-[12px] py-[10px] border-b border-gray-stroke07">
+        <div className="flex w-full px-[12px] py-[10px] border-gray-stroke07">
           <ChatTextInput input={input} onChangeInput={onChangeInput} />
           <SendButton onClick={handleTestPost} isInputFilled={input.length > 0} />
         </div>
-        <div className="flex w-full items-center p-[12px]">
+        <div className="flex w-full items-center px-[14px] pb-[14px]">
           <TypeSelectorBox
             sessionMessages={sessionMessages}
             isDropdownOpen={isDropdownOpen}
