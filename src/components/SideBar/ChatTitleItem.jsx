@@ -5,7 +5,7 @@ import { IconStarG } from '../../utils/icons';
 import TextOrInput from '../TextOrInput';
 
 const ChatTitleItem = ({ session, isSelected }) => {
-  const { setChatSessions, setCurrentSessionId, setSidebarOpen } = useContext(ChatContext);
+  const { updateChatTitle, setCurrentSessionId, setSidebarOpen } = useContext(ChatContext);
   const [isEditing, setIsEditing] = useState(false);
   const [inputValue, setInputValue] = useState(session.title);
   const nav = useNavigate();
@@ -29,12 +29,12 @@ const ChatTitleItem = ({ session, isSelected }) => {
     }
   }, [isEditing, session.sessionId]);
 
-  const handleSave = () => {
-    const trimmed = inputValue.trim();
+  // 타이틀 수정 후 저장
+  const handleSave = async () => {
+    const trimmed = inputValue.trim(); //앞뒤 공백 제거
     if (trimmed === '') return;
-    setChatSessions((prev) =>
-      prev.map((s) => (s.sessionId === session.sessionId ? { ...s, title: trimmed } : s))
-    );
+
+    await updateChatTitle(session.sessionId, trimmed); // API 연동
     setIsEditing(false);
   };
 

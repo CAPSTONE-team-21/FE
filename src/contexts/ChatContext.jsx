@@ -54,12 +54,19 @@ export const ChatProvider = ({ children }) => {
   };
 
   // ✅ 제목 수정
-  const updateChatTitle = (sessionId, newTitle) => {
-    setChatSessions((prev) =>
-      prev.map((session) =>
-        session.sessionId === sessionId ? { ...session, title: newTitle } : session
-      )
-    );
+  const updateChatTitle = async (sessionId, newTitle) => {
+    try {
+      const res = await axios.patch(`/chat/sessions/${sessionId}/title`, { title: newTitle });
+
+      const updated = res.data;
+
+      // id가 같으면 title update
+      setChatSessions((prev) =>
+        prev.map((s) => (s.sessionId === sessionId ? { ...s, title: updated.title } : s))
+      );
+    } catch (err) {
+      console.error('제목 수정 실패:', err);
+    }
   };
 
   // ✅ 즐겨찾기 토글

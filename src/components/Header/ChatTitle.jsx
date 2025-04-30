@@ -7,7 +7,7 @@ import TextOrInput from '../TextOrInput';
 import { IconEdit } from '../../utils/icons';
 
 const ChatTitle = () => {
-  const { chatSessions, currentSessionId, setChatSessions } = useContext(ChatContext);
+  const { chatSessions, currentSessionId, updateChatTitle } = useContext(ChatContext);
   const { sessionMessages } = useChat();
 
   const location = useLocation();
@@ -26,13 +26,12 @@ const ChatTitle = () => {
 
   const isPlaceholder = !currentSession.title || currentSession.title === '제목을 입력해주세요.';
 
-  const handleSave = () => {
-    const trimmed = inputValue.trim();
+  // 타이틀 수정 후 저장
+  const handleSave = async () => {
+    const trimmed = inputValue.trim(); //앞뒤 공백 제거
     if (trimmed === '') return;
 
-    setChatSessions((prev) =>
-      prev.map((s) => (s.sessionId === currentSessionId ? { ...s, title: trimmed } : s))
-    );
+    await updateChatTitle(currentSession.sessionId, trimmed); // API 연동
     setIsEditing(false);
   };
 
