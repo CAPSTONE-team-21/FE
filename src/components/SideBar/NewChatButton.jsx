@@ -7,12 +7,10 @@ const NewChatButton = () => {
   const { createChatSession, setSidebarOpen } = useContext(ChatContext);
   const nav = useNavigate();
 
-  const handleNewChat = () => {
-    // 새로운 임시 세션 생성 (백 response 대용)
-    // 여기에 post요청 필요
-    const newSessionId = createChatSession();
+  const handleNewChat = async () => {
+    const newSessionId = await createChatSession(); // 응답 대기
     setSidebarOpen(false);
-    nav(`/chat/${newSessionId}`);
+    nav(`/chat/${newSessionId}`); // 해당 세션으로 이동
   };
 
   return (

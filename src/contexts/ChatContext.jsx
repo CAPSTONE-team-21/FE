@@ -1,36 +1,41 @@
 // ChatContext.jsx (API 명세서 기준으로 sessionId 사용)
 import { createContext, useState, useEffect } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 
 export const ChatContext = createContext();
 
 export const ChatProvider = ({ children }) => {
-  // ✨ 초기 mock 세션 데이터
-  const initialMockData = [
-    // {
-    //   sessionId: uuidv4(),
-    //   title: '기본 세션',
-    //   isBookmark: false,
-    // },
-    // {
-    //   sessionId: uuidv4(),
-    //   title: '나의 스킨케어 챗나의 스킨케어 챗',
-    //   isBookmark: true,
-    // },
-    // {
-    //   sessionId: uuidv4(),
-    //   title: '제목을 입력해주세요.',
-    //   isBookmark: true,
-    // },
-  ];
+  // // ✨ 초기 mock 세션 데이터
+  // const initialMockData = [
+  //   {
+  //     sessionId: uuidv4(),
+  //     title: '기본 세션',
+  //     isBookmark: false,
+  //   },
+  //   {
+  //     sessionId: uuidv4(),
+  //     title: '나의 스킨케어 챗나의 스킨케어 챗',
+  //     isBookmark: true,
+  //   },
+  //   {
+  //     sessionId: uuidv4(),
+  //     title: '제목을 입력해주세요.',
+  //     isBookmark: true,
+  //   },
+  // ];
 
   const [chatSessions, setChatSessions] = useState([]);
   const [currentSessionId, setCurrentSessionId] = useState(null);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   // ✅ mock 데이터 불러오기
-  const fetchChatSessions = () => {
-    setChatSessions(initialMockData);
+  const fetchChatSessions = async () => {
+    try {
+      const response = await axios.get('/chat/sessions');
+      setChatSessions(response.data);
+    } catch (error) {
+      console.error('세션 목록 불러오기 실패:', error);
+    }
   };
 
   useEffect(() => {
@@ -38,14 +43,13 @@ export const ChatProvider = ({ children }) => {
   }, []);
 
   // ✅ 새로운 세션 생성
-  const createChatSession = () => {
-    const newSession = {
-      sessionId: uuidv4(),
-      title: '제목을 입력해주세요.',
-      isBookmark: false,
-    };
-    setChatSessions((prev) => [...prev, newSession]);
-    setCurrentSessionId(newSession.sessionId);
+  const createChatSession = async () => {
+    const res = await axios.post('/chat/sessions', { title: '제목을 입력해주세요.' });
+
+    const newSession = res.data;
+
+    setCurrentSessionId(res.data.sessionId);
+    await fetchChatSessions(); // 여기서 바로 목록 갱신
     return newSession.sessionId;
   };
 
