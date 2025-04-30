@@ -31,7 +31,7 @@ export const ChatProvider = ({ children }) => {
   // ✅ mock 데이터 불러오기
   const fetchChatSessions = async () => {
     try {
-      const response = await axios.get('/chat/sessions');
+      const response = await axios.get('/api/chat/sessions');
       setChatSessions(response.data);
     } catch (error) {
       console.error('세션 목록 불러오기 실패:', error);
@@ -44,7 +44,7 @@ export const ChatProvider = ({ children }) => {
 
   // ✅ 새로운 세션 생성
   const createChatSession = async () => {
-    const res = await axios.post('/chat/sessions', { title: '제목을 입력해주세요.' });
+    const res = await axios.post('/api/chat/sessions', { title: '제목을 입력해주세요.' });
 
     const newSession = res.data;
 
@@ -56,7 +56,7 @@ export const ChatProvider = ({ children }) => {
   // ✅ 제목 수정
   const updateChatTitle = async (sessionId, newTitle) => {
     try {
-      const res = await axios.patch(`/chat/sessions/${sessionId}/title`, { title: newTitle });
+      const res = await axios.patch(`/api/chat/sessions/${sessionId}/title`, { title: newTitle });
 
       const updated = res.data;
 

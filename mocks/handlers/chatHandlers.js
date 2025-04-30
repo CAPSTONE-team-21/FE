@@ -5,12 +5,12 @@ let initSessionId = 3;
 
 export const handlers = [
   // 전체 세션 목록 조회 (사이드바, 메인용)
-  http.get('/chat/sessions', () => {
+  http.get('/api/chat/sessions', () => {
     return HttpResponse.json(chatSessions_allView);
   }),
 
   // 새 세션 생성
-  http.post('/chat/sessions', async ({ request }) => {
+  http.post('/api/chat/sessions', async ({ request }) => {
     const { title } = await request.json();
 
     const newSession = {
@@ -23,7 +23,7 @@ export const handlers = [
   }),
 
   // title 수정
-  http.patch('/chat/sessions/:id/title', async ({ params, request }) => {
+  http.patch('/api/chat/sessions/:id/title', async ({ params, request }) => {
     const { id } = params; // URL 경로에 있는 :id 값을 꺼냄
     const { title } = await request.json(); //요청 바디에서 title값 꺼냄
 
