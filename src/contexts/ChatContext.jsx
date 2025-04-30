@@ -1,80 +1,43 @@
-// ChatContext.jsx (API 명세서 기준으로 sessionId 사용)
 import { createContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import {
+  fetchChatSessions as fetchChatSessionsAPI,
+  createChatSession as createChatSessionAPI,
+  updateChatTitle as updateChatTitleAPI,
+} from '../utils/chatmk'; // 위치는 상황에 따라 조정
 
 export const ChatContext = createContext();
 
 export const ChatProvider = ({ children }) => {
-  // // ✨ 초기 mock 세션 데이터
-  // const initialMockData = [
-  //   {
-  //     sessionId: uuidv4(),
-  //     title: '기본 세션',
-  //     isBookmark: false,
-  //   },
-  //   {
-  //     sessionId: uuidv4(),
-  //     title: '나의 스킨케어 챗나의 스킨케어 챗',
-  //     isBookmark: true,
-  //   },
-  //   {
-  //     sessionId: uuidv4(),
-  //     title: '제목을 입력해주세요.',
-  //     isBookmark: true,
-  //   },
-  // ];
-
   const [chatSessions, setChatSessions] = useState([]);
   const [currentSessionId, setCurrentSessionId] = useState(null);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
-  // ✅ mock 데이터 불러오기
   const fetchChatSessions = async () => {
-    try {
-      const response = await axios.get('/api/chat/sessions');
-      setChatSessions(response.data);
-    } catch (error) {
-      console.error('세션 목록 불러오기 실패:', error);
-    }
+    const data = await fetchChatSessionsAPI();
+    setChatSessions(data);
   };
 
   useEffect(() => {
-    fetchChatSessions(); // 페이지 로드시 실행
+    fetchChatSessions();
   }, []);
 
-  // ✅ 새로운 세션 생성
   const createChatSession = async () => {
-    const res = await axios.post('/api/chat/sessions', { title: '제목을 입력해주세요.' });
-
-    const newSession = res.data;
-
-    setCurrentSessionId(res.data.sessionId);
-    await fetchChatSessions(); // 여기서 바로 목록 갱신
+    const newSession = await createChatSessionAPI();
+    setCurrentSessionId(newSession.sessionId);
+    await fetchChatSessions();
     return newSession.sessionId;
   };
 
-  // ✅ 제목 수정
   const updateChatTitle = async (sessionId, newTitle) => {
-    try {
-      const res = await axios.patch(`/api/chat/sessions/${sessionId}/title`, { title: newTitle });
-
-      const updated = res.data;
-
-      // id가 같으면 title update
-      setChatSessions((prev) =>
-        prev.map((s) => (s.sessionId === sessionId ? { ...s, title: updated.title } : s))
-      );
-    } catch (err) {
-      console.error('제목 수정 실패:', err);
-    }
+    const updated = await updateChatTitleAPI(sessionId, newTitle);
+    setChatSessions((prev) =>
+      prev.map((s) => (s.sessionId === sessionId ? { ...s, title: updated.title } : s))
+    );
   };
 
-  // ✅ 즐겨찾기 토글
   const toggleBookmark = (sessionId) => {
     setChatSessions((prev) =>
-      prev.map((session) =>
-        session.sessionId === sessionId ? { ...session, isBookmark: !session.isBookmark } : session
-      )
+      prev.map((s) => (s.sessionId === sessionId ? { ...s, isBookmark: !s.isBookmark } : s))
     );
   };
 

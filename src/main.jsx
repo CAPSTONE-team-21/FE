@@ -5,10 +5,13 @@ import { BrowserRouter } from 'react-router-dom';
 import { ChatProvider } from './contexts/ChatContext.jsx';
 
 async function enableMocking() {
-  if (import.meta.env.MODE !== 'development') return;
-
-  const { worker } = await import('../mocks/browser');
-  return worker.start();
+  if (import.meta.env.VITE_USE_MSW === 'true') {
+    const { worker } = await import('../mocks/browser');
+    await worker.start({
+      onUnhandledRequest: 'bypass',
+    });
+    console.log('[MSW] ✅ MSW 실행됨');
+  }
 }
 
 enableMocking().then(() => {
