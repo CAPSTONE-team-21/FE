@@ -1,4 +1,4 @@
-import { useChat } from '../../contexts/ChatContextsh';
+import { useChat } from '../../contexts/ChatContext';
 import ChatTextInput from './ChatTextInput';
 import SendButton from './SendButton';
 import TypeSelectorBox from './TypeSelectorBox';
@@ -17,6 +17,8 @@ const ChatInputBox = ({ sessionId, fetchMessagesAgain }) => {
     setIsDropdownOpen,
     sessionMessages,
     skinTypes,
+    setChatSessions,
+    setCurrentSessionId,
   } = useChat();
 
   // dropdown 위로 열지 아래로 열지 판단
@@ -41,8 +43,13 @@ const ChatInputBox = ({ sessionId, fetchMessagesAgain }) => {
       let currentSessionId = sessionId;
       // 만약 현재 sessionId가 없으면,
       if (!currentSessionId) {
-        const session = await createChatSession();
-        currentSessionId = session.sessionId;
+        const { newSession, updatedSessions } = await createChatSession();
+        currentSessionId = newSession.sessionId;
+        // ➔ 전역 세션 목록 업데이트
+        setChatSessions(updatedSessions);
+
+        // ➔ 현재 선택된 세션 ID도 업데이트 (헤더용)
+        setCurrentSessionId(newSession.sessionId);
 
         // ✅ 먼저 메세지를 보내고
         await sendChatMessages(currentSessionId, body);
