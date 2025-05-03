@@ -11,7 +11,13 @@ export const handlers = [
 
   // 새 세션 생성
   http.post('/api/chat/sessions', async ({ request }) => {
-    const { title } = await request.json();
+    let body = {};
+    try {
+      body = await request.json();
+    } catch {
+      body = {};
+    }
+    const title = body.title || '제목을 입력해주세요.';
 
     const newSession = {
       sessionId: initSessionId++,
