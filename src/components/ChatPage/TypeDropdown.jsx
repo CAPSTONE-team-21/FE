@@ -1,7 +1,7 @@
 // import { useRef, useEffect } from 'react';
 
 import { useEffect } from 'react';
-import { useChat } from '../../contexts/ChatContextsh';
+import { useChat } from '../../contexts/ChatContext';
 import { IconCheckNoBgInactive } from '../../utils/icons';
 import { IconCheckNoBgActive } from '../../utils/icons';
 // 드롭다운 목록 (건성, 지성 등)
