@@ -1,5 +1,5 @@
 import Header from '../components/Header';
-import Logo from '../components/LoginPage/Logo.jsx';
+import LogoSection from '../components/LoginPage/LogoSection.jsx';
 import LoginForm from '../components/LoginPage/LoginForm';
 import SocialLogin from '../components/LoginPage/SocialLogin';
 
@@ -13,7 +13,7 @@ const LoginPage = () => {
           className="pt-[60px] w-[320px] h-[552px] overflow-hidden
         flex flex-col justify-center items-center"
         >
-          <Logo />
+          <LogoSection />
           <LoginForm />
           <SocialLogin />
         </div>
