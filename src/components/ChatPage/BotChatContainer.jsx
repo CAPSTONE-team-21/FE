@@ -9,10 +9,6 @@ const SkinTypeLabel = {
 };
 
 const BotChatContainer = ({ botMessages }) => {
-  if (!botMessages || botMessages.length === 0) {
-    return null;
-  }
-
   const [activeType, setActiveType] = useState(botMessages[0].skinType);
   const [activeIndex, setActiveIndex] = useState(0);
   const buttonRefs = useRef([]);
@@ -29,6 +25,10 @@ const BotChatContainer = ({ botMessages }) => {
     }
   }, [activeIndex, botMessages]);
 
+  if (!botMessages || botMessages.length === 0) {
+    return null;
+  }
+
   const handleFilterSelect = (type, idx) => {
     setActiveType(type);
     setActiveIndex(idx);
@@ -37,7 +37,7 @@ const BotChatContainer = ({ botMessages }) => {
   return (
     <div className="flex flex-col w-full">
       {/* 스포이드 추출 결과 안내 문구 */}
-      <div className="flex items-center mb-4">
+      <div className="flex items-center py-4">
         <img className="w-7" src={IconLogo} alt="" />
         <span className="ml-2 text-15 font-semibold bg-gradient-to-r from-main to-main-purple bg-clip-text text-transparent">
           스포이드 추출 결과는 다음과 같습니다.
