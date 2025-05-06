@@ -61,7 +61,7 @@ const BotChatContainer = ({ botMessages }) => {
         />
       </div>
 
-      <div className="bg-white border-b-2 border-main-typeStroke font-normal text-gray-stroke70 pl-[18px] pr-[16px] py-[16px] max-w-[100%] whitespace-pre-line break-words leading-[1.4]">
+      <div className="bg-white border-b-2 border-main-typeStroke font-normal text-gray-stroke70 px-[20px] py-[36px] max-w-[100%] whitespace-pre-line break-words leading-[1.4]">
         {botMessages
           .filter((msg) => msg.skinType === activeType)
           .map((msg, idx) => (
