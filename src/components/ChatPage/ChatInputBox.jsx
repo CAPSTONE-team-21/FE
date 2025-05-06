@@ -94,11 +94,11 @@ const ChatInputBox = ({ sessionId, fetchMessagesAgain }) => {
         bg-white
       flex flex-col w-[740px]
       rounded-[25px]
-      border-[1.5px] border-gray-stroke05 focus-within:border-gray-stroke10
+      border-[1.5px] border-gray-stroke05 focus-within:border-gray-stroke07
       
     "
       >
-        <div className="flex w-full px-[12px] py-[10px] border-gray-stroke07">
+        <div className="flex w-full p-[10px] border-gray-stroke07">
           <ChatTextInput input={input} onChangeInput={onChangeInput} />
           <SendButton onClick={handleTestPost} isInputFilled={input.length > 0} />
         </div>
