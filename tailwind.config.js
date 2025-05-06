@@ -35,6 +35,7 @@ export default {
           stroke07: 'rgba(0, 0, 0, 0.07)',
           stroke10: 'rgba(0, 0, 0, 0.1)',
           stroke30: 'rgba(0, 0, 0, 0.3)',
+          stroke50: 'rgba(0, 0, 0, 0.5)',
           stroke60: 'rgba(0, 0, 0, 0.6)',
           stroke70: 'rgba(0, 0, 0, 0.7)',
         },
