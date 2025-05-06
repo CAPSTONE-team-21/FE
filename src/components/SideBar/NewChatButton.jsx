@@ -4,13 +4,16 @@ import { ChatContext } from '../../contexts/ChatContext';
 import { IconPlus } from '../../utils/icons';
 
 const NewChatButton = () => {
-  const { createChatSession, setSidebarOpen } = useContext(ChatContext);
+  const { createChatSession, setCurrentSessionId, setSidebarOpen } = useContext(ChatContext);
   const nav = useNavigate();
 
-  const handleNewChat = () => {
-    // 새로운 임시 세션 생성 (백 response 대용)
-    // 여기에 post요청 필요
-    const newSessionId = createChatSession();
+  const handleNewChat = async () => {
+    const newSessionId = await createChatSession(); // 여기서 sessionId만 받아옴
+    if (!newSessionId) {
+      console.error('세션 생성 실패: sessionId 없음');
+      return;
+    }
+    setCurrentSessionId(newSessionId);
     setSidebarOpen(false);
     nav(`/chat/${newSessionId}`);
   };

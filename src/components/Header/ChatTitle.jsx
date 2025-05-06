@@ -2,13 +2,11 @@
 import { useContext, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ChatContext } from '../../contexts/ChatContext';
-import { useChat } from '../../contexts/ChatContextsh';
 import TextOrInput from '../TextOrInput';
 import { IconEdit } from '../../utils/icons';
 
 const ChatTitle = () => {
-  const { chatSessions, currentSessionId, setChatSessions } = useContext(ChatContext);
-  const { sessionMessages } = useChat();
+  const { chatSessions, currentSessionId, updateChatTitle } = useContext(ChatContext);
 
   const location = useLocation();
   const currentSession = chatSessions.find((s) => s.sessionId === currentSessionId);
@@ -21,18 +19,16 @@ const ChatTitle = () => {
     }
   }, [currentSession?.title, isEditing]);
 
-  // ✅ 메인(/chat)에서는 타이틀 숨김, 메시지 없으면 숨김
-  if (location.pathname === '/chat' || sessionMessages.length === 0) return null;
+  if (location.pathname === '/chat' || !currentSession) return null;
 
   const isPlaceholder = !currentSession.title || currentSession.title === '제목을 입력해주세요.';
 
-  const handleSave = () => {
-    const trimmed = inputValue.trim();
+  // 타이틀 수정 후 저장
+  const handleSave = async () => {
+    const trimmed = inputValue.trim(); //앞뒤 공백 제거
     if (trimmed === '') return;
 
-    setChatSessions((prev) =>
-      prev.map((s) => (s.sessionId === currentSessionId ? { ...s, title: trimmed } : s))
-    );
+    await updateChatTitle(currentSession.sessionId, trimmed); // API 연동
     setIsEditing(false);
   };
 
@@ -48,6 +44,9 @@ const ChatTitle = () => {
     }
     return Math.max(width + 15, 100);
   };
+  console.log('chatSessions:', chatSessions);
+  console.log('currentSessionId:', currentSessionId);
+  console.log('currentSession:', currentSession);
 
   return (
     <div

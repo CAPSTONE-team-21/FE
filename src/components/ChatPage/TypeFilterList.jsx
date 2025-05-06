@@ -1,18 +1,27 @@
 import TypeFilterItem from './TypeFilterItem';
 
-const TypeFilterList = ({ selectedTypes }) => {
+// 스스로 코드를 짜볼 것...
+const TypeFilterList = ({ selectedTypes, onDelete }) => {
   const typeLabels = {
     SENSITIVE: '민감성',
     DRY: '건성',
     OILY: '지성',
-    COMBINATION: '복합성',
+    COMBINED: '복합성',
   };
-  const toRender = selectedTypes.length === 0 ? Object.keys(typeLabels) : selectedTypes;
+  const typeOrder = ['DRY', 'OILY', 'SENSITIVE', 'COMBINED'];
+  const sortedSelectedTypes = selectedTypes.sort(
+    (a, b) => typeOrder.indexOf(a) - typeOrder.indexOf(b)
+  );
 
   return (
     <div className="flex flex-wrap gap-2">
-      {toRender.map((type, index) => (
-        <TypeFilterItem key={`${index}-${type}`} type={typeLabels[type]} />
+      {sortedSelectedTypes.map((type, index) => (
+        <TypeFilterItem
+          key={`${index}-${type}`}
+          label={typeLabels[type]}
+          type={type}
+          onDelete={onDelete}
+        />
       ))}
     </div>
   );

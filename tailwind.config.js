@@ -11,10 +11,12 @@ export default {
           DEFAULT: 'rgb(var(--color-main) / <alpha-value>)',
           hover: 'rgb(var(--color-main-hover) / <alpha-value>)',
           buttonStroke: 'rgba(59, 104, 239, 0.3)', // 버튼 테두리 고정값
-          buttonHover: 'rgba(59, 104, 239, 0.)', // 버튼 테두리 고정값
           buttonFill: 'rgba(59, 104, 239, 0.05)', // 버튼 fill 고정값
           typeStroke: 'rgba(59, 104, 239, 0.1)', // TypeStroke 고정값
           typeBackground: 'rgba(59, 104, 239, 0.04)', // TypeStroke 고정값
+          chatFilter: 'rgba(249, 250, 255)', // TypeStroke 고정값
+          chatFilterStroke: 'rgba(59, 104, 239, 0.07)', // TypeStroke 고정값
+          chatFilterHover: 'rgba(59, 104, 239, 0.8)', // TypeStroke 고정값
           newChatHover: 'rgba(59, 104, 239, 0.04)',
         },
         login: {
@@ -41,7 +43,30 @@ export default {
         },
       },
     },
+    keyframes: {
+      typing: {
+        '0%': {
+          width: '0%',
+          visibility: 'hidden',
+        },
+        '100%': {
+          width: '100%',
+        },
+      },
+      blink: {
+        '50%': {
+          borderColor: 'transparent',
+        },
+        '100%': {
+          borderColor: 'white',
+        },
+      },
+    },
+    animation: {
+      typing: 'typing 1.5s steps(16) alternate, blink .7s infinite',
+    },
   },
+
   plugins: [],
   experimental: {
     // Tailwind가 className 내부의 동적 표현식을 더 잘 감지하게 해주는 설정
