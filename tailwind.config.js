@@ -12,6 +12,7 @@ export default {
           hover: 'rgb(var(--color-main-hover) / <alpha-value>)',
           buttonStroke: 'rgba(59, 104, 239, 0.3)', // 버튼 테두리 고정값
           buttonFill: 'rgba(59, 104, 239, 0.05)', // 버튼 fill 고정값
+          20: 'rgba(59, 104, 239, 0.20)',
           typeStroke: 'rgba(59, 104, 239, 0.1)', // TypeStroke 고정값
           typeBackground: 'rgba(59, 104, 239, 0.04)', // TypeStroke 고정값
           chatFilter: 'rgba(249, 250, 255)', // TypeStroke 고정값
