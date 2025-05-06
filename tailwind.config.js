@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+import borderGradientRadius from 'tailwindcss-border-gradient-radius';
 export default {
   content: ['./index.html', './src/**/*.{js,jsx}'],
   theme: {
@@ -10,11 +11,12 @@ export default {
         main: {
           DEFAULT: 'rgb(var(--color-main) / <alpha-value>)',
           hover: 'rgb(var(--color-main-hover) / <alpha-value>)',
-          buttonStroke: 'rgba(59, 104, 239, 0.3)', // 버튼 테두리 고정값
-          buttonFill: 'rgba(59, 104, 239, 0.05)', // 버튼 fill 고정값
-          20: 'rgba(59, 104, 239, 0.20)',
+          purple: 'rgb(139, 91, 254, 1)',
           2: 'rgba(59, 104, 239, 0.02)',
           7: 'rgba(59, 104, 239, 0.07)',
+          20: 'rgba(59, 104, 239, 0.20)',
+          buttonStroke: 'rgba(59, 104, 239, 0.3)', // 버튼 테두리 고정값
+          buttonFill: 'rgba(59, 104, 239, 0.05)', // 버튼 fill 고정값
           typeStroke: 'rgba(59, 104, 239, 0.1)', // TypeStroke 고정값
           typeBackground: 'rgba(59, 104, 239, 0.04)', // TypeStroke 고정값
           chatFilter: 'rgba(249, 250, 255)', // TypeStroke 고정값
@@ -71,7 +73,7 @@ export default {
     },
   },
 
-  plugins: [],
+  plugins: [borderGradientRadius],
   experimental: {
     // Tailwind가 className 내부의 동적 표현식을 더 잘 감지하게 해주는 설정
     classRegex: [
