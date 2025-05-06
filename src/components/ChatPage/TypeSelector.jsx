@@ -15,7 +15,7 @@ const TypeSelector = ({
         className="flex w-full px-[14px] py-[7px] rounded-[20px] gap-[6px] 
                   text-main font-semibold text-[14px]
                   bg-main-typeBackground hover:bg-white
-                  border-[1.5px] border-main-typeStroke hover:border-[rgba(59,104,239,0.1)]
+                  border-[1px] border-main-typeStroke hover:border-[rgba(59,104,239,0.1)]
                   focus:border-[rgba(59,104,239,0.1)] focus:bg-white
                   transition duration-300"
       >
