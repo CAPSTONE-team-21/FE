@@ -15,7 +15,7 @@ const LoginPage = () => {
         >
           <LogoSection />
           <LoginForm />
-          <SocialLogin />
+          {/* <SocialLogin /> */}
         </div>
       </div>
     </div>
