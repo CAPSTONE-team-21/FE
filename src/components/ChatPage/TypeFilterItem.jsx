@@ -5,7 +5,7 @@ const TypeFilterItem = ({ label, type, onDelete }) => {
   return (
     <>
       <div
-        className="flex w-fit px-[16px] py-[2px] rounded-[20px] gap-[10px]
+        className="flex w-fit px-[15px] py-[2px] rounded-[20px] gap-[10px]
       justify-center items-center
       font-normal text-[14px]
       text-gray-stroke50 hover:text-gray-stroke70
@@ -14,7 +14,7 @@ const TypeFilterItem = ({ label, type, onDelete }) => {
       transition duration-300"
         style={{ textShadow: '0 0 1px rgb(255,255,255)' }}
       >
-        <span>{label}</span>
+        <span className="">{label}</span>
         <img
           className="w-[8px] cursor-pointer"
           src={IconCancel}
