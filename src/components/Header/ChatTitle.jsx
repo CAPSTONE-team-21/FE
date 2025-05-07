@@ -32,21 +32,7 @@ const ChatTitle = () => {
     setIsEditing(false);
   };
 
-  const calculateInputWidth = (text = '') => {
-    let width = 0;
-    for (let char of text.toString()) {
-      if (/[ㄱ-ㅎㅏ-ㅣ가-힣]/.test(char)) width += 13;
-      else if (/[A-Z]/.test(char)) width += 10;
-      else if (/[a-z]/.test(char)) width += 8;
-      else if (/\d/.test(char)) width += 9;
-      else if (char === ' ') width += 4;
-      else width += 10;
-    }
-    return Math.max(width + 15, 100);
-  };
-  console.log('chatSessions:', chatSessions);
-  console.log('currentSessionId:', currentSessionId);
-  console.log('currentSession:', currentSession);
+  // const calculateInputWidth = (text = '') => {/
 
   return (
     <div
@@ -54,7 +40,7 @@ const ChatTitle = () => {
     flex items-center gap-[8px] text-[16px] leading-[1.4]
     ${isPlaceholder ? 'text-gray/80' : 'text-gray'} font-medium
     px-[10px] py-[6px] rounded-[10px]
-    max-w-5xl
+    max-w-5xl 
     cursor-pointer transition-all duration-150 ease-in-out
     ${isEditing ? 'bg-gray-stroke03' : 'hover:shadow-custom'}
   `}
@@ -69,12 +55,12 @@ const ChatTitle = () => {
           setIsEditing(false);
           setInputValue(currentSession.title || '');
         }}
-        className="flex-1 text-[16px]  font-semibold leading-[1.4] outline-none bg-transparent"
+        className=" text-[16px] font-medium leading-[1.4] outline-none bg-transparent"
       />
       <img
         src={IconEdit}
         alt="수정 아이콘"
-        className="w-[12px] h-auto cursor-pointer"
+        className="w-[12px] h-auto cursor-pointer flex-shrink-0"
         onClick={(e) => {
           e.stopPropagation();
           setIsEditing(true);

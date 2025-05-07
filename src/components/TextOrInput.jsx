@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect } from 'react';
 
 const TextOrInput = ({
   value,
@@ -11,35 +11,13 @@ const TextOrInput = ({
 }) => {
   const inputRef = useRef(null);
   const spanRef = useRef(null);
-  const [inputWidth, setInputWidth] = useState(0);
 
   useEffect(() => {
-    if (spanRef.current) {
-      if (value === '') {
-        setInputWidth(0); // ✅ 빈 문자열일 때 0으로 설정
-      } else {
-        const width = spanRef.current.offsetWidth;
-        setInputWidth(width);
-      }
-
-      const rawWidth = spanRef.current.offsetWidth;
-      const step = 10;
-      const bufferedWidth = rawWidth + 10;
-      const adjustedWidth = Math.ceil(bufferedWidth / step) * step;
-      setInputWidth(adjustedWidth);
+    if (isEditing && inputRef.current && spanRef.current) {
+      const width = spanRef.current.offsetWidth + 1;
+      inputRef.current.style.width = `${width}px`;
     }
-  }, [value]);
-
-  // useEffect(() => {
-  //   if (spanRef.current) {
-  //     if (value === '') {
-  //       setInputWidth(0); // ✅ 빈 문자열일 때 0으로 설정
-  //     } else {
-  //       const width = spanRef.current.offsetWidth;
-  //       setInputWidth(width);
-  //     }
-  //   }
-  // }, [value]);
+  }, [value, isEditing]);
 
   useEffect(() => {
     if (isEditing && inputRef.current) {
@@ -56,13 +34,16 @@ const TextOrInput = ({
   return (
     <div className="inline-flex truncate items-center relative">
       {/* width 측정용 span */}
-      <span ref={spanRef} className={`invisible whitespace-pre absolute ${className}`}>
-        {value || '제목을 입력해주세요.'}
+      <span
+        ref={spanRef}
+        className={`invisible absolute whitespace-pre text-[15px] font-medium leading-[1.4] ${className}`}
+      >
+        {value}
       </span>
 
       {!isEditing && (
         <span
-          className={`inline-block cursor-pointer whitespace-nowrap truncate ${className}`}
+          className={`inline-block cursor-pointer whitespace-nowrap truncate text-[15px] font-medium leading-[1.4] ${className}`}
           onDoubleClick={onStartEdit}
         >
           {value || '제목을 입력해주세요.'}
@@ -71,14 +52,22 @@ const TextOrInput = ({
 
       {isEditing && (
         <input
+          placeholder="제목을 입력해주세요."
           ref={inputRef}
           type="text"
-          className={`inline-block bg-transparent border-none outline-none whitespace-nowrap align-baseline ${className}`}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onBlur={onSave}
           onKeyDown={handleKeyDown}
-          style={{ width: `${inputWidth}px` }}
+          className={`
+            inline-block
+            bg-transparent border-none outline-none
+            
+            text-[15px] font-medium leading-[1.4]
+            whitespace-nowrap align-baseline
+            ${className}
+          `}
+          style={{ minWidth: '0px', boxSizing: 'content-box' }}
         />
       )}
     </div>
