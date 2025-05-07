@@ -20,7 +20,7 @@ const Header = () => {
           <SidebarToggleButton />
         </div>
         {/* 조건부렌더링 */}
-        <div className="flex w-full mx-auto items-center justify-between pl-[60px]">
+        <div className="flex w-full mx-auto items-center justify-between pl-[36px]">
           {/* Chat페이지에서만 ChatTitle 보여줌 */}
           {isChatPage && <ChatTitle isHeader={true} />}
 

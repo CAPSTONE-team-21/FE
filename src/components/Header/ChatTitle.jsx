@@ -51,32 +51,30 @@ const ChatTitle = () => {
   return (
     <div
       className={`
-        flex items-center gap-[8px] sm:gap-[10px] text-[16px] sm:text-[16px] leading-[1.4]        ${isPlaceholder ? 'text-gray/80' : 'text-gray'} font-medium
-        px-[10px] sm:px-[10px] py-[6px] sm:py-[6px] rounded-[10px]
-        max-w-full sm:max-w-[1000px]
-        cursor-pointer transition-all duration-150 ease-in-out
-        ${isEditing ? 'bg-gray-stroke03' : 'hover:bg-gray-stroke03'}
-      `}
+    flex items-center gap-[8px] text-[16px] leading-[1.4]
+    ${isPlaceholder ? 'text-gray/80' : 'text-gray'} font-medium
+    px-[10px] py-[6px] rounded-[10px]
+    max-w-5xl
+    cursor-pointer transition-all duration-150 ease-in-out
+    ${isEditing ? 'bg-gray-stroke03' : 'hover:shadow-custom'}
+  `}
       onDoubleClick={() => setIsEditing(true)}
     >
-      <div className="flex-1" style={{ width: `${calculateInputWidth(inputValue)}px` }}>
-        <TextOrInput
-          value={inputValue}
-          isEditing={isEditing}
-          onStartEdit={() => setIsEditing(true)}
-          onChange={setInputValue}
-          onSave={handleSave}
-          onCancel={() => {
-            setIsEditing(false);
-            setInputValue(currentSession.title || '');
-          }}
-          className="text-[16px] font-semibold leading-[1.4] truncate min-w-[30px] max-w-[1000px] w-full"
-        />
-      </div>
+      <TextOrInput
+        value={inputValue}
+        isEditing={isEditing}
+        onChange={setInputValue}
+        onSave={handleSave}
+        onCancel={() => {
+          setIsEditing(false);
+          setInputValue(currentSession.title || '');
+        }}
+        className="flex-1 text-[16px]  font-semibold leading-[1.4] outline-none bg-transparent"
+      />
       <img
         src={IconEdit}
         alt="수정 아이콘"
-        className="w-[12px] h-auto cursor-pointer self-center"
+        className="w-[12px] h-auto cursor-pointer"
         onClick={(e) => {
           e.stopPropagation();
           setIsEditing(true);
