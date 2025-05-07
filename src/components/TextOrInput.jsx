@@ -14,7 +14,8 @@ const TextOrInput = ({
 
   useEffect(() => {
     if (isEditing && inputRef.current && spanRef.current) {
-      const width = spanRef.current.offsetWidth + 1;
+      const rawWidth = spanRef.current.offsetWidth;
+      const width = value === '' ? rawWidth : rawWidth + 1;
       inputRef.current.style.width = `${width}px`;
     }
   }, [value, isEditing]);
@@ -30,10 +31,8 @@ const TextOrInput = ({
     if (e.key === 'Enter') onSave();
     if (e.key === 'Escape') onCancel();
   };
-
   return (
     <div className="inline-flex truncate items-center relative">
-      {/* width 측정용 span */}
       <span
         ref={spanRef}
         className={`invisible absolute whitespace-pre text-[15px] font-medium leading-[1.4] ${className}`}
@@ -41,20 +40,20 @@ const TextOrInput = ({
         {value}
       </span>
 
-      {!isEditing && (
+      {!isEditing && value !== '' && (
         <span
           className={`inline-block cursor-pointer whitespace-nowrap truncate text-[15px] font-medium leading-[1.4] ${className}`}
           onDoubleClick={onStartEdit}
         >
-          {value || '제목을 입력해주세요.'}
+          {value}
         </span>
       )}
 
       {isEditing && (
         <input
-          placeholder="제목을 입력해주세요."
           ref={inputRef}
           type="text"
+          placeholder=""
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onBlur={onSave}
@@ -62,12 +61,11 @@ const TextOrInput = ({
           className={`
             inline-block
             bg-transparent border-none outline-none
-            
             text-[15px] font-medium leading-[1.4]
             whitespace-nowrap align-baseline
             ${className}
           `}
-          style={{ minWidth: '0px', boxSizing: 'content-box' }}
+          style={{ minWidth: '10px', boxSizing: 'content-box' }}
         />
       )}
     </div>

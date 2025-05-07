@@ -37,7 +37,7 @@ const ChatTitle = () => {
   return (
     <div
       className={`
-    flex items-center gap-[8px] text-[16px] leading-[1.4]
+    flex items-center gap-[12px] text-[16px] leading-[1.4]
     ${isPlaceholder ? 'text-gray/80' : 'text-gray'} font-medium
     px-[10px] py-[6px] rounded-[10px]
     max-w-5xl 
