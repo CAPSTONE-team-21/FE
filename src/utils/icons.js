@@ -25,6 +25,9 @@ import IconSearch from '../assets/icon-search.svg';
 import IconStarY from '../assets/icon-starY.svg';
 import IconStarG from '../assets/icon-starG.svg';
 import IconLogo from '../assets/icon-logo.svg';
+import IconSummary from '../assets/icon-summary.svg';
+import IconUser from '../assets/icon-user.svg';
+
 export {
   IconCancel,
   IconCheckActive,
@@ -51,4 +54,6 @@ export {
   IconStarY,
   IconStarG,
   IconLogo,
+  IconSummary,
+  IconUser,
 };
