@@ -35,12 +35,12 @@ const ChatDetailPage = () => {
       <Header />
 
       {/* 본문 전체: 헤더 제외 + InputBox 제외 */}
-      <div className="pt-[60px] pb-[100px] h-[calc(100vh-60px)] flex overflow-hidden">
+      <div className="pt-[60px] pb-[90px] pl-1 h-[calc(100vh-60px)] flex overflow-hidden">
         <SideBar />
         {/* 사이드바 */}
 
         {/* 채팅영역 */}
-        <div className="flex-1 overflow-y-auto flex justify-center">
+        <div className="flex-1 overflow-y-auto scrollbar-custom flex justify-center">
           <div className="w-[760px]">
             <ChatSection
               sessionId={sessionId}

@@ -28,14 +28,14 @@ const TypeDropDown = ({ selectedTypes, setSelectedTypes }) => {
         
          bg-white w-full
         border border-gray-stroke03
-        rounded-[10px]
+        rounded-[12px]
         shadow-[0_0_10px_rgba(0,0,0,0.05)]
-        p-[4px] z-10"
+        p-[6px] z-10"
       >
         <li
           onClick={() => onClickTypes('DRY')}
           className={`
-          flex gap-[10px] px-[14px] py-[5px] text-[14px] font-normal
+          flex gap-[10px] px-[10px] py-[6px] text-[14px] font-normal
           ${selectedTypes.includes('DRY') ? 'text-gray-stroke70' : 'text-gray-stroke30'}
            hover:bg-gray-stroke02 rounded-md
           transition duration-300 cursor-pointer
@@ -51,7 +51,7 @@ const TypeDropDown = ({ selectedTypes, setSelectedTypes }) => {
         <li
           onClick={() => onClickTypes('OILY')}
           className={`
-          flex gap-[10px] px-[14px] py-[5px] text-[14px] font-normal
+          flex gap-[10px] px-[10px] py-[6px] text-[14px] font-normal
           ${selectedTypes.includes('OILY') ? 'text-gray-stroke70' : 'text-gray-stroke30'}
           hover:bg-gray-stroke02 rounded-md
           transition duration-300 cursor-pointer
@@ -67,7 +67,7 @@ const TypeDropDown = ({ selectedTypes, setSelectedTypes }) => {
         <li
           onClick={() => onClickTypes('SENSITIVE')}
           className={`
-          flex gap-[10px] px-[14px] py-[5px] text-[14px] font-normal
+          flex gap-[10px] px-[10px] py-[6px] text-[14px] font-normal
           ${selectedTypes.includes('SENSITIVE') ? 'text-gray-stroke70' : 'text-gray-stroke30'}
            hover:bg-gray-stroke02 rounded-md
           transition duration-300 cursor-pointer
@@ -83,7 +83,7 @@ const TypeDropDown = ({ selectedTypes, setSelectedTypes }) => {
         <li
           onClick={() => onClickTypes('COMBINED')}
           className={`
-          flex gap-[10px] px-[14px] py-[5px] text-[14px] font-normal
+          flex gap-[10px] px-[10px] py-[6px] text-[14px] font-normal
           ${selectedTypes.includes('COMBINED') ? 'text-gray-stroke70' : 'text-gray-stroke30'}
           hover:bg-gray-stroke02 rounded-md
           transition duration-300 cursor-pointer
