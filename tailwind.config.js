@@ -39,6 +39,8 @@ export default {
           stroke05: 'rgba(0, 0, 0, 0.05)',
           stroke07: 'rgba(0, 0, 0, 0.07)',
           stroke10: 'rgba(0, 0, 0, 0.1)',
+          stroke15: 'rgba(0, 0, 0, 0.15)',
+          stroke20: 'rgba(0, 0, 0, 0.2)',
           stroke30: 'rgba(0, 0, 0, 0.3)',
           stroke50: 'rgba(0, 0, 0, 0.5)',
           stroke60: 'rgba(0, 0, 0, 0.6)',
@@ -47,6 +49,9 @@ export default {
         bubble: {
           DEFAULT: 'rgb(var(--color-bubble) / <alpha-value>)',
         },
+      },
+      boxShadow: {
+        custom: '0px 1px 4px 0px rgba(0,0,0,0.1)',
       },
     },
     keyframes: {
