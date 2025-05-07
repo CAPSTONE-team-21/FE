@@ -70,7 +70,7 @@ const ChatTitle = () => {
             setIsEditing(false);
             setInputValue(currentSession.title || '');
           }}
-          className="text-[16px] font-medium leading-[1.4] truncate min-w-[30px] max-w-[1000px] w-full"
+          className="text-[16px] font-semibold leading-[1.4] truncate min-w-[30px] max-w-[1000px] w-full"
         />
       </div>
       <img
