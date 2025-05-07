@@ -1,12 +1,13 @@
-import SignUpBtn from './SignUpBtn';
+import GotoSignUp from './GotoSignUp';
 import { IconEye, IconCheckInactive, IconCheckActive } from '../../utils/icons';
 import { useState } from 'react';
-
+import Button from '../Button';
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [autoLogin, setAutoLogin] = useState(false);
   return (
     <>
-      {/* 이메일 비밀번호 */}
+      {/* 이메일 */}
       <input
         type="email"
         placeholder="아이디를 입력해주세요."
@@ -15,6 +16,8 @@ const LoginForm = () => {
         focus:border focus:border-main
         placeholder-gray-stroke30 placeholder:font-medium"
       />
+
+      {/* 비밀번호 */}
       <div
         className="w-full flex items-center px-[16px] py-[14px] gap-[12px]
       border border-gray-stroke08 rounded-b-[8px]
@@ -30,17 +33,33 @@ const LoginForm = () => {
           <img className="h-[11px]" src={IconEye} alt="eye" />
         </button>
       </div>
-      <div className="w-full flex justify-between mt-[16px] px-[1px]">
+
+      {/* 자동로그인 회원가입 */}
+      <div className="w-full flex justify-between mt-[16px] mb-[24px] px-[1px]">
         {/* 자동로그인 */}
-        <div className="flex gap-[6px] items-center">
-          <img className="w-[18px]" src={IconCheckInactive} alt="checkIcon" />
-          <div className="text-gray-stroke50 font-medium text-[14px]">자동 로그인</div>
+        <div
+          className="flex gap-[6px] items-center cursor-pointer select-none group"
+          onClick={() => setAutoLogin(!autoLogin)}
+        >
+          <img
+            className="w-[18px]"
+            src={autoLogin ? IconCheckActive : IconCheckInactive}
+            alt="checkIcon"
+          />
+          <div
+            className={`text-[14px] font-medium ${
+              autoLogin ? 'text-gray-600' : 'text-gray-stroke50'
+            } group-hover:text-gray-600`}
+          >
+            자동 로그인
+          </div>
         </div>
-        {/* 회원가입버튼 */}
-        <SignUpBtn />
+        {/* 회원가입으로 */}
+        <GotoSignUp />
       </div>
 
       {/* 로그인 버튼 */}
+      <Button />
     </>
   );
 };
