@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 import borderGradientRadius from 'tailwindcss-border-gradient-radius';
+import plugin from 'tailwindcss/plugin';
+
 export default {
   content: ['./index.html', './src/**/*.{js,jsx}'],
   theme: {
@@ -54,53 +56,62 @@ export default {
       boxShadow: {
         custom: '0px 1px 4px 0px rgba(0,0,0,0.1)',
         modal: '0px 30px 80px 0px rgba(0,0,0,0.15)',
+        backgroundImage: {
+          // ✅ 배경용 gd 등록
+          gd: 'linear-gradient(to right, rgb(var(--color-main)), rgb(139, 91, 254))',
+        },
+      },
+      keyframes: {
+        typing: {
+          '0%': {
+            width: '0%',
+            visibility: 'hidden',
+          },
+          '100%': {
+            width: '100%',
+          },
+        },
+        blink: {
+          '50%': {
+            borderColor: 'transparent',
+          },
+          '100%': {
+            borderColor: 'white',
+          },
+        },
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '0.04' }, // 배경 opacity-[4%] 대응
+        },
+        modalIn: {
+          '0%': { opacity: '0', transform: 'scale(0.95)' },
+          '100%': { opacity: '1', transform: 'scale(1)' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-6px)' },
+        },
+      },
+      animation: {
+        typing: 'typing 1.5s steps(16) alternate, blink .7s infinite',
+        fadeIn: 'fadeIn 0.3s ease-out forwards',
+        modalIn: 'modalIn 0.3s ease-out forwards',
+        float: 'float 1.5s ease-in-out infinite',
       },
     },
-    keyframes: {
-      typing: {
-        '0%': {
-          width: '0%',
-          visibility: 'hidden',
-        },
-        '100%': {
-          width: '100%',
-        },
-      },
-      blink: {
-        '50%': {
-          borderColor: 'transparent',
-        },
-        '100%': {
-          borderColor: 'white',
-        },
-      },
-      fadeIn: {
-        '0%': { opacity: '0' },
-        '100%': { opacity: '0.04' }, // 배경 opacity-[4%] 대응
-      },
-      modalIn: {
-        '0%': { opacity: '0', transform: 'scale(0.95)' },
-        '100%': { opacity: '1', transform: 'scale(1)' },
-      },
-      float: {
-        '0%, 100%': { transform: 'translateY(0)' },
-        '50%': { transform: 'translateY(-6px)' },
-      },
-    },
-    animation: {
-      typing: 'typing 1.5s steps(16) alternate, blink .7s infinite',
-      fadeIn: 'fadeIn 0.3s ease-out forwards',
-      modalIn: 'modalIn 0.3s ease-out forwards',
-      float: 'float 1.5s ease-in-out infinite',
-    },
-  },
 
-  plugins: [borderGradientRadius],
-  experimental: {
-    // Tailwind가 className 내부의 동적 표현식을 더 잘 감지하게 해주는 설정
-    classRegex: [
-      ['className="([^"]+)"', 1],
-      ['className={`([^`]+)`', 1],
+    plugins: [
+      borderGradientRadius,
+      plugin(function ({ addUtilities }) {
+        // ✅ 텍스트용 text-gd 등록
+        addUtilities({
+          '.text-gd': {
+            background: 'linear-gradient(to right, rgb(var(--color-main)), rgb(139, 91, 254))',
+            '-webkit-background-clip': 'text',
+            '-webkit-text-fill-color': 'transparent',
+          },
+        });
+      }),
     ],
   },
 };
