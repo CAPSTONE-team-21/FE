@@ -6,8 +6,8 @@ import NotFound from './pages/Notfound';
 import { ChatProvider } from './contexts/ChatContext';
 // import IndexPage from './pages/IndexPage';
 import LoginPage from './pages/LoginPage';
+import SocialLogin from './components/LoginPage/SocialLogin';
 import SignUpPage from './pages/SignUpPage';
-
 function App() {
   return (
     <ChatProvider>
@@ -17,8 +17,7 @@ function App() {
 
         {/* 1. 로그인 */}
         <Route path="/login" element={<LoginPage />} />
-        {/* <Route path="/login/google/callback" element={<GoogleCallback />} />
-        <Route path="/login/kakao/callback" element={<KakaoCallback />} /> */}
+        <Route path="/login/kakao" element={<SocialLogin />} />
 
         {/* 2. 회원가입 */}
         <Route path="/signup" element={<SignUpPage />} />
