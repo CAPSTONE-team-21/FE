@@ -52,6 +52,10 @@ export default {
         bubble: {
           DEFAULT: 'rgb(var(--color-bubble) / <alpha-value>)',
         },
+        kakao: {
+          DEFAULT: 'rgba(254,229,0,1)',
+          text: 'rgba(0,0,0,0.85)',
+        },
       },
       boxShadow: {
         custom: '0px 1px 4px 0px rgba(0,0,0,0.1)',
