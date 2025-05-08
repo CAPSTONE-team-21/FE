@@ -5,7 +5,8 @@ const GotoSignUp = () => {
   return (
     <>
       <div
-        className="text-gray-stroke50 font-medium text-[14px] cursor-pointer hover:text-gray-600"
+        className="text-gray-stroke50 font-medium text-[14px] leading-[1.4] tracking-[-0.025em] cursor-pointer
+         hover:text-gray-600 transition duration-150"
         onClick={() => nav('/signup')}
       >
         회원가입
