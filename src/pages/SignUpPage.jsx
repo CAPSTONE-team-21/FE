@@ -1,6 +1,5 @@
 import Header from '../components/Header';
 import SignUpForm from '../components/SignUpPage/SignUpForm';
-import Button from '../components/Button';
 
 const SignUpPage = () => {
   return (
@@ -15,9 +14,6 @@ const SignUpPage = () => {
           >
             <div className="text-[28px] font-bold mt-[48px]">회원가입</div>
             <SignUpForm />
-            <div className="mb-[48px] w-full">
-              <Button />
-            </div>
           </div>
         </div>
       </div>
