@@ -7,7 +7,7 @@ import { createChatSession, sendChatMessages } from '../../utils/chat';
 import { useNavigate } from 'react-router-dom';
 
 // 채팅 입력창 컨테이너
-const ChatInputBox = ({ sessionId, fetchMessagesAgain }) => {
+const ChatInputBox = ({ sessionId, fetchMessagesAgain, isTypeSelected, isClick }) => {
   const {
     input,
     setInput,
@@ -103,6 +103,7 @@ const ChatInputBox = ({ sessionId, fetchMessagesAgain }) => {
         </div>
         <div className="flex w-full items-center px-[14px] pb-[14px]">
           <TypeSelectorBox
+            isTypeSelected={isTypeSelected}
             sessionMessages={sessionMessages}
             isDropdownOpen={isDropdownOpen}
             setIsDropdownOpen={setIsDropdownOpen}
@@ -110,6 +111,7 @@ const ChatInputBox = ({ sessionId, fetchMessagesAgain }) => {
             setSelectedTypes={setSelectedTypes}
             direction={isDetailPage ? 'up' : 'down'}
             onDelete={onDelete}
+            isClick={isClick}
           />
         </div>
       </div>
