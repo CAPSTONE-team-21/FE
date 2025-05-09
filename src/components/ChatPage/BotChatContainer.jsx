@@ -13,6 +13,7 @@ const BotChatContainer = ({ botMessages, onAnswerComplete }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [showAlternate, setShowAlternate] = useState(false);
   const buttonRefs = useRef([]);
+  const seenSkinTypes = new Set();
 
   const [indicatorStyle, setIndicatorStyle] = useState({ width: 0, left: 0 });
 
@@ -68,20 +69,27 @@ const BotChatContainer = ({ botMessages, onAnswerComplete }) => {
       {/* 피부 타입 선택 */}
       {showAlternate ? (
         <div className="relative flex w-full bg-main-2 rounded-t-[10px]">
-          {botMessages.map((msg, idx) => (
-            <button
-              key={idx}
-              ref={(el) => (buttonRefs.current[idx] = el)}
-              onClick={() => handleFilterSelect(msg.skinType, idx)}
-              className={`
-              z-10 text-[14px] py-[6px] [width:calc((100%)/4)]
-              border-b-2 border-main-buttonFill
-              ${activeType === msg.skinType ? 'text-main font-medium' : 'text-main-buttonStroke hover:text-main-chatFilterHover hover:border-main-typeStroke duration-200'}
-            `}
-            >
-              {SkinTypeLabel[msg.skinType]}
-            </button>
-          ))}
+          {botMessages.map((msg, idx) => {
+            if (seenSkinTypes.has(msg.skinType)) {
+              return null; // 이미 본 타입은 버튼 안 만듦
+            }
+            seenSkinTypes.add(msg.skinType); // 새로운 타입 추가
+
+            return (
+              <button
+                key={idx}
+                ref={(el) => (buttonRefs.current[idx] = el)}
+                onClick={() => handleFilterSelect(msg.skinType, idx)}
+                className={`
+        z-10 text-[14px] py-[6px] [width:calc((100%)/4)]
+        border-b-2 border-main-buttonFill
+        ${activeType === msg.skinType ? 'text-main font-medium' : 'text-main-buttonStroke hover:text-main-chatFilterHover hover:border-main-typeStroke duration-200'}
+      `}
+              >
+                {SkinTypeLabel[msg.skinType]}
+              </button>
+            );
+          })}
 
           {/* 움직이는 강조선 */}
           <span
