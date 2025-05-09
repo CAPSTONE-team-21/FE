@@ -17,6 +17,7 @@ const BotChatContainer = ({ botMessages, onAnswerComplete }) => {
 
   const [indicatorStyle, setIndicatorStyle] = useState({ width: 0, left: 0 });
 
+  // 첫번째 피부 타입
   useEffect(() => {
     if (showAlternate && buttonRefs.current[activeIndex]) {
       const btn = buttonRefs.current[activeIndex];
@@ -27,6 +28,7 @@ const BotChatContainer = ({ botMessages, onAnswerComplete }) => {
     }
   }, [activeIndex, botMessages, showAlternate]);
 
+  // 스크롤 영역
   useEffect(() => {
     if (showAlternate) {
       onAnswerComplete?.(); // ✅ 콜백 실행
@@ -81,10 +83,10 @@ const BotChatContainer = ({ botMessages, onAnswerComplete }) => {
                 ref={(el) => (buttonRefs.current[idx] = el)}
                 onClick={() => handleFilterSelect(msg.skinType, idx)}
                 className={`
-        z-10 text-[14px] py-[6px] [width:calc((100%)/4)]
-        border-b-2 border-main-buttonFill
-        ${activeType === msg.skinType ? 'text-main font-medium' : 'text-main-buttonStroke hover:text-main-chatFilterHover hover:border-main-typeStroke duration-200'}
-      `}
+                z-10 text-[14px] font-medium py-[7px] [width:calc((100%)/4)]
+                border-b-2 border-main-7
+                ${activeType === msg.skinType ? 'text-main font-semibold' : 'text-main-buttonStroke hover:text-main-chatFilterHover hover:border-main-20 duration-200'}
+              `}
               >
                 {SkinTypeLabel[msg.skinType]}
               </button>
@@ -109,10 +111,10 @@ const BotChatContainer = ({ botMessages, onAnswerComplete }) => {
             {botMessages
               .filter((msg) => msg.skinType === activeType)
               .map((msg, idx) => (
-                <div className="h-full w-full py-8 group" key={idx}>
+                <div className="h-full w-full py-9 group" key={idx}>
                   <span className="">{msg.message}</span>
 
-                  <div className="relative top-8 w-full h-[2px] bg-main-typeStroke">
+                  <div className="relative top-9 w-full h-[2px] opacity-40 bg-main-20">
                     {/* 기본 선 위에 겹치는 그라데이션 선 */}
                     <div
                       className="
