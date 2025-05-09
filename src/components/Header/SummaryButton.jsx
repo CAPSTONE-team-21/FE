@@ -1,4 +1,4 @@
-import { IconSummary } from '../../utils/icons';
+import { IconSummaryBlack } from '../../utils/icons';
 // import { useState } from 'react';
 import SessionSummary from './SessionSummary';
 
@@ -11,7 +11,7 @@ const SummaryButton = ({ onClick }) => {
     hover:border-gray-stroke10 hover:shadow-custom
     transition-all duration-200 cursor-pointer"
       >
-        <img className="w-[12px] h-auto" src={IconSummary} alt="filter 아이콘" />
+        <img className="w-[12px] h-auto" src={IconSummaryBlack} alt="filter 아이콘" />
         <div>요약</div>
       </div>
     </div>

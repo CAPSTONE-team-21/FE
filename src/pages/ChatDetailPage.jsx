@@ -41,7 +41,7 @@ const ChatDetailPage = () => {
       {/* 헤더: 고정 */}
       <div>
         <Header onClick={onClick} />
-        <div>{isOpen ? <SessionSummary /> : null}</div>
+        <div>{isOpen ? <SessionSummary onClick={onClick} /> : null}</div>
       </div>
 
       {/* 본문 전체: 헤더 제외 + InputBox 제외 */}
