@@ -1,5 +1,6 @@
 import { ChatContext } from '../contexts/ChatContext';
 import { useLocation } from 'react-router-dom';
+import { IconLogo } from '../utils/icons';
 
 import SidebarToggleButton from './SidebarToggleButton';
 import ChatTitle from '../components/Header/ChatTitle';
@@ -11,13 +12,18 @@ import HeaderLoginButton from './Header/HeaderLoginButton';
 const Header = ({ onClick }) => {
   const location = useLocation();
   const isChatPage = location.pathname.startsWith('/chat');
+  // const isLoggedIn = false;
 
   return (
     <div className="fixed top-0 left-0 w-full h-[64px] bg-white z-40">
       <div className=" mx-auto flex items-center justify-between h-full">
         {/* 왼쪽 버튼 */}
         <div className="px-[20px]">
-          <SidebarToggleButton />
+          {isChatPage ? (
+            <SidebarToggleButton />
+          ) : (
+            <img className="w-10 mx-2" src={IconLogo} alt="" />
+          )}
         </div>
         {/* 조건부렌더링 */}
         <div className="flex w-full mx-auto items-center justify-between pl-[36px]">
