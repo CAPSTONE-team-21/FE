@@ -95,7 +95,6 @@ const ChatInputBox = ({ sessionId, fetchMessagesAgain }) => {
       flex flex-col w-[740px]
       rounded-[25px]
       border-[1.5px] border-gray-stroke05 focus-within:border-gray-stroke07
-      
     "
       >
         <div className="flex w-full p-[10px] border-gray-stroke07">
