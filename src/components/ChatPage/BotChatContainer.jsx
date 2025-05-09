@@ -53,8 +53,8 @@ const BotChatContainer = ({ botMessages }) => {
             스포이드 추출 결과는 다음과 같습니다.
           </span>
         ) : (
-          <span className="ml-2 text-15 font-semibold bg-gradient-to-r from-main to-main-purple bg-clip-text text-transparent">
-            스포이드가 리뷰를 추출 중입니다.
+          <span className="relative ml-2 text-15 font-semibold bg-gradient-to-r from-main to-main-purple bg-clip-text text-transparent overflow-hidden timer-glass opacity-50">
+            스포이드가 리뷰를 추출 중입니다...
           </span>
         )}
       </div>
@@ -88,8 +88,30 @@ const BotChatContainer = ({ botMessages }) => {
         </div>
       ) : null}
 
-      {showAlternate && (
+      {showAlternate ? (
         <div className="group flex flex-col w-full">
+          {/* 챗 답변 렌더링 구간 */}
+          <div className="bg-white font-normal text-gray-stroke70 px-[20px] py-[36px] max-w-[100%] whitespace-pre-line break-words leading-[1.6]">
+            {botMessages
+              .filter((msg) => msg.skinType === activeType)
+              .map((msg, idx) => (
+                <div key={idx}>{msg.message}</div>
+              ))}
+            <div className="relative w-full h-[2px] bg-main-typeStroke">
+              {/* 기본 선 위에 겹치는 그라데이션 선 */}
+              <div
+                className="
+          absolute top-0 left-0 w-full h-full
+          bg-gradient-to-r from-main to-main-purple
+          opacity-0 group-hover:opacity-100
+          transition-opacity duration-500
+          "
+              ></div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="opacity-0 group flex flex-col w-full">
           {/* 챗 답변 렌더링 구간 */}
           <div className="bg-white font-normal text-gray-stroke70 px-[20px] py-[36px] max-w-[100%] whitespace-pre-line break-words leading-[1.6]">
             {botMessages
