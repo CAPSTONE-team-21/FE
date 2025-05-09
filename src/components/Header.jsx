@@ -8,7 +8,7 @@ import SummaryButton from './Header/SummaryButton';
 import HeaderProfile from './Header/HeaderProfile';
 import HeaderLoginButton from './Header/HeaderLoginButton';
 
-const Header = () => {
+const Header = ({ onClick }) => {
   const location = useLocation();
   const isChatPage = location.pathname.startsWith('/chat');
 
@@ -26,7 +26,7 @@ const Header = () => {
 
           <div className="flex ml-auto gap-[16px]">
             {/* <FilterButton /> */}
-            {isChatPage && <SummaryButton isHeader={true} />}
+            {isChatPage && <SummaryButton isHeader={true} onClick={onClick} />}
             {isChatPage && <HeaderLoginButton isHeader={true} />}
           </div>
         </div>
