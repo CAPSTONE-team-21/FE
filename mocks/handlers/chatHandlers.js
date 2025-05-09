@@ -4,7 +4,7 @@ import { sessionMessagesMap } from '../dummy/sessionMessagesMap';
 import { sessionSummaries } from '../dummy/sessionSummaries';
 let initSessionId = 3;
 
-export const handlers = [
+export const chatHandlers = [
   // 전체 세션 목록 조회 (사이드바, 메인용)
   http.get('/api/chat/sessions', () => {
     return HttpResponse.json(chatSessions_allView);
