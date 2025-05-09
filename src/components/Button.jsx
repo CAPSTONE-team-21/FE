@@ -1,10 +1,21 @@
-const Button = () => {
+const Button = ({ text, onClick, disabled, isActive }) => {
   return (
-    <>
-      <button className="w-full h-[50px] tracking-[-0.025em] bg-login rounded-[8px] text-white hover:bg-gd">
-        버튼입니다
-      </button>
-    </>
+    <button
+      className={`relative w-full h-[50px] tracking-[-0.025em] rounded-[8px] text-white overflow-hidden
+        ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
+        bg-login
+      `}
+      onClick={onClick}
+      disabled={disabled}
+    >
+      <span className="relative z-10">{text}</span>
+      <div
+        className={`absolute inset-0 rounded-[8px] bg-gd transition-opacity duration-200
+          ${isActive ? 'opacity-100' : 'opacity-0'}
+        `}
+      />
+    </button>
   );
 };
+
 export default Button;
