@@ -26,6 +26,7 @@ import IconStarY from '../assets/icon-starY.svg';
 import IconStarG from '../assets/icon-starG.svg';
 import IconLogo from '../assets/icon-logo.svg';
 import IconUser from '../assets/icon-user.svg';
+import IconTail from '../assets/icon-tail.svg';
 
 export {
   IconCancel,
@@ -54,4 +55,5 @@ export {
   IconStarG,
   IconLogo,
   IconUser,
+  IconTail,
 };
