@@ -1,8 +1,15 @@
 import Header from '../components/Header';
 import ChatInputBox from '../components/ChatPage/ChatInputBox';
 import SideBar from '../components/SideBar/SideBar';
+import { useState } from 'react';
 
 const ChatMainPage = () => {
+  const [isClick, setIsClick] = useState(true);
+
+  const isTypeSelected = () => {
+    setIsClick(false);
+  };
+
   return (
     <div className="flex flex-col h-screen w-screen items-center">
       <Header />
@@ -31,7 +38,7 @@ const ChatMainPage = () => {
         </div>
 
         {/* 메인 페이지는 sessionId 없기 때문에 Null */}
-        <ChatInputBox sessionId={null} />
+        <ChatInputBox sessionId={null} isTypeSelected={isTypeSelected} isClick={isClick} />
       </div>
     </div>
   );
