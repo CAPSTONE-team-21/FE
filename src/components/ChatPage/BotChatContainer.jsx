@@ -8,7 +8,7 @@ const SkinTypeLabel = {
   COMBINED: '복합성',
 };
 
-const BotChatContainer = ({ botMessages }) => {
+const BotChatContainer = ({ botMessages, onAnswerComplete }) => {
   const [activeType, setActiveType] = useState(botMessages[0].skinType);
   const [activeIndex, setActiveIndex] = useState(0);
   const [showAlternate, setShowAlternate] = useState(false);
@@ -17,14 +17,20 @@ const BotChatContainer = ({ botMessages }) => {
   const [indicatorStyle, setIndicatorStyle] = useState({ width: 0, left: 0 });
 
   useEffect(() => {
-    if (buttonRefs.current[activeIndex]) {
+    if (showAlternate && buttonRefs.current[activeIndex]) {
       const btn = buttonRefs.current[activeIndex];
       setIndicatorStyle({
         width: btn.offsetWidth,
         left: btn.offsetLeft,
       });
     }
-  }, [activeIndex, botMessages]);
+  }, [activeIndex, botMessages, showAlternate]);
+
+  useEffect(() => {
+    if (showAlternate) {
+      onAnswerComplete?.(); // ✅ 콜백 실행
+    }
+  }, [showAlternate]);
 
   if (!botMessages || botMessages.length === 0) {
     return null;
@@ -88,15 +94,17 @@ const BotChatContainer = ({ botMessages }) => {
         </div>
       ) : null}
 
-      {showAlternate ? (
-        <div className="group flex flex-col w-full">
-          {/* 챗 답변 렌더링 구간 */}
-          <div className="bg-white font-normal text-gray-stroke70 px-[20px] py-[36px] max-w-[100%] whitespace-pre-line break-words leading-[1.6]">
-            {botMessages
-              .filter((msg) => msg.skinType === activeType)
-              .map((msg, idx) => (
-                <div key={idx}>{msg.message}</div>
-              ))}
+      {
+        showAlternate ? (
+          <div className="group flex flex-col w-full">
+            {/* 챗 답변 렌더링 구간 */}
+            <div className="bg-white font-normal text-gray-stroke70 px-[20px] py-[36px] max-w-[100%] whitespace-pre-line break-words leading-[1.6]">
+              {botMessages
+                .filter((msg) => msg.skinType === activeType)
+                .map((msg, idx) => (
+                  <div key={idx}>{msg.message}</div>
+                ))}
+            </div>
             <div className="relative w-full h-[2px] bg-main-typeStroke">
               {/* 기본 선 위에 겹치는 그라데이션 선 */}
               <div
@@ -109,31 +117,30 @@ const BotChatContainer = ({ botMessages }) => {
               ></div>
             </div>
           </div>
-        </div>
-      ) : (
-        <div className="opacity-0 group flex flex-col w-full">
-          {/* 챗 답변 렌더링 구간 */}
-          <div className="bg-white font-normal text-gray-stroke70 px-[20px] py-[36px] max-w-[100%] whitespace-pre-line break-words leading-[1.6]">
-            {botMessages
-              .filter((msg) => msg.skinType === activeType)
-              .map((msg, idx) => (
-                <div key={idx}>{msg.message}</div>
-              ))}
-          </div>
+        ) : null
+        // <div className="opacity-0 group flex flex-col w-full">
+        //   {/* 챗 답변 렌더링 구간 */}
+        //   <div className="bg-white font-normal text-gray-stroke70 px-[20px] py-[36px] max-w-[100%] whitespace-pre-line break-words leading-[1.6]">
+        //     {botMessages
+        //       .filter((msg) => msg.skinType === activeType)
+        //       .map((msg, idx) => (
+        //         <div key={idx}>{msg.message}</div>
+        //       ))}
+        //   </div>
 
-          <div className="relative w-full h-[2px] bg-main-typeStroke">
-            {/* 기본 선 위에 겹치는 그라데이션 선 */}
-            <div
-              className="
-          absolute top-0 left-0 w-full h-full
-          bg-gradient-to-r from-main to-main-purple
-          opacity-0 group-hover:opacity-100
-          transition-opacity duration-500
-          "
-            ></div>
-          </div>
-        </div>
-      )}
+        //   <div className="relative w-full h-[2px] bg-main-typeStroke">
+        //     {/* 기본 선 위에 겹치는 그라데이션 선 */}
+        //     <div
+        //       className="
+        //   absolute top-0 left-0 w-full h-full
+        //   bg-gradient-to-r from-main to-main-purple
+        //   opacity-0 group-hover:opacity-100
+        //   transition-opacity duration-500
+        //   "
+        //     ></div>
+        //   </div>
+        // </div>
+      }
     </div>
   );
 };
