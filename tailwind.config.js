@@ -52,6 +52,7 @@ export default {
       },
       boxShadow: {
         custom: '0px 1px 4px 0px rgba(0,0,0,0.1)',
+        modal: '0px 30px 80px 0px rgba(0,0,0,0.1)',
       },
     },
     keyframes: {
