@@ -81,11 +81,16 @@ export default {
         '0%': { opacity: '0', transform: 'scale(0.95)' },
         '100%': { opacity: '1', transform: 'scale(1)' },
       },
+      float: {
+        '0%, 100%': { transform: 'translateY(0)' },
+        '50%': { transform: 'translateY(-6px)' },
+      },
     },
     animation: {
       typing: 'typing 1.5s steps(16) alternate, blink .7s infinite',
       fadeIn: 'fadeIn 0.3s ease-out forwards',
       modalIn: 'modalIn 0.3s ease-out forwards',
+      float: 'float 1.5s ease-in-out infinite',
     },
   },
 
