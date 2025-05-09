@@ -73,9 +73,19 @@ export default {
           borderColor: 'white',
         },
       },
+      fadeIn: {
+        '0%': { opacity: '0' },
+        '100%': { opacity: '0.04' }, // 배경 opacity-[4%] 대응
+      },
+      modalIn: {
+        '0%': { opacity: '0', transform: 'scale(0.95)' },
+        '100%': { opacity: '1', transform: 'scale(1)' },
+      },
     },
     animation: {
       typing: 'typing 1.5s steps(16) alternate, blink .7s infinite',
+      fadeIn: 'fadeIn 0.3s ease-out forwards',
+      modalIn: 'modalIn 0.3s ease-out forwards',
     },
   },
 
