@@ -55,7 +55,7 @@ const BotChatContainer = ({ botMessages, onAnswerComplete }) => {
   return (
     <div className="flex flex-col w-full">
       {/* 스포이드 추출 결과 안내 문구 */}
-      <div className="flex items-center py-4">
+      <div className="flex items-center py-4 mt-4">
         <img className="w-7" src={IconLogo} alt="" />
         {showAlternate ? (
           <span className="ml-2 text-15 font-semibold bg-gradient-to-r from-main to-main-purple bg-clip-text text-transparent">
@@ -105,13 +105,13 @@ const BotChatContainer = ({ botMessages, onAnswerComplete }) => {
       ) : null}
 
       {showAlternate && (
-        <div className=" flex flex-col w-full">
+        <div className=" flex flex-col w-full mb-6">
           {/* 챗 답변 렌더링 구간 */}
           <div className="bg-white font-normal text-gray-stroke70  max-w-[100%] whitespace-pre-line break-words leading-[1.6]">
             {botMessages
               .filter((msg) => msg.skinType === activeType)
               .map((msg, idx) => (
-                <div className="h-full w-full py-9 group" key={idx}>
+                <div className="h-full w-full py-9 px-3  group" key={idx}>
                   <span className="">{msg.message}</span>
 
                   <div className="relative top-9 w-full h-[2px] opacity-40 bg-main-20">
