@@ -1,6 +1,7 @@
 import { HttpResponse, http } from 'msw';
 import chatSessions_allView from '../dummy/chatSessions_allView.json';
 import { sessionMessagesMap } from '../dummy/sessionMessagesMap';
+import { sessionSummaries } from '../dummy/sessionSummaries';
 let initSessionId = 3;
 
 export const handlers = [
@@ -88,5 +89,19 @@ export const handlers = [
     }
 
     return HttpResponse.json(messages);
+  }),
+
+  http.get('/api/chat/sessions/:id/summary', ({ params }) => {
+    const { id } = params;
+
+    // 세션별 메시지 저장소에서 조회 (직접 구현 필요)
+    const dummySummary = sessionSummaries[id];
+    if (!dummySummary) {
+      return HttpResponse.json(
+        { dummySummary: '해당 세션의 메시지를 찾을 수 없습니다.' },
+        { status: 404 }
+      );
+    }
+    return HttpResponse.json({ summary: dummySummary });
   }),
 ];
