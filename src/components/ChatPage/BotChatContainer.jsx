@@ -53,7 +53,7 @@ const BotChatContainer = ({ botMessages, onAnswerComplete }) => {
   }, []);
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="pl-2 flex flex-col w-full">
       {/* 스포이드 추출 결과 안내 문구 */}
       <div className="flex items-center py-4 mt-4">
         <img className="w-7" src={IconLogo} alt="" />
@@ -105,23 +105,23 @@ const BotChatContainer = ({ botMessages, onAnswerComplete }) => {
       ) : null}
 
       {showAlternate && (
-        <div className=" flex flex-col w-full mb-6">
+        <div className=" flex flex-col w-full mb-6 ">
           {/* 챗 답변 렌더링 구간 */}
           <div className="bg-white font-normal text-gray-stroke70  max-w-[100%] whitespace-pre-line break-words leading-[1.6]">
             {botMessages
               .filter((msg) => msg.skinType === activeType)
               .map((msg, idx) => (
-                <div className="h-full w-full py-9 px-3  group" key={idx}>
+                <div className="h-full w-full py-9  group" key={idx}>
                   <span className="">{msg.message}</span>
 
-                  <div className="relative top-9 w-full h-[2px] opacity-40 bg-main-20">
+                  <div className="relative top-9 w-full h-[1.5px] opacity-30 bg-main-20">
                     {/* 기본 선 위에 겹치는 그라데이션 선 */}
                     <div
                       className="
                       absolute top-0 left-0 w-full h-full
                       bg-gradient-to-r from-main to-main-purple
                       opacity-0 group-hover:opacity-100
-                      transition-opacity duration-500
+                      transition-opacity duration-1000
                       "
                     ></div>
                   </div>
