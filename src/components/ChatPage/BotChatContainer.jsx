@@ -94,53 +94,32 @@ const BotChatContainer = ({ botMessages, onAnswerComplete }) => {
         </div>
       ) : null}
 
-      {
-        showAlternate ? (
-          <div className="group flex flex-col w-full">
-            {/* 챗 답변 렌더링 구간 */}
-            <div className="bg-white font-normal text-gray-stroke70 px-[20px] py-[36px] max-w-[100%] whitespace-pre-line break-words leading-[1.6]">
-              {botMessages
-                .filter((msg) => msg.skinType === activeType)
-                .map((msg, idx) => (
-                  <div key={idx}>{msg.message}</div>
-                ))}
-            </div>
-            <div className="relative w-full h-[2px] bg-main-typeStroke">
-              {/* 기본 선 위에 겹치는 그라데이션 선 */}
-              <div
-                className="
-          absolute top-0 left-0 w-full h-full
-          bg-gradient-to-r from-main to-main-purple
-          opacity-0 group-hover:opacity-100
-          transition-opacity duration-500
-          "
-              ></div>
-            </div>
-          </div>
-        ) : null
-        // <div className="opacity-0 group flex flex-col w-full">
-        //   {/* 챗 답변 렌더링 구간 */}
-        //   <div className="bg-white font-normal text-gray-stroke70 px-[20px] py-[36px] max-w-[100%] whitespace-pre-line break-words leading-[1.6]">
-        //     {botMessages
-        //       .filter((msg) => msg.skinType === activeType)
-        //       .map((msg, idx) => (
-        //         <div key={idx}>{msg.message}</div>
-        //       ))}
-        //   </div>
+      {showAlternate && (
+        <div className=" flex flex-col w-full">
+          {/* 챗 답변 렌더링 구간 */}
+          <div className="bg-white font-normal text-gray-stroke70  max-w-[100%] whitespace-pre-line break-words leading-[1.6]">
+            {botMessages
+              .filter((msg) => msg.skinType === activeType)
+              .map((msg, idx) => (
+                <div className="h-full w-full py-8 group" key={idx}>
+                  <span className="">{msg.message}</span>
 
-        //   <div className="relative w-full h-[2px] bg-main-typeStroke">
-        //     {/* 기본 선 위에 겹치는 그라데이션 선 */}
-        //     <div
-        //       className="
-        //   absolute top-0 left-0 w-full h-full
-        //   bg-gradient-to-r from-main to-main-purple
-        //   opacity-0 group-hover:opacity-100
-        //   transition-opacity duration-500
-        //   "
-        //     ></div>
-        //   </div>
-        // </div>
-      }
+                  <div className="relative top-8 w-full h-[2px] bg-main-typeStroke">
+                    {/* 기본 선 위에 겹치는 그라데이션 선 */}
+                    <div
+                      className="
+                      absolute top-0 left-0 w-full h-full
+                      bg-gradient-to-r from-main to-main-purple
+                      opacity-0 group-hover:opacity-100
+                      transition-opacity duration-500
+                      "
+                    ></div>
+                  </div>
+                </div>
+              ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

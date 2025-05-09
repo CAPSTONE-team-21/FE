@@ -57,11 +57,23 @@ export const handlers = [
     const types =
       skinTypes && skinTypes.length > 0 ? skinTypes : ['DRY', 'OILY', 'SENSITIVE', 'COMBINED'];
 
-    const responses = types.map((type) => ({
-      sender: 'BOT',
-      skinType: type,
-      message: `[MOCK:${type}] "${message}"에 대한 응답입니다.`,
-    }));
+    const responses = types.flatMap((type) => [
+      {
+        sender: 'BOT',
+        skinType: type,
+        message: `[MOCK:${type}] "${message}"에 대한 첫번째 응답입니다.`,
+      },
+      {
+        sender: 'BOT',
+        skinType: type,
+        message: `[MOCK:${type}] "${message}"에 대한 두번째 응답입니다.`,
+      },
+      {
+        sender: 'BOT',
+        skinType: type,
+        message: `[MOCK:${type}] "${message}"에 대한 세번째 응답입니다.`,
+      },
+    ]);
     // 🟡 여기 추가해야 함
     sessionMessagesMap[id] = sessionMessagesMap[id] || [];
     sessionMessagesMap[id].push({
