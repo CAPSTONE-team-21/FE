@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { IconCheckNoBgActive, IconCheckNoBgInactive } from '../../utils/icons';
+import { IconEye, IconCheckNoBgActive, IconCheckNoBgInactive } from '../../utils/icons';
 
-const UserPassWord = () => {
+const UserPassWord = ({ value, onChange }) => {
   // 비밀번호
-  const [password, setPassword] = useState('');
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(true);
 
@@ -26,10 +25,10 @@ const UserPassWord = () => {
   };
 
   const handlePasswordChange = (e) => {
-    const value = e.target.value;
-    setPassword(value);
-    setIsPasswordValid(validatePassword(value));
-    setIsPasswordMatch(value === confirmPassword);
+    const inputValue = e.target.value;
+    onChange(inputValue);
+    setIsPasswordValid(validatePassword(inputValue));
+    setIsPasswordMatch(inputValue === confirmPassword);
   };
 
   // 비밀번호 확인
@@ -37,10 +36,13 @@ const UserPassWord = () => {
   const [isPasswordMatch, setIsPasswordMatch] = useState(true);
 
   const handleConfirmPasswordChange = (e) => {
-    const value = e.target.value;
-    setConfirmPassword(value);
-    setIsPasswordMatch(password === value);
+    const confirmValue = e.target.value;
+    setConfirmPassword(confirmValue);
+    setIsPasswordMatch(value === confirmValue);
   };
+
+  //비밀번호 보기
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <>
@@ -55,14 +57,17 @@ const UserPassWord = () => {
               transition duration-200`}
         >
           <input
-            type="password"
-            value={password}
+            type={showPassword ? 'text' : 'password'}
+            value={value}
             onChange={handlePasswordChange}
             onFocus={() => setIsPasswordFocused(true)}
             onBlur={() => setIsPasswordFocused(false)}
             placeholder="비밀번호를 입력해주세요."
             className="w-full outline-none placeholder-gray-stroke30 placeholder:font-medium"
           />
+          <button type="button" onClick={() => setShowPassword(!showPassword)}>
+            <img className="h-[11px]" src={IconEye} alt="eye" />
+          </button>
         </div>
 
         {isPasswordFocused && (
@@ -70,11 +75,11 @@ const UserPassWord = () => {
             {/* 조건 1 */}
             <div
               className={`flex items-center gap-[4px] ${
-                validateCondition1(password) ? 'text-main' : 'text-gray-stroke30'
+                validateCondition1(value) ? 'text-main' : 'text-gray-stroke30'
               }`}
             >
               <img
-                src={validateCondition1(password) ? IconCheckNoBgActive : IconCheckNoBgInactive}
+                src={validateCondition1(value) ? IconCheckNoBgActive : IconCheckNoBgInactive}
                 alt="check"
                 className="w-[8.8px]"
               />
@@ -83,11 +88,11 @@ const UserPassWord = () => {
             {/* 조건 2 */}
             <div
               className={`flex items-center gap-[4px] ${
-                validateCondition2(password) ? 'text-main' : 'text-gray-stroke30'
+                validateCondition2(value) ? 'text-main' : 'text-gray-stroke30'
               }`}
             >
               <img
-                src={validateCondition2(password) ? IconCheckNoBgActive : IconCheckNoBgInactive}
+                src={validateCondition2(value) ? IconCheckNoBgActive : IconCheckNoBgInactive}
                 alt="check"
                 className="w-[8.8px]"
               />
@@ -108,12 +113,15 @@ const UserPassWord = () => {
               transition duration-200`}
         >
           <input
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             value={confirmPassword}
             onChange={handleConfirmPasswordChange}
             placeholder="비밀번호를 재입력해주세요."
             className="w-full outline-none placeholder-gray-stroke30 placeholder:font-medium"
           />
+          <button type="button" onClick={() => setShowPassword(!showPassword)}>
+            <img className="h-[11px]" src={IconEye} alt="eye" />
+          </button>
         </div>
         {!isPasswordMatch && (
           <div className="text-rederror text-[14px] font-medium leading-[1.4]">

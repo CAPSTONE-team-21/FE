@@ -4,34 +4,35 @@ import UserName from './UserName';
 import UserPassWord from './UserPassWord';
 import Button from '../Button';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext'; // ✅ context에서 가져오기
 
 const SignUpForm = () => {
   const navigate = useNavigate();
+  const { signup, errorMsg, loading } = useAuth(); // ✅ context 훅 사용
+
+  const [nickname, setNickname] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const handleSignupSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const { accessToken, refreshToken } = await signup(nickname, email, password);
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('refreshToken', refreshToken);
-      // 👉 회원가입 후 이동
+    const success = await signup(nickname, email, password);
+    if (success) {
+      alert('회원가입이 완료되었습니다!');
       navigate('/login');
-    } catch (error) {
-      if (error.response && error.response.status === 401) {
-        alert('이메일 또는 비밀번호가 틀렸습니다.');
-      } else {
-        alert('로그인 중 오류가 발생했습니다.');
-      }
     }
   };
-
   return (
     <>
       <div className="flex flex-col gap-[20px] w-full">
-        <UserName />
-        <EmailVerify />
-        <UserPassWord />
+        <UserName value={nickname} onChange={setNickname} />
+        <EmailVerify value={email} onChange={setEmail} />
+        <UserPassWord value={password} onChange={setPassword} />
+        {errorMsg && (
+          <div className="text-rederror text-[14px] font-medium leading-[1.4]">{errorMsg}</div>
+        )}
         <div className="mt-[28px] mb-[48px] w-full">
-          <Button text="회원가입" onClick={handleSignupSubmit} />
+          <Button text="회원가입" onClick={handleSignupSubmit} disabled={loading} />
         </div>
       </div>
     </>

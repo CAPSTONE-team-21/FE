@@ -1,17 +1,14 @@
 import { useState } from 'react';
 
-const UserName = () => {
-  // 사용자명
-  const [userName, setUserName] = useState('');
+const UserName = ({ value, onChange }) => {
   const [isUserNameValid, setIsUserNameValid] = useState(true);
 
   const handleUserNameChange = (e) => {
-    const value = e.target.value;
-    setUserName(value);
+    const inputValue = e.target.value;
+    onChange(inputValue); // 부모 컴포넌트(SignUpForm)로 값 전달
 
-    // 사용자명 정규식 검사
     const regex = /^[가-힣a-zA-Z0-9]{2,8}$/;
-    setIsUserNameValid(regex.test(value));
+    setIsUserNameValid(regex.test(inputValue));
   };
   return (
     <>
@@ -21,7 +18,7 @@ const UserName = () => {
         <input
           type="text"
           placeholder="한글, 영어, 숫자 포함 2~8글자"
-          value={userName}
+          value={value}
           onChange={handleUserNameChange}
           className={`w-full outline-none h-[51px]
               px-[16px] py-[14px]
