@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { IconEye, IconCheckNoBgActive, IconCheckNoBgInactive } from '../../utils/icons';
 
-const UserPassWord = ({ value, onChange }) => {
+const UserPassWord = ({ value, onChange, setPasswordConfirm }) => {
   // 비밀번호
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(true);
@@ -39,6 +39,7 @@ const UserPassWord = ({ value, onChange }) => {
     const confirmValue = e.target.value;
     setConfirmPassword(confirmValue);
     setIsPasswordMatch(value === confirmValue);
+    setPasswordConfirm(confirmValue);
   };
 
   //비밀번호 보기

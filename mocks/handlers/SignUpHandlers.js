@@ -1,22 +1,31 @@
 // msw/handlers.js
 import { http, HttpResponse } from 'msw';
 
+console.log('[회원가입 핸들러 실행]');
 export const SignUpHandlers = [
   // ✅ 회원가입
+
   http.post('/api/auth/signup', async ({ request }) => {
     const body = await request.json();
     console.log('📨 [회원가입] 요청 바디:', body);
-    const { email, nickname, password } = body;
+    const { email, nickname, password, passwordConfirm } = body;
 
-    if (!email || !nickname || !password) {
+    if (!email || !nickname || !password || !passwordConfirm) {
+      console.log('[MSW] 필수값 누락 조건문 실행됨');
       return HttpResponse.json(
-        { message: '이메일, 닉네임, 비밀번호는 필수입니다.' },
+        { message: '이메일, 닉네임, 비밀번호, 비밀번호 확인은 필수입니다.' },
         { status: 400 }
       );
     }
 
     if (email === 'existing@example.com') {
       return HttpResponse.json({ message: '이미 존재하는 이메일입니다.' }, { status: 400 });
+    }
+    if (password !== passwordConfirm) {
+      return HttpResponse.json(
+        { message: '비밀번호와 비밀번호 확인이 일치하지 않습니다.' },
+        { status: 400 }
+      );
     }
 
     return HttpResponse.json(

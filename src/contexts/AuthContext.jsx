@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
       } else if (error.response.status === 404) {
         alert('존재하지 않는 사용자입니다.');
       } else {
-        alert('회원가입 중 알 수 없는 오류가 발생했습니다.');
+        alert('로그인 중 알 수 없는 오류가 발생했습니다.');
       }
       throw error;
     } finally {
@@ -36,25 +36,21 @@ export const AuthProvider = ({ children }) => {
   };
 
   // 회원가입 함수
-  const signup = async (nickname, email, password) => {
+  const signup = async (nickname, email, password, passwordConfirm) => {
     setLoading(true);
     setErrorMsg('');
     try {
-      const { accessToken, refreshToken } = await signupAPI(nickname, email, password);
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('refreshToken', refreshToken);
-      return true; // 성공 여부 반환
-    } catch (error) {
-      if (error.response) {
-        if (error.response.status === 400) {
-          setErrorMsg(error.response.data.message || '이미 존재하는 이메일입니다.');
-        } else {
-          setErrorMsg('회원가입 중 오류가 발생했습니다.');
-        }
+      const result = await signupAPI(nickname, email, password, passwordConfirm);
+
+      if (result.success) {
+        const { accessToken, refreshToken } = result.data;
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
+        return { success: true };
       } else {
-        setErrorMsg('네트워크 오류');
+        setErrorMsg(result.error);
+        return { success: false, error: result.error };
       }
-      return false;
     } finally {
       setLoading(false);
     }
