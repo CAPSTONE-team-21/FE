@@ -58,11 +58,11 @@ const BotChatContainer = ({ botMessages, onAnswerComplete }) => {
       <div className="flex items-center py-4 ">
         <img className="w-7" src={IconLogo} alt="" />
         {showAlternate ? (
-          <span className="ml-2 text-15 font-semibold bg-gradient-to-r from-main to-main-purple bg-clip-text text-transparent">
+          <span className="ml-2 text-16 font-medium bg-gradient-to-r from-main to-main-purple bg-clip-text text-transparent">
             SSPOID 추출 결과는 다음과 같습니다.
           </span>
         ) : (
-          <span className="relative ml-2 text-15 font-semibold bg-gradient-to-r from-main to-main-purple bg-clip-text text-transparent overflow-hidden timer-glass opacity-50">
+          <span className="relative ml-2 text-16 font-medium bg-gradient-to-r from-main to-main-purple bg-clip-text text-transparent overflow-hidden timer-glass opacity-50">
             SSPOID가 리뷰를 추출 중입니다...
           </span>
         )}
@@ -107,7 +107,7 @@ const BotChatContainer = ({ botMessages, onAnswerComplete }) => {
       {showAlternate && (
         <div className=" flex flex-col w-full mb-6 ">
           {/* 챗 답변 렌더링 구간 */}
-          <div className="bg-white font-normal text-gray-stroke70  max-w-[100%] whitespace-pre-line break-words leading-[1.6]">
+          <div className="bg-white font-normal text-gray-stroke70  max-w-[100%] whitespace-pre-line break-words leading-[1.8]">
             {botMessages
               .filter((msg) => msg.skinType === activeType)
               .map((msg, idx) => (
