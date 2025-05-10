@@ -55,15 +55,15 @@ const BotChatContainer = ({ botMessages, onAnswerComplete }) => {
   return (
     <div className="pl-2 flex flex-col w-full">
       {/* 스포이드 추출 결과 안내 문구 */}
-      <div className="flex items-center py-4 mt-4">
+      <div className="flex items-center py-4 ">
         <img className="w-7" src={IconLogo} alt="" />
         {showAlternate ? (
           <span className="ml-2 text-15 font-semibold bg-gradient-to-r from-main to-main-purple bg-clip-text text-transparent">
-            스포이드 추출 결과는 다음과 같습니다.
+            SSPOID 추출 결과는 다음과 같습니다.
           </span>
         ) : (
           <span className="relative ml-2 text-15 font-semibold bg-gradient-to-r from-main to-main-purple bg-clip-text text-transparent overflow-hidden timer-glass opacity-50">
-            스포이드가 리뷰를 추출 중입니다...
+            SSPOID가 리뷰를 추출 중입니다...
           </span>
         )}
       </div>
@@ -111,10 +111,10 @@ const BotChatContainer = ({ botMessages, onAnswerComplete }) => {
             {botMessages
               .filter((msg) => msg.skinType === activeType)
               .map((msg, idx) => (
-                <div className="h-full w-full py-9  group" key={idx}>
-                  <span className="">{msg.message}</span>
+                <div className="h-full w-full py-6  group" key={idx}>
+                  <span className="block h-full w-full px-5">{msg.message}</span>
 
-                  <div className="relative top-9 w-full h-[1.5px] opacity-30 bg-main-20">
+                  <div className="relative top-6 w-full h-[1.5px] bg-main-20">
                     {/* 기본 선 위에 겹치는 그라데이션 선 */}
                     <div
                       className="
