@@ -3,7 +3,7 @@ import api from './api';
 // 회원가입
 // 네 개의 매개변수 받음
 export const signup = async (nickname, email, password) => {
-  console.log('signup 함수 호출됨');
+  console.log('[🔥 signupAPI 함수 호출됨]');
   try {
     const { data } = await api.post('/api/signup', {
       nickname,
@@ -22,9 +22,6 @@ export const signup = async (nickname, email, password) => {
   } catch (error) {
     console.error('회원가입 실패:', error);
 
-    if (error.response && error.response.status === 400) {
-      return { success: false, error: '이미 존재하는 이메일입니다.' };
-    }
     if (error.response && error.response.data && error.response.data.message) {
       return { success: false, error: error.response.data.message };
     }

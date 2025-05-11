@@ -16,6 +16,9 @@ const EmailVerify = ({ value, onChange }) => {
     if (result.success) {
       setShowCodeInput(true);
       alert('이메일 인증 메일이 전송되었습니다!');
+    } else {
+      setMessage(result.message);
+      alert(result.message); // 또는 여기서도 경고
     }
   };
 
@@ -34,15 +37,18 @@ const EmailVerify = ({ value, onChange }) => {
 
       {/* 이메일 입력 */}
       <div
-        className="w-full flex items-center pl-[16px] pr-[6px] py-[5px] gap-[12px]
-        border border-gray-stroke08 rounded-[8px] tracking-[-0.025em]
-        focus-within:border focus-within:border-main
-        transition duration-200"
+        className={`w-full flex items-center pl-[16px] pr-[6px] py-[5px] gap-[12px]
+  rounded-[8px] tracking-[-0.025em]
+  transition duration-200
+  ${message ? 'border border-rederror' : 'border border-gray-stroke08 focus-within:border-main'}`}
       >
         <input
           type="email"
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={(e) => {
+            onChange(e.target.value); // 상위 상태 업데이트
+            setMessage(''); // 🔥 입력 바뀌면 메시지 초기화
+          }}
           placeholder="이메일을 입력해주세요."
           className="w-full outline-none flex-1 placeholder-gray-stroke30 placeholder:font-medium disabled:bg-transparent"
           disabled={emailVerified}
@@ -64,13 +70,12 @@ const EmailVerify = ({ value, onChange }) => {
           {emailVerified ? '인증 완료' : '인증 요청'}
         </button>
       </div>
-
       {/* 인증 코드 입력 */}
       {showCodeInput && !emailVerified && (
         <div
           className="w-full flex items-center pl-[16px] pr-[6px] py-[5px] gap-[12px]
-          border border-gray-stroke08 rounded-[8px] tracking-[-0.025em]
-          focus-within:border focus-within:border-main
+        border border-gray-stroke08 rounded-[8px] tracking-[-0.025em]
+        focus-within:border focus-within:border-main
           transition duration-200"
         >
           <input
@@ -82,9 +87,9 @@ const EmailVerify = ({ value, onChange }) => {
           />
           <button
             className={`text-[14px] font-semibold tracking-[-0.025em]
-            px-[14px] py-[11px] rounded-[5px] h-[39px]
-            transition-colors duration-100
-            ${code.length > 0 ? 'bg-main text-white' : 'bg-gray-stroke02 text-gray-stroke30'}`}
+              px-[14px] py-[11px] rounded-[5px] h-[39px]
+              transition-colors duration-100
+              ${code.length > 0 ? 'bg-main text-white' : 'bg-gray-stroke02 text-gray-stroke30'}`}
             onClick={handleVerifyCode}
             disabled={code.length === 0}
           >
@@ -92,9 +97,6 @@ const EmailVerify = ({ value, onChange }) => {
           </button>
         </div>
       )}
-
-      {/* 메시지 출력 */}
-      {message && <div className="text-[13px] font-medium mt-[4px]">{message}</div>}
     </div>
   );
 };

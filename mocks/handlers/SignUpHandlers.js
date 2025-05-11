@@ -8,22 +8,12 @@ export const SignUpHandlers = [
   http.post('/api/signup', async ({ request }) => {
     const body = await request.json();
     console.log('📨 [회원가입] 요청 바디:', body);
-    const { email, nickname, password, passwordConfirm } = body;
+    const { email, nickname, password } = body;
 
-    if (!email || !nickname || !password || !passwordConfirm) {
+    if (!email || !nickname || !password) {
       console.log('[MSW] 필수값 누락 조건문 실행됨');
       return HttpResponse.json(
-        { message: '이메일, 닉네임, 비밀번호, 비밀번호 확인은 필수입니다.' },
-        { status: 400 }
-      );
-    }
-
-    if (email === 'existing@example.com') {
-      return HttpResponse.json({ message: '이미 존재하는 이메일입니다.' }, { status: 400 });
-    }
-    if (password !== passwordConfirm) {
-      return HttpResponse.json(
-        { message: '비밀번호와 비밀번호 확인이 일치하지 않습니다.' },
+        { message: '이메일, 닉네임, 비밀번호는 필수입니다.' },
         { status: 400 }
       );
     }
@@ -39,6 +29,10 @@ export const SignUpHandlers = [
     const body = await request.json();
     console.log('📨 [이메일 인증 요청] 요청 바디:', body);
     const { email } = body;
+
+    if (email === 'existing@example.com') {
+      return HttpResponse.json({ message: '이미 존재하는 이메일입니다.' }, { status: 400 });
+    }
 
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return HttpResponse.json(
