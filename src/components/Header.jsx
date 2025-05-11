@@ -18,9 +18,9 @@ const Header = ({ onClick }) => {
 
   return (
     <div className="fixed top-0 left-0 w-full h-[64px] bg-white z-40">
-      <div className=" mx-auto flex items-center justify-between h-full">
+      <div className=" flex items-center justify-between h-full w-full">
         {/* 왼쪽 버튼 */}
-        <div className="px-[20px]">
+        <div className="px-[30px]">
           {isChatPage ? (
             <SidebarToggleButton />
           ) : (
