@@ -5,7 +5,7 @@ import api from './api';
 export const signup = async (nickname, email, password) => {
   console.log('signup 함수 호출됨');
   try {
-    const { data } = await api.post('/api/auth/signup', {
+    const { data } = await api.post('/api/signup', {
       nickname,
       email,
       password,
@@ -36,7 +36,7 @@ export const signup = async (nickname, email, password) => {
 export const sendEmailCode = async (email) => {
   try {
     // post시 email을 JSON body로 보냅니다: { email: "입력한 이메일" }
-    const res = await api.post('/api/auth/email/send', { email });
+    const res = await api.post('/api/email/send', { email });
     // 요청 성공 시: 응답 결과에서 message를 꺼내서, 성공 플래그(success: true)와 함께 객체로 반환합니다.
     // 예: { success: true, message: "인증 코드가 발송되었습니다." }
     return { success: true, message: res.data.message };
@@ -51,7 +51,7 @@ export const sendEmailCode = async (email) => {
 // 이메일 인증 코드 확인
 export const verifyEmailCode = async (email, code) => {
   try {
-    const res = await api.post('/api/auth/email/verify', { email, code });
+    const res = await api.post('/api/email/verify', { email, code });
 
     return { success: true, message: res.data.message }; // 예: "이메일 인증 성공!"
   } catch (error) {

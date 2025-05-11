@@ -5,7 +5,7 @@ console.log('[회원가입 핸들러 실행]');
 export const SignUpHandlers = [
   // ✅ 회원가입
 
-  http.post('/api/auth/signup', async ({ request }) => {
+  http.post('/api/signup', async ({ request }) => {
     const body = await request.json();
     console.log('📨 [회원가입] 요청 바디:', body);
     const { email, nickname, password, passwordConfirm } = body;
@@ -35,7 +35,7 @@ export const SignUpHandlers = [
   }),
 
   // ✅ 이메일 인증 코드 발송
-  http.post('/api/auth/email/send', async ({ request }) => {
+  http.post('/api/email/send', async ({ request }) => {
     const body = await request.json();
     console.log('📨 [이메일 인증 요청] 요청 바디:', body);
     const { email } = body;
@@ -51,7 +51,7 @@ export const SignUpHandlers = [
   }),
 
   // ✅ 이메일 인증 코드 확인
-  http.post('/api/auth/email/verify', async ({ request }) => {
+  http.post('/api/email/verify', async ({ request }) => {
     const body = await request.json();
     console.log('📨 [이메일 인증 확인] 요청 바디:', body);
     const { email, code } = body;

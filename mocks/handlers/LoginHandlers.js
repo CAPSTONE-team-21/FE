@@ -3,7 +3,7 @@ import { http, HttpResponse } from 'msw';
 
 export const loginHandlers = [
   // 회원가입
-  http.post('/api/auth/signup', async ({ request }) => {
+  http.post('/api/signup', async ({ request }) => {
     const body = await request.json();
     console.log('📨 회원가입 요청 바디:', body); // ✅ 추가
     const { email } = body;
@@ -21,7 +21,7 @@ export const loginHandlers = [
   }),
 
   // 로그인
-  http.post('/api/auth/login', async ({ request }) => {
+  http.post('/api/login', async ({ request }) => {
     const { email, password } = await request.json();
 
     if (email === 'unknown') {
