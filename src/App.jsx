@@ -5,7 +5,7 @@ import MyPage from './pages/MyPage';
 import NotFound from './pages/Notfound';
 import { ChatProvider } from './contexts/ChatContext';
 // import IndexPage from './pages/IndexPage';
-import LoginPage from './pages/LoginPage';
+// import LoginPage from './pages/LoginPage';
 // import SignUpPage from './pages/SignUpPage';
 
 function App() {
@@ -27,9 +27,9 @@ function App() {
         {/* 4. 404 Not Found */}
         <Route path="*" element={<NotFound />} />
 
-        {/* 5. 인증 */}
-        <Route path="/login" element={<LoginPage />} />
-        {/* <Route path="/signup" element={<SignUpPage />} />
+        {/* 5. 인증
+       <Route path="/login" element={<LoginPage />} />
+       <Route path="/signup" element={<SignUpPage />} />
        <Route path="/login/google/callback" element={<GoogleCallback />} />
        <Route path="/login/kakao/callback" element={<KakaoCallback />} /> */}
 
