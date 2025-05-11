@@ -49,7 +49,7 @@ const SignUpForm = () => {
         )}
         <div className="mt-[28px] mb-[48px] w-full">
           <Button
-            text="회원가입"
+            text="회원가입 완료"
             onClick={handleSignupSubmit}
             disabled={!nickname || !email || !isPasswordValidAll}
             isActive={nickname && email && isPasswordValidAll}
