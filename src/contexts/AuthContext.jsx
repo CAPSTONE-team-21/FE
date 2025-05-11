@@ -1,6 +1,7 @@
 // src/contexts/AuthContext.jsx
 import { createContext, useContext, useState } from 'react';
 import { login as loginAPI } from '../utils/login'; // ✅ utils 함수 사용
+import { kakaoLogin as kakaoLoginAPI } from '../utils/login';
 import { signup as signupAPI } from '../utils/signUp';
 
 const AuthContext = createContext();
@@ -35,6 +36,34 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // 카카오 간편로그인 함수
+  const kakaoLogin = async (code) => {
+    setLoading(true);
+    try {
+      const result = await kakaoLoginAPI(code);
+
+      if (result.success) {
+        const { accessToken, refreshToken, kakao_account } = result.data;
+
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
+        setIsLoggedIn(true);
+
+        // 닉네임이나 이메일이 있으면 유저정보 저장
+        const nickname = kakao_account?.profile?.nickname || '';
+        const email = kakao_account?.email || '';
+        setUser({ email, nickname });
+      } else {
+        setErrorMsg(result.error);
+      }
+    } catch (err) {
+      console.error('카카오 로그인 실패', err);
+      setErrorMsg('카카오 로그인 중 오류 발생');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // 회원가입 함수
   const signup = async (nickname, email, password, passwordConfirm) => {
     setLoading(true);
@@ -57,7 +86,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, user, errorMsg, loading, login, signup }}>
+    <AuthContext.Provider
+      value={{ isLoggedIn, user, errorMsg, loading, login, kakaoLogin, signup }}
+    >
       {children}
     </AuthContext.Provider>
   );
