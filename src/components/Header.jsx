@@ -12,6 +12,7 @@ import HeaderLoginButton from './Header/HeaderLoginButton';
 const Header = ({ onClick }) => {
   const location = useLocation();
   const isChatPage = location.pathname.startsWith('/chat');
+  const isSignUpPage = location.pathname.startsWith('/signup');
   // const isLoggedIn = false;
 
   return (
@@ -34,6 +35,7 @@ const Header = ({ onClick }) => {
             {/* <FilterButton /> */}
             {isChatPage && <SummaryButton isHeader={true} onClick={onClick} />}
             {isChatPage && <HeaderLoginButton isHeader={true} />}
+            {isSignUpPage && <HeaderLoginButton isHeader={true} />}
           </div>
         </div>
         {/* 여기까지 */}
