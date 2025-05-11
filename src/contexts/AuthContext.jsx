@@ -65,11 +65,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   // 회원가입 함수
-  const signup = async (nickname, email, password, passwordConfirm) => {
+  const signup = async (nickname, email, password) => {
     setLoading(true);
     setErrorMsg('');
     try {
-      const result = await signupAPI(nickname, email, password, passwordConfirm);
+      const result = await signupAPI(nickname, email, password);
 
       if (result.success) {
         const { accessToken, refreshToken } = result.data;
