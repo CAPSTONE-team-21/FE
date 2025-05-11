@@ -16,7 +16,7 @@ const ChatMainPage = () => {
       <SideBar />
       {/* 시작 문구 */}
 
-      <div className="flex flex-col justify-center items-center h-full w-[740px] ">
+      <div className="flex flex-col justify-center items-center h-[90%] w-[740px] ">
         <div className="flex text-[32px] text-center ">
           <div className="text-[32px] mb-8 text-center">
             {/* 두 번째 줄: 스포이드로 추출하세요 */}
