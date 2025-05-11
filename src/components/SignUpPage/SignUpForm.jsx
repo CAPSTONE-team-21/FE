@@ -8,12 +8,12 @@ import { useAuth } from '../../contexts/AuthContext'; // ✅ context에서 가�
 
 const SignUpForm = () => {
   const navigate = useNavigate();
-  const { signup, errorMsg, loading } = useAuth(); // ✅ context 훅 사용
+  const { signup, errorMsg } = useAuth(); // ✅ context 훅 사용
 
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [isPasswordValidAll, setIsPasswordValidAll] = useState(false);
 
   const handleSignupSubmit = async (e) => {
     e.preventDefault();
@@ -21,13 +21,11 @@ const SignUpForm = () => {
     console.log('nickname:', nickname);
     console.log('email:', email);
     console.log('password:', password);
-    console.log('passwordConfirm:', passwordConfirm);
-    if (!nickname || !email || !password || !passwordConfirm) {
+    if (!nickname || !email || !password || !isPasswordValidAll) {
       alert('모든 항목을 입력해주세요.');
       return;
     }
-    console.log('passwordConfirm:', passwordConfirm);
-    const result = await signup(nickname, email, password, passwordConfirm); // ✅ success와 error 받음
+    const result = await signup(nickname, email, password); // ✅ success와 error 받음
 
     if (result.success) {
       alert('회원가입이 완료되었습니다!');
@@ -44,13 +42,18 @@ const SignUpForm = () => {
         <UserPassWord
           value={password}
           onChange={setPassword}
-          setPasswordConfirm={setPasswordConfirm}
+          setIsPasswordValidAll={setIsPasswordValidAll}
         />
         {errorMsg && (
           <div className="text-rederror text-[14px] font-medium leading-[1.4]">{errorMsg}</div>
         )}
         <div className="mt-[28px] mb-[48px] w-full">
-          <Button text="회원가입" onClick={handleSignupSubmit} disabled={loading} />
+          <Button
+            text="회원가입"
+            onClick={handleSignupSubmit}
+            disabled={!nickname || !email || !isPasswordValidAll}
+            isActive={nickname && email && isPasswordValidAll}
+          />
         </div>
       </div>
     </>

@@ -1,66 +1,74 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { IconEye, IconCheckNoBgActive, IconCheckNoBgInactive } from '../../utils/icons';
 
-const UserPassWord = ({ value, onChange, setPasswordConfirm }) => {
-  // 비밀번호
+const UserPassWord = ({ value, onChange, setIsPasswordValidAll }) => {
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
-  const [isPasswordValid, setIsPasswordValid] = useState(true);
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  // 입력값 없으면 errorborder안뜨게
+  const isInputStarted = value.length > 0;
+
+  // 조건 1: 영문/숫자/특수문자 중 2가지 이상 포함
   const validateCondition1 = (value) => {
     const hasLetter = /[a-zA-Z]/.test(value);
     const hasNumber = /[0-9]/.test(value);
     const hasSpecial = /[^a-zA-Z0-9]/.test(value);
-    const count = [hasLetter, hasNumber, hasSpecial].filter(Boolean).length >= 2;
-    return count;
+    return [hasLetter, hasNumber, hasSpecial].filter(Boolean).length >= 2;
   };
 
+  // 조건 2: 공백 제외 8~32자
   const validateCondition2 = (value) => {
-    const lengthValid =
-      value.replace(/\s/g, '').length >= 8 && value.replace(/\s/g, '').length <= 32;
-    return lengthValid;
+    const trimmed = value.replace(/\s/g, '');
+    return trimmed.length >= 8 && trimmed.length <= 32;
   };
 
+  // 비밀번호 전체 유효성 검사
   const validatePassword = (value) => {
     return validateCondition1(value) && validateCondition2(value);
   };
 
-  const handlePasswordChange = (e) => {
-    const inputValue = e.target.value;
-    onChange(inputValue);
-    setIsPasswordValid(validatePassword(inputValue));
-    setIsPasswordMatch(inputValue === confirmPassword);
-  };
+  const isPasswordValid = validatePassword(value);
+  const isPasswordMatch = value === confirmPassword;
+  const isValidPasswordAll = isPasswordValid && isPasswordMatch;
 
-  // 비밀번호 확인
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [isPasswordMatch, setIsPasswordMatch] = useState(true);
-
-  const handleConfirmPasswordChange = (e) => {
-    const confirmValue = e.target.value;
-    setConfirmPassword(confirmValue);
-    setIsPasswordMatch(value === confirmValue);
-    setPasswordConfirm(confirmValue);
-  };
-
-  //비밀번호 보기
-  const [showPassword, setShowPassword] = useState(false);
+  // 👉 외부로 '비밀번호가 유효한지'만 전달
+  useEffect(() => {
+    if (typeof setIsPasswordValidAll === 'function') {
+      setIsPasswordValidAll(isValidPasswordAll);
+    }
+  }, [value, confirmPassword]);
 
   return (
     <>
-      {/* 비밀번호 */}
+      {/* 비밀번호 입력 */}
       <div className="flex flex-col gap-[10px]">
         <div className="text-[15px] font-bold text-gray">비밀번호</div>
         <div
-          className={`w-full flex items-center px-[16px] py-[14px] gap-[12px] tracking-[-0.025em]
-              border ${isPasswordValid ? 'border-gray-stroke08' : 'border-rederror'}
-              rounded-[8px] h-[51px]
-              ${isPasswordValid ? 'focus-within:border-main' : 'focus-within:border-rederror'}
-              transition duration-200`}
+          className={`w-full flex items-center px-[16px] py-[14px] gap-[12px]
+            border ${
+              !isInputStarted
+                ? 'border-gray-stroke08'
+                : isPasswordValid
+                  ? 'border-gray-stroke08'
+                  : 'border-rederror'
+            }
+            rounded-[8px] h-[51px]
+            ${
+              !isInputStarted
+                ? 'focus-within:border-main'
+                : isPasswordValid
+                  ? 'focus-within:border-main'
+                  : 'focus-within:border-rederror'
+            }
+
+            transition duration-200`}
         >
           <input
             type={showPassword ? 'text' : 'password'}
             value={value}
-            onChange={handlePasswordChange}
+            onChange={(e) => onChange(e.target.value)}
             onFocus={() => setIsPasswordFocused(true)}
             onBlur={() => setIsPasswordFocused(false)}
             placeholder="비밀번호를 입력해주세요."
@@ -73,7 +81,6 @@ const UserPassWord = ({ value, onChange, setPasswordConfirm }) => {
 
         {isPasswordFocused && (
           <div className="flex flex-col gap-[4px] mt-[4px] text-[13px]">
-            {/* 조건 1 */}
             <div
               className={`flex items-center gap-[4px] ${
                 validateCondition1(value) ? 'text-main' : 'text-gray-stroke30'
@@ -86,7 +93,6 @@ const UserPassWord = ({ value, onChange, setPasswordConfirm }) => {
               />
               <div>영문/숫자/특수문자 중 2가지 이상 포함</div>
             </div>
-            {/* 조건 2 */}
             <div
               className={`flex items-center gap-[4px] ${
                 validateCondition2(value) ? 'text-main' : 'text-gray-stroke30'
@@ -107,20 +113,20 @@ const UserPassWord = ({ value, onChange, setPasswordConfirm }) => {
       <div className="flex flex-col gap-[10px]">
         <div className="text-[15px] font-bold text-gray">비밀번호 확인</div>
         <div
-          className={`w-full flex items-center px-[16px] py-[14px] gap-[12px] tracking-[-0.025em]
-              border ${isPasswordMatch ? 'border-gray-stroke08' : 'border-rederror'}
-              rounded-[8px] h-[51px]
-              ${isPasswordMatch ? 'focus-within:border-main' : 'focus-within:border-rederror'}
-              transition duration-200`}
+          className={`w-full flex items-center px-[16px] py-[14px] gap-[12px]
+            border ${isPasswordMatch ? 'border-gray-stroke08' : 'border-rederror'}
+            rounded-[8px] h-[51px]
+            ${isPasswordMatch ? 'focus-within:border-main' : 'focus-within:border-rederror'}
+            transition duration-200`}
         >
           <input
-            type={showPassword ? 'text' : 'password'}
+            type={showConfirmPassword ? 'text' : 'password'}
             value={confirmPassword}
-            onChange={handleConfirmPasswordChange}
+            onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="비밀번호를 재입력해주세요."
             className="w-full outline-none placeholder-gray-stroke30 placeholder:font-medium"
           />
-          <button type="button" onClick={() => setShowPassword(!showPassword)}>
+          <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
             <img className="h-[11px]" src={IconEye} alt="eye" />
           </button>
         </div>
