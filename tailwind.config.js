@@ -60,13 +60,13 @@ export default {
           DEFAULT: 'rgba(255,88,88,1)',
         },
       },
+      backgroundImage: {
+        // ✅ 배경용 gd 등록
+        gd: 'linear-gradient(to right, rgb(var(--color-main)), rgb(139, 91, 254))',
+      },
       boxShadow: {
         custom: '0px 1px 4px 0px rgba(0,0,0,0.1)',
         modal: '0px 30px 80px 0px rgba(0,0,0,0.15)',
-        backgroundImage: {
-          // ✅ 배경용 gd 등록
-          gd: 'linear-gradient(to right, rgb(var(--color-main)), rgb(139, 91, 254))',
-        },
       },
       keyframes: {
         typing: {
