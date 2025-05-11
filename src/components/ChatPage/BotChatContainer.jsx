@@ -112,7 +112,7 @@ const BotChatContainer = ({ botMessages, onAnswerComplete }) => {
               .filter((msg) => msg.skinType === activeType)
               .map((msg, idx) => (
                 <div className="h-full w-full py-6  group" key={idx}>
-                  <span className="block h-full w-full px-5">{msg.message}</span>
+                  <span className="block h-full w-full px-6">{msg.message}</span>
 
                   <div className="relative top-6 w-full h-[1.5px] bg-main-20">
                     {/* 기본 선 위에 겹치는 그라데이션 선 */}
