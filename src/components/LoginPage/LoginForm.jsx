@@ -23,6 +23,7 @@ const LoginForm = () => {
       await login(email, password); // context 함수 사용
       navigate('/chat'); // 로그인 성공 시 이동
     } catch (err) {
+      console.error(err);
       // errorMsg는 context에서 관리 → 여기선 별도 처리 필요 없음
     }
   };
