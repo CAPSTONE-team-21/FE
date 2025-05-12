@@ -7,26 +7,33 @@ import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
 import { ChatProvider } from './contexts/ChatContext';
 // import IndexPage from './pages/IndexPage';
-// import LoginPage from './pages/LoginPage';
-// import SignUpPage from './pages/SignUpPage';
-
+import LoginPage from './pages/LoginPage';
+import SignUpPage from './pages/SignUpPage';
+import KakaoCallback from './pages/KakaoCallback';
 function App() {
   return (
     <ChatProvider>
       <Routes>
-        {/* 1. 메인 (대시보드 or 초기화면 - 챗봇 세션 목록) */}
+        {/* 0. 메인 (대시보드 or 초기화면 - 챗봇 세션 목록) */}
         <Route path="/" element={<ChatMainPage />} />
 
-        {/* 2. 챗봇 */}
+        {/* 1. 로그인 */}
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/login/kakao" element={<KakaoCallback />} />
+
+        {/* 2. 회원가입 */}
+        <Route path="/signup" element={<SignUpPage />} />
+
+        {/* 3. 챗봇 */}
         <Route path="/chat">
           <Route index element={<ChatMainPage />} />
           <Route path=":sessionId" element={<ChatDetailPage />} />
         </Route>
 
-        {/* 3. 마이페이지 */}
+        {/* 4. 마이페이지 */}
         <Route path="/mypage" element={<MyPage />} />
 
-        {/* 4. 404 Not Found */}
+        {/* 404 Not Found */}
         <Route path="*" element={<NotFound />} />
 
         {/* {/* 5. 인증 */}
