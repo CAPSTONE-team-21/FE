@@ -17,6 +17,7 @@
     "react-router-dom": "^7.4.1",
     "react-textarea-autosize": "^8.5.9",
     "tailwindcss-border-gradient-radius": "^3.0.1",
+    "typewriter-effect": "^2.22.0",
     "uuid": "^11.1.0"
   },
   "devDependencies": {

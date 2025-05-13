@@ -7,8 +7,7 @@ import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
 import { ChatProvider } from './contexts/ChatContext';
 // import IndexPage from './pages/IndexPage';
-import LoginPage from './pages/LoginPage';
-import SignUpPage from './pages/SignUpPage';
+
 import KakaoCallback from './pages/KakaoCallback';
 function App() {
   return (

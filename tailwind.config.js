@@ -98,12 +98,18 @@ export default {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-6px)' },
         },
+        blinkFade: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0' },
+        },
       },
       animation: {
-        typing: 'typing 1.5s steps(16) alternate, blink .7s infinite',
+        typing: 'typing 1s steps(16) alternate, blink .4s infinite',
         fadeIn: 'fadeIn 0.3s ease-out forwards',
         modalIn: 'modalIn 0.3s ease-out forwards',
         float: 'float 1.5s ease-in-out infinite',
+
+        blinkFade: 'blinkFade 1s ease-in-out infinite',
       },
     },
 
