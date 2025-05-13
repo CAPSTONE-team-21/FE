@@ -1,12 +1,12 @@
 [
   {
     "sessionId": 1,
-    "title": "기본 세션",
+    "title": "1",
     "isBookmark": false
   },
   {
     "sessionId": 2,
-    "title": "나의 스킨케어 챗",
+    "title": "2",
     "isBookmark": true
   }
 ]
