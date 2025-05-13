@@ -1,6 +1,7 @@
 import { ChatContext } from '../contexts/ChatContext';
 import { useLocation } from 'react-router-dom';
 import { IconLogo } from '../utils/icons';
+import { useAuth } from '../contexts/AuthContext';
 
 import SidebarToggleButton from './SidebarToggleButton';
 import ChatTitle from '../components/Header/ChatTitle';
@@ -15,7 +16,8 @@ const Header = ({ onClick }) => {
   const isLoginPage = location.pathname.startsWith('/login');
 
   // 추후에 로그인 정보 저장할 것
-  const isLoggedIn = true;
+  const { isLoggedIn, user } = useAuth();
+  console.log(isLoggedIn);
 
   return (
     <div className="fixed top-0 left-0 w-full h-[64px] bg-white z-40">
