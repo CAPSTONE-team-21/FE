@@ -65,8 +65,9 @@ export default {
         gd: 'linear-gradient(to right, rgb(var(--color-main)), rgb(139, 91, 254))',
       },
       boxShadow: {
-        custom: '0px 1px 4px 0px rgba(0,0,0,0.1)',
         modal: '0px 30px 80px 0px rgba(0,0,0,0.15)',
+        custom: '0px 1px 4px 0px rgba(0,0,0,0.1)',
+        dropDown: '0px 0px 10px 0px rgba(0,0,0,0.03)',
       },
       keyframes: {
         typing: {
