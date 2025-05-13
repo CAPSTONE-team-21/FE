@@ -28,14 +28,14 @@ const ChatMainPage = () => {
             <div className="flex whitespace-nowrap text-[32px] leading-[32px]">
               <div className="flex w-max">
                 <div className="flex overflow-hidden whitespace-nowrap text-glass border-r-main">
-                  <div className="text-[32px] text-main font-bold text-glass w-[125px]">
+                  <div className="text-[32px] text-main font-bold text-glass min-w-[130px] max-w-[150px]">
                     <Typewriter
                       options={{
                         strings: ['스포이드', 'SSPOID'],
                         autoStart: true,
                         loop: true,
                         cursor: '|', // ✅ 커서 명시
-                        cursorClassName: 'text-[#4952FA] animate-blink ', // ✅ 커서에도 같은 스타일 적용
+                        cursorClassName: 'font-semibold text-[#4952FA] animate-blink ', // ✅ 커서에도 같은 스타일 적용
                         skipAddStyles: false, // ✅ 기본 애니메이션 유지
                       }}
                     />
