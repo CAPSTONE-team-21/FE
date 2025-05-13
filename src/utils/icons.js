@@ -33,9 +33,11 @@ import IconProfile from '../assets/icon-profile.svg';
 import Logo from '../assets/logo-SSPOID.svg';
 import KakaoLogin from '../assets/kakao_login_medium_wide.png';
 import KakaoLoginL from '../assets/kakao_login_large_wide.png';
+import IconCancelRed from '../assets/icon-cancelred.svg';
 
 export {
   IconCancel,
+  IconCancelRed,
   IconCheckActive,
   IconCheckInactive,
   IconCheckNoBgActive,

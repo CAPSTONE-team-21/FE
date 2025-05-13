@@ -163,4 +163,21 @@ export const chatHandlers = [
     }
     return HttpResponse.json({ summary: dummySummary });
   }),
+
+  // 세션 삭제
+  http.delete('/api/chat/sessions/:id', ({ params }) => {
+    const sessionId = Number(params.id);
+
+    if (isNaN(sessionId)) {
+      return HttpResponse.json({ message: 'ID 형식이 잘못되었습니다.' }, { status: 400 });
+    }
+
+    const index = chatSessions_allView.findIndex((s) => s.sessionId === sessionId);
+    if (index === -1) {
+      return HttpResponse.json({ message: '세션을 찾을 수 없습니다.' }, { status: 404 });
+    }
+
+    chatSessions_allView.splice(index, 1); // 삭제
+    return HttpResponse.json({ message: '세션이 삭제되었습니다.' }, { status: 200 });
+  }),
 ];
