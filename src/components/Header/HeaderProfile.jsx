@@ -1,16 +1,23 @@
 import { useState } from 'react';
 import { IconAccount } from '../../utils/icons';
 import { IconLogout } from '../../utils/icons';
-import DropDownItem from './DropDownItem';
+import DropDownItem from '../DropDownItem';
+import { useAuth } from '../../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
   const [accountClick, setAccountClick] = useState(false);
+  const { logout } = useAuth();
+  const nav = useNavigate();
 
   const isClick = () => {
     setAccountClick(!accountClick);
   };
 
-  const handleLogout = () => {};
+  const handleLogout = () => {
+    logout();
+    nav(`/`);
+  };
 
   return (
     <div className="relative flex">
@@ -21,7 +28,7 @@ const Profile = () => {
         <img src={IconAccount} alt="profile" />
       </div>
 
-      <div className="absolute p-1 w-fit right-0 top-full mt-2 z-50 rounded-[10px] border border-gray-stroke03 shadow-dropDown">
+      <div className="absolute p-1 w-fit right-0 top-full mt-1 z-50 rounded-[10px] border border-gray-stroke03 shadow-dropDown">
         {accountClick && (
           <DropDownItem
             icon={IconLogout}
