@@ -3,10 +3,11 @@ import ChatMainPage from './pages/ChatMainPage';
 import ChatDetailPage from './pages/ChatDetailPage';
 import MyPage from './pages/MyPage';
 import NotFound from './pages/Notfound';
-import { ChatProvider } from './contexts/ChatContext';
-// import IndexPage from './pages/IndexPage';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
+import { ChatProvider } from './contexts/ChatContext';
+// import IndexPage from './pages/IndexPage';
+
 import KakaoCallback from './pages/KakaoCallback';
 function App() {
   return (
@@ -33,6 +34,12 @@ function App() {
 
         {/* 404 Not Found */}
         <Route path="*" element={<NotFound />} />
+
+        {/* {/* 5. 인증 */}
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        {/* <Route path="/login/google/callback" element={<GoogleCallback />} /> */}
+        {/* <Route path="/login/kakao/callback" element={<KakaoCallback />} /> */}
 
         {/* 6. 비회원 제한 처리 페이지 (예: 횟수 제한 안내) */}
         {/* <Route path="/guest-limit" element={<GuestLimitPage />} /> */}
