@@ -73,7 +73,7 @@ const ChatTitleItem = ({ session, isSelected }) => {
       className={`
         flex items-center justify-between
         px-[10px] py-[8px] rounded-[10px] text-gray/80
-         cursor-pointer
+         cursor-pointer gap-[12px]
         ${isSelected ? 'bg-gray-stroke04' : 'hover:bg-gray-stroke02'}
       `}
       onClick={handleClick}
@@ -91,11 +91,11 @@ const ChatTitleItem = ({ session, isSelected }) => {
             setIsEditing(false);
             setInputValue(session.title);
           }}
-          className="text-[15px] font-medium leading-[1.4] truncate overflow-hidden whitespace-nowrap"
+          className="text-[15px] leading-[1.4] truncate overflow-hidden whitespace-nowrap"
         />
       </div>
 
-      <BookMark />
+      <BookMark session={session} />
     </div>
   );
 };
