@@ -24,11 +24,7 @@ const Header = ({ onClick }) => {
       <div className=" flex items-center justify-between h-full w-full">
         {/* 왼쪽 버튼 */}
         <div className="px-[30px]">
-          {isChatPage ? (
-            <SidebarToggleButton />
-          ) : (
-            <img className="w-10 mx-2" src={IconLogo} alt="" />
-          )}
+          {isChatPage ? <SidebarToggleButton /> : <img className="w-12" src={IconLogo} alt="" />}
         </div>
         {/* 조건부렌더링 */}
         <div className="flex w-full mx-auto items-center justify-between pl-[36px]">
