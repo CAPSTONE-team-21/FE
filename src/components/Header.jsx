@@ -14,7 +14,8 @@ const Header = ({ onClick }) => {
   const isChatPage = location.pathname.startsWith('/chat');
   const isLoginPage = location.pathname.startsWith('/login');
 
-  // const isLoggedIn = false;
+  // 추후에 로그인 정보 저장할 것
+  const isLoggedIn = true;
 
   return (
     <div className="fixed top-0 left-0 w-full h-[64px] bg-white z-40">
@@ -35,12 +36,15 @@ const Header = ({ onClick }) => {
           <div className="flex ml-auto gap-[16px]">
             {/* <FilterButton /> */}
             {isChatPage && <SummaryButton isHeader={true} onClick={onClick} />}
-            {!isLoginPage && <HeaderLoginButton isHeader={true} />}
+            {!isLoginPage &&
+              (isLoggedIn ? (
+                <HeaderProfile isHeader={true} />
+              ) : (
+                <HeaderLoginButton isHeader={true} />
+              ))}
           </div>
         </div>
         {/* 여기까지 */}
-        {/* 추후에 로그인 했을 시, 안 했을 시 렌더링 다르게 할 것 */}
-        {/* {isLoggedIn ? <HeaderProfile /> : <LoginButton />} */}
 
         <div className="ml-auto pr-[26px]">{/* <HeaderProfile /> */}</div>
       </div>
