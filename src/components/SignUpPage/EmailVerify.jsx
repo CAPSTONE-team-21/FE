@@ -50,7 +50,7 @@ const EmailVerify = ({ value, onChange }) => {
             setMessage(''); // 🔥 입력 바뀌면 메시지 초기화
           }}
           placeholder="이메일을 입력해주세요."
-          className="w-full outline-none flex-1 placeholder-gray-stroke30 placeholder:font-medium disabled:bg-transparent"
+          className="w-full outline-none flex-1 placeholder-gray-stroke30 disabled:bg-transparent"
           disabled={emailVerified}
         />
         <button
