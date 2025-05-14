@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-import borderGradientRadius from 'tailwindcss-border-gradient-radius';
+
 import plugin from 'tailwindcss/plugin';
 
 export default {
@@ -115,7 +115,6 @@ export default {
     },
 
     plugins: [
-      borderGradientRadius,
       plugin(function ({ addUtilities }) {
         // ✅ 텍스트용 text-gd 등록
         addUtilities({
