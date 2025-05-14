@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { IconLogo } from '../../utils/icons';
 import { useChat } from '../../contexts/ChatContext';
+import personaProfiles from '../../constants/personaProfiles';
 
 const SkinTypeLabel = {
   DRY: '건성',
@@ -118,14 +119,21 @@ const BotChatContainer = ({ botMessages, onAnswerComplete, blockId }) => {
           <div className="bg-white font-normal text-gray-stroke70 max-w-[100%] whitespace-pre-line break-words leading-[1.8]">
             {botMessages
               .filter((msg) => msg.skinType === activeType)
-              .map((msg, idx) => (
-                <div className="h-full w-full py-6 group" key={idx}>
-                  <span className="block h-full w-full px-6">{msg.message}</span>
-                  <div className="relative top-6 w-full h-[1.5px] bg-main-20">
-                    <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-main to-main-purple opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+              .map((msg, idx) => {
+                const persona = personaProfiles[msg.skinType]?.[idx] || ''; // ✅ 이 줄 추가
+
+                return (
+                  <div className="h-full w-full py-6 group" key={idx}>
+                    {/* 페르소나 설명 */}
+                    <p className="px-6 mb-2 text-main text-sm font-semibold">{persona}</p>
+                    {/* 봇 응답 메시지 */}
+                    <span className="block h-full w-full px-6">{msg.message}</span>
+                    <div className="relative top-6 w-full h-[1.5px] bg-main-20">
+                      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-main to-main-purple opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
           </div>
         </div>
       )}
