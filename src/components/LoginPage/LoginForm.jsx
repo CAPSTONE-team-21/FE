@@ -37,7 +37,7 @@ const LoginForm = () => {
         placeholder="아이디를 입력해주세요."
         onChange={(e) => setEmail(e.target.value)}
         className="w-full outline-none
-        px-[16px] py-[14px] tracking-[-0.025em]
+        px-[16px] py-[12px] tracking-[-0.025em]
         border border-gray-stroke08 rounded-t-[8px] border-b-transparent
         focus:border focus:border-main
         placeholder-gray-stroke30 placeholder:font-medium"
@@ -45,7 +45,7 @@ const LoginForm = () => {
 
       {/* 비밀번호 */}
       <div
-        className="w-full flex items-center px-[16px] py-[14px] gap-[12px] tracking-[-0.025em]
+        className="w-full flex items-center px-[16px] py-[12px] gap-[12px] tracking-[-0.025em]
       border border-gray-stroke08 rounded-b-[8px]
       focus-within:border focus-within:border-main
       transition duration-200"
