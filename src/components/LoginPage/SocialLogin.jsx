@@ -21,7 +21,11 @@ const SocialLogin = () => {
       </div>
 
       <div onClick={handleKakaoLogin}>
-        <img className="w-full cursor-pointer" src={KakaoLoginL} alt="kakaologin" />
+        <img
+          className="w-full cursor-pointer border border-kakao rounded-[8px]"
+          src={KakaoLoginL}
+          alt="kakaologin"
+        />
       </div>
     </div>
   );
