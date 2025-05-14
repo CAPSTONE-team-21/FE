@@ -125,7 +125,7 @@ const BotChatContainer = ({ botMessages, onAnswerComplete, blockId }) => {
                 return (
                   <div className="h-full w-full py-6 group" key={idx}>
                     {/* 페르소나 설명 */}
-                    <p className="px-6 mb-2 text-main text-sm font-semibold">{persona}</p>
+                    <div className="px-4 py-2 w-full text-main text-sm font-medium ">{persona}</div>
                     {/* 봇 응답 메시지 */}
                     <span className="block h-full w-full px-6">{msg.message}</span>
                     <div className="relative top-6 w-full h-[1.5px] bg-main-20">
