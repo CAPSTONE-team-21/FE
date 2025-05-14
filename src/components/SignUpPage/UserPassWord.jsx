@@ -80,7 +80,7 @@ const UserPassWord = ({ value, onChange, setIsPasswordValidAll }) => {
         </div>
 
         {isPasswordFocused && (
-          <div className="flex flex-col font-medium gap-[4px] mt-[2px] text-[13px]">
+          <div className="flex flex-col font-medium gap-[4px] text-[13px]">
             <div
               className={`flex items-center gap-[6px] ${
                 validateCondition1(value) ? 'text-main' : 'text-gray-stroke30'
