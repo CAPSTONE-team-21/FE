@@ -18,7 +18,7 @@ export const ChatProvider = ({ children }) => {
     'DRY',
     'OILY',
     'SENSITIVE',
-    'COMBINED', // ✅ 선택할 수 있는 전체 타입 목록
+    'COMBINATION', // ✅ 선택할 수 있는 전체 타입 목록
   ]);
 
   const [revealedBotBlocks, setRevealedBotBlocks] = useState({});
