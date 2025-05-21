@@ -1,5 +1,5 @@
 import { ChatContext } from '../contexts/ChatContext';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { IconLogo } from '../utils/icons';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -14,7 +14,7 @@ const Header = ({ onClick }) => {
   const location = useLocation();
   const isChatPage = location.pathname.startsWith('/chat');
   const isLoginPage = location.pathname.startsWith('/login');
-
+  const nav = useNavigate();
   // 추후에 로그인 정보 저장할 것
   const { isLoggedIn, user } = useAuth();
   console.log(isLoggedIn);
@@ -23,8 +23,12 @@ const Header = ({ onClick }) => {
     <div className="fixed top-0 left-0 w-full h-[64px] px-6 bg-white z-40">
       <div className=" flex items-center justify-between h-full w-full">
         {/* 왼쪽 버튼 */}
-        <div className="">
-          {isChatPage ? <SidebarToggleButton /> : <img className="w-12" src={IconLogo} alt="" />}
+        <div className="cursor-pointer">
+          {isChatPage ? (
+            <SidebarToggleButton />
+          ) : (
+            <img className="w-12" src={IconLogo} alt="" onClick={() => nav('/')} />
+          )}
         </div>
         {/* 조건부렌더링 */}
         <div className="flex w-full mx-auto items-center justify-between pl-[36px]">
