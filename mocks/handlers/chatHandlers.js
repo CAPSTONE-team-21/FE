@@ -161,7 +161,7 @@ export const chatHandlers = [
         { status: 404 }
       );
     }
-    return HttpResponse.json({ summary: dummySummary });
+    return HttpResponse.json({ summarizedMessage: dummySummary });
   }),
 
   // 세션 삭제

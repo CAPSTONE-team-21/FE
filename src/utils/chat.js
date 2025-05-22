@@ -74,9 +74,9 @@ export const deleteChatSession = async (sessionId) => {
 };
 
 // 요약 기능
-export const postChatSummary = async (sessionId) => {
+export const getChatSummary = async (sessionId) => {
   try {
-    const { data } = await api.post(`/api/chat/sessions/${sessionId}/summary`);
+    const { data } = await api.get(`/api/chat/sessions/${sessionId}/summary`);
     console.log('✅ 백엔드 응답:', data);
     return data;
   } catch (error) {
