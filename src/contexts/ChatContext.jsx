@@ -6,6 +6,7 @@ import {
   deleteChatSession as deleteChatSessionAPI,
 } from '../utils/chat'; // 위치는 상황에 따라 조정
 import { useAuth } from './AuthContext'; // ✅ 추가
+import { sendChatMessages } from '../utils/chat';
 
 export const ChatContext = createContext();
 export const ChatProvider = ({ children }) => {
@@ -27,25 +28,46 @@ export const ChatProvider = ({ children }) => {
   const [revealedBotBlocks, setRevealedBotBlocks] = useState({});
   const idRef = useRef(0);
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!input.trim()) return;
+    if (!currentSessionId) {
+      alert('세션이 없습니다.');
+      return;
+    }
 
-    // const sessionId = idRef.current; // 이미 만들어진 세션 ID가 있다고 가정
+    const expandSkinTypes = (types) =>
+      types.flatMap((type) => ['1', '2', '3'].map((suffix) => `${type}${suffix}`));
+
+    const expandedTypes =
+      selectedTypes.length > 0
+        ? expandSkinTypes(selectedTypes)
+        : expandSkinTypes(['DRY', 'OILY', 'SENSITIVE', 'COMBINED']);
 
     const userMessage = {
       id: idRef.current++,
       sender: 'USER',
-      skinTypes:
-        selectedTypes.length > 0 ? selectedTypes : ['DRY', 'OILY', 'SENSITIVE', 'COMBINATION'], // 기본값 설정
+      skinTypes: expandedTypes,
       message: input,
     };
 
-    // 메시지 합쳐서 저장
-    // 세션 - 백한테 코드 받고, 봇 메세지를 이 sessionMessages에 추가해줄 것 -> 필터링하여 보여줌
+    // 1. 유저 메시지 화면에 먼저 보여주기
     setSessionMessages((prev) => [...prev, userMessage]);
-    // 입력 초기화
     setInput('');
+
+    try {
+      // 2. API 전송
+      const botResponses = await sendChatMessages(currentSessionId, {
+        message: input,
+        skinTypes: expandedTypes,
+      });
+
+      // 3. BOT 응답을 상태에 반영
+      setSessionMessages((prev) => [...prev, ...botResponses]);
+    } catch (err) {
+      alert('메시지 전송 실패');
+    }
   };
+
   const markBotBlockAsRevealed = (sessionId, blockId) => {
     const key = `${sessionId}:${blockId}`;
     setRevealedBotBlocks((prev) => ({ ...prev, [key]: true }));

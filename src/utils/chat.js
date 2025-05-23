@@ -53,8 +53,14 @@ export const updateChatTitle = async (sessionId, newTitle, accessToken) => {
 
 // 3. 메시지 전송
 export const sendChatMessages = async (sessionId, body) => {
+  const accessToken = localStorage.getItem('accessToken');
+
   try {
-    const { data } = await api.post(`/api/chat/${sessionId}/messages`, body);
+    const { data } = await api.post(`/api/chat/${sessionId}/messages`, body, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
     console.log('✅ 백엔드 응답:', data);
     return data;
   } catch (error) {
