@@ -42,10 +42,7 @@ const Profile = () => {
         </div>
         {/* ✅ 닉네임 표시 */}
         {user?.nickname && (
-          <div
-            className="text-[14px] text-gray/80 font-medium group-hover:underline
-        "
-          >
+          <div className="text-[14px] text-gray/80 font-medium group-hover:underline">
             {user.nickname}
           </div>
         )}
