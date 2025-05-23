@@ -71,12 +71,17 @@ export const sendChatMessages = async (sessionId, body) => {
 
 // 4. 세션별 메세지 조회
 export const getChatMessages = async (sessionId) => {
+  const accessToken = localStorage.getItem('accessToken'); // 🔐 토큰 가져오기
+
   try {
-    const { data } = await api.get(`/api/chat/sessions/${sessionId}/messages`);
+    const { data } = await api.get(`/api/chat/sessions/${sessionId}/messages`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
     console.log('✅ 백엔드 응답:', data);
     return data;
   } catch (error) {
-    // ✅ 에러 발생 시 콘솔에 에러 출력하고, 다시 에러 던지기
     console.error('API 호출 실패:', error);
     throw error;
   }

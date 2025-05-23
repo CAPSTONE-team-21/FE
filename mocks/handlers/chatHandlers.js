@@ -67,6 +67,13 @@ export const chatHandlers = [
 
   // 메시지 전송 (AI 응답 포함)
   http.post('/api/chat/:id/messages', async ({ params, request }) => {
+    const authHeader = request.headers.get('Authorization');
+    const token = authHeader?.replace('Bearer ', '');
+
+    if (!authHeader || !token) {
+      return HttpResponse.json({ message: '인증 토큰 누락' }, { status: 401 });
+    }
+
     const { id } = params;
     const { message, skinTypes } = await request.json();
 
@@ -148,11 +155,17 @@ export const chatHandlers = [
     return HttpResponse.json(responses);
   }),
 
-  http.get('/api/chat/sessions/:id/messages', ({ params }) => {
-    const { id } = params;
+  http.get('/api/chat/sessions/:id/messages', ({ params, request }) => {
+    const authHeader = request.headers.get('Authorization');
+    const token = authHeader?.replace('Bearer ', '');
 
-    // 세션별 메시지 저장소에서 조회 (직접 구현 필요)
+    if (!authHeader || !token) {
+      return HttpResponse.json({ message: '인증 토큰 누락' }, { status: 401 });
+    }
+
+    const { id } = params;
     const messages = sessionMessagesMap[id];
+
     console.log('[MSW] GET 요청 받음', id);
     console.log('[MSW] 현재 메시지 맵:', sessionMessagesMap);
 
