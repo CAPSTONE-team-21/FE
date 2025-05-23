@@ -5,10 +5,13 @@ import {
   updateChatTitle as updateChatTitleAPI,
   deleteChatSession as deleteChatSessionAPI,
 } from '../utils/chat'; // 위치는 상황에 따라 조정
+import { useAuth } from './AuthContext'; // ✅ 추가
 
 export const ChatContext = createContext();
-
 export const ChatProvider = ({ children }) => {
+  const { isLoggedIn } = useAuth(); // ❗ 필요 시 사용
+  const accessToken = localStorage.getItem('accessToken'); // ✅ 토큰 직접 가져옴
+
   // 서현
   const [sessionMessages, setSessionMessages] = useState([]); // 채팅방 별 메세지 (봇, 유저 구분)
   const [input, setInput] = useState('');
@@ -93,10 +96,15 @@ export const ChatProvider = ({ children }) => {
     return newSession.sessionId;
   };
 
+  // 제목 수정
   const updateChatTitle = async (sessionId, newTitle) => {
-    const updated = await updateChatTitleAPI(sessionId, newTitle);
+    const updated = await updateChatTitleAPI(sessionId, newTitle, accessToken);
     setChatSessions((prev) =>
-      prev.map((s) => (s.sessionId === sessionId ? { ...s, title: updated.title } : s))
+      prev.map((s) =>
+        s.sessionId === sessionId
+          ? { ...s, title: updated.title, isBookmark: updated.isBookmark }
+          : s
+      )
     );
   };
 

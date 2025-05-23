@@ -29,24 +29,29 @@ export const chatHandlers = [
     return HttpResponse.json(newSession); // 이게 그대로 res.data
   }),
 
-  // title 수정
+  // title 수정 (Authorization 검사 포함)
   http.patch('/api/chat/sessions/:id/title', async ({ params, request }) => {
-    const { id } = params; // URL 경로에 있는 :id 값을 꺼냄
-    const { title } = await request.json(); //요청 바디에서 title값 꺼냄
+    const authHeader = request.headers.get('Authorization');
+    const token = authHeader?.replace('Bearer ', '');
 
-    //chatSessions_allView 배열에서 sessionId가 일치하는 index 찾음
-    const sessionIndex = chatSessions_allView.findIndex((s) => s.sessionId === Number(id)); //문자열id를 숫자로
+    if (!authHeader || !token) {
+      return HttpResponse.json({ message: '인증 토큰 누락' }, { status: 401 });
+    }
 
-    // 못찾으면 -1반환하고 404에러
+    const { id } = params;
+    const { title } = await request.json();
+
+    const sessionIndex = chatSessions_allView.findIndex((s) => s.sessionId === Number(id));
     if (sessionIndex === -1) {
       return HttpResponse.json({ message: '세션을 찾을 수 없습니다.' }, { status: 404 });
     }
 
-    // 제목을 새 title로 바꿈
+    // 실제라면 userId 비교도 추가해야 함
+    // if (chatSessions_allView[sessionIndex].userId !== 'me') return ...
+
     chatSessions_allView[sessionIndex].title = title;
 
-    // 수정된 것 객체로 return
-    return HttpResponse.json(chatSessions_allView[sessionIndex]); // 프론트에서 setChatSessions할 수 있게
+    return HttpResponse.json(chatSessions_allView[sessionIndex]); // { sessionId, title, isBookmark }
   }),
 
   // 메시지 전송 (AI 응답 포함)

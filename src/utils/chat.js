@@ -27,10 +27,18 @@ export const createChatSession = async () => {
 };
 
 // 제목 수정
-export const updateChatTitle = async (sessionId, newTitle) => {
+export const updateChatTitle = async (sessionId, newTitle, accessToken) => {
   try {
-    const { data } = await api.patch(`/api/chat/sessions/${sessionId}/title`, { title: newTitle });
-    return data;
+    const { data } = await api.patch(
+      `/api/chat/sessions/${sessionId}/title`,
+      { title: newTitle },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    return data; // { sessionId, title, isBookmark } 형태
   } catch (error) {
     console.error('제목 수정 실패:', error);
     throw error;
