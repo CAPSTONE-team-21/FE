@@ -87,8 +87,14 @@ export const deleteChatSession = async (sessionId, accessToken) => {
 
 // 요약 기능
 export const getChatSummary = async (sessionId) => {
+  const accessToken = localStorage.getItem('accessToken'); // ✅ 로컬에서 토큰 가져오기
+
   try {
-    const { data } = await api.get(`/api/chat/sessions/${sessionId}/summary`);
+    const { data } = await api.get(`/api/chat/sessions/${sessionId}/summary`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
     console.log('✅ 백엔드 응답:', data);
     return data;
   } catch (error) {

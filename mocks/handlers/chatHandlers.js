@@ -155,17 +155,25 @@ export const chatHandlers = [
     return HttpResponse.json(messages);
   }),
 
-  http.get('/api/chat/sessions/:id/summary', ({ params }) => {
-    const { id } = params;
+  // 요약
+  http.get('/api/chat/sessions/:id/summary', ({ params, request }) => {
+    const authHeader = request.headers.get('Authorization');
+    const token = authHeader?.replace('Bearer ', '');
 
-    // 세션별 메시지 저장소에서 조회 (직접 구현 필요)
+    if (!authHeader || !token) {
+      return HttpResponse.json({ message: '인증 토큰 누락' }, { status: 401 });
+    }
+
+    const { id } = params;
     const dummySummary = sessionSummaries[id];
+
     if (!dummySummary) {
       return HttpResponse.json(
-        { dummySummary: '해당 세션의 메시지를 찾을 수 없습니다.' },
+        { message: '해당 세션의 요약을 찾을 수 없습니다.' },
         { status: 404 }
       );
     }
+
     return HttpResponse.json({ summarizedMessage: dummySummary });
   }),
 
