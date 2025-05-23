@@ -6,7 +6,14 @@ let initSessionId = 3;
 
 export const chatHandlers = [
   // 전체 세션 목록 조회 (사이드바, 메인용)
-  http.get('/api/chat/sessions', () => {
+  http.get('/api/chat/sessions', ({ request }) => {
+    const authHeader = request.headers.get('Authorization');
+    const token = authHeader?.replace('Bearer ', '');
+
+    if (!authHeader || !token) {
+      return HttpResponse.json({ message: '인증 토큰 누락' }, { status: 401 });
+    }
+
     return HttpResponse.json(chatSessions_allView);
   }),
 
