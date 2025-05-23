@@ -13,11 +13,17 @@ export const fetchChatSessions = async () => {
 
 // 세션 생성 (생성 후 목록 자동 새로고침)
 export const createChatSession = async () => {
+  const accessToken = localStorage.getItem('accessToken'); // ✅ 토큰 가져오기
   try {
-    const { data: newSession } = await api.post('/api/chat/sessions', {
-      title: '제목을 입력해주세요.',
-    });
-    // 생성 후 목록 새로고침
+    const { data: newSession } = await api.post(
+      '/api/chat/sessions',
+      {}, // ✅ 명세상 request body 없음
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`, // ✅ 헤더 추가
+        },
+      }
+    );
     const updatedSessions = await fetchChatSessions();
     return { newSession, updatedSessions };
   } catch (error) {

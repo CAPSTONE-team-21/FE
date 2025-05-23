@@ -12,21 +12,32 @@ export const chatHandlers = [
 
   // 새 세션 생성
   http.post('/api/chat/sessions', async ({ request }) => {
+    const authHeader = request.headers.get('Authorization');
+    const token = authHeader?.replace('Bearer ', '');
+
+    if (!authHeader || !token) {
+      return HttpResponse.json({ message: '인증 토큰 누락' }, { status: 401 });
+    }
+
+    // request body 파싱
     let body = {};
     try {
       body = await request.json();
     } catch {
       body = {};
     }
-    const title = body.title || '제목을 입력해주세요.';
+
+    const title = body.title || '제목 없음';
 
     const newSession = {
       sessionId: initSessionId++,
-      title: title || '제목을 입력해주세요.',
+      title,
       isBookmark: false,
     };
+
     chatSessions_allView.push(newSession);
-    return HttpResponse.json(newSession); // 이게 그대로 res.data
+
+    return HttpResponse.json(newSession); // 명세: { sessionId, title, isBookmark }
   }),
 
   // title 수정 (Authorization 검사 포함)
