@@ -12,45 +12,68 @@ export const chatHandlers = [
 
   // 새 세션 생성
   http.post('/api/chat/sessions', async ({ request }) => {
+    const authHeader = request.headers.get('Authorization');
+    const token = authHeader?.replace('Bearer ', '');
+
+    if (!authHeader || !token) {
+      return HttpResponse.json({ message: '인증 토큰 누락' }, { status: 401 });
+    }
+
+    // request body 파싱
     let body = {};
     try {
       body = await request.json();
     } catch {
       body = {};
     }
-    const title = body.title || '제목을 입력해주세요.';
+
+    const title = body.title || '제목 없음';
 
     const newSession = {
       sessionId: initSessionId++,
-      title: title || '제목을 입력해주세요.',
+      title,
       isBookmark: false,
     };
+
     chatSessions_allView.push(newSession);
-    return HttpResponse.json(newSession); // 이게 그대로 res.data
+
+    return HttpResponse.json(newSession); // 명세: { sessionId, title, isBookmark }
   }),
 
-  // title 수정
+  // title 수정 (Authorization 검사 포함)
   http.patch('/api/chat/sessions/:id/title', async ({ params, request }) => {
-    const { id } = params; // URL 경로에 있는 :id 값을 꺼냄
-    const { title } = await request.json(); //요청 바디에서 title값 꺼냄
+    const authHeader = request.headers.get('Authorization');
+    const token = authHeader?.replace('Bearer ', '');
 
-    //chatSessions_allView 배열에서 sessionId가 일치하는 index 찾음
-    const sessionIndex = chatSessions_allView.findIndex((s) => s.sessionId === Number(id)); //문자열id를 숫자로
+    if (!authHeader || !token) {
+      return HttpResponse.json({ message: '인증 토큰 누락' }, { status: 401 });
+    }
 
-    // 못찾으면 -1반환하고 404에러
+    const { id } = params;
+    const { title } = await request.json();
+
+    const sessionIndex = chatSessions_allView.findIndex((s) => s.sessionId === Number(id));
     if (sessionIndex === -1) {
       return HttpResponse.json({ message: '세션을 찾을 수 없습니다.' }, { status: 404 });
     }
 
-    // 제목을 새 title로 바꿈
+    // 실제라면 userId 비교도 추가해야 함
+    // if (chatSessions_allView[sessionIndex].userId !== 'me') return ...
+
     chatSessions_allView[sessionIndex].title = title;
 
-    // 수정된 것 객체로 return
-    return HttpResponse.json(chatSessions_allView[sessionIndex]); // 프론트에서 setChatSessions할 수 있게
+    return HttpResponse.json(chatSessions_allView[sessionIndex]); // { sessionId, title, isBookmark }
   }),
 
   // 메시지 전송 (AI 응답 포함)
   http.post('/api/chat/:id/messages', async ({ params, request }) => {
+    const authHeader = request.headers.get('Authorization');
+    const token = authHeader?.replace('Bearer ', '');
+
+    if (!authHeader || !token) {
+      return HttpResponse.json({ message: '인증 토큰 누락' }, { status: 401 });
+    }
+
     const { id } = params;
     const { message, skinTypes } = await request.json();
 
@@ -132,11 +155,17 @@ export const chatHandlers = [
     return HttpResponse.json(responses);
   }),
 
-  http.get('/api/chat/sessions/:id/messages', ({ params }) => {
-    const { id } = params;
+  http.get('/api/chat/sessions/:id/messages', ({ params, request }) => {
+    const authHeader = request.headers.get('Authorization');
+    const token = authHeader?.replace('Bearer ', '');
 
-    // 세션별 메시지 저장소에서 조회 (직접 구현 필요)
+    if (!authHeader || !token) {
+      return HttpResponse.json({ message: '인증 토큰 누락' }, { status: 401 });
+    }
+
+    const { id } = params;
     const messages = sessionMessagesMap[id];
+
     console.log('[MSW] GET 요청 받음', id);
     console.log('[MSW] 현재 메시지 맵:', sessionMessagesMap);
 
@@ -150,23 +179,37 @@ export const chatHandlers = [
     return HttpResponse.json(messages);
   }),
 
-  http.get('/api/chat/sessions/:id/summary', ({ params }) => {
-    const { id } = params;
+  // 요약
+  http.get('/api/chat/sessions/:id/summary', ({ params, request }) => {
+    const authHeader = request.headers.get('Authorization');
+    const token = authHeader?.replace('Bearer ', '');
 
-    // 세션별 메시지 저장소에서 조회 (직접 구현 필요)
+    if (!authHeader || !token) {
+      return HttpResponse.json({ message: '인증 토큰 누락' }, { status: 401 });
+    }
+
+    const { id } = params;
     const dummySummary = sessionSummaries[id];
+
     if (!dummySummary) {
       return HttpResponse.json(
-        { dummySummary: '해당 세션의 메시지를 찾을 수 없습니다.' },
+        { message: '해당 세션의 요약을 찾을 수 없습니다.' },
         { status: 404 }
       );
     }
+
     return HttpResponse.json({ summarizedMessage: dummySummary });
   }),
 
   // 세션 삭제
-  http.delete('/api/chat/sessions/:id', ({ params }) => {
+  http.delete('/api/chat/sessions/:id', ({ params, request }) => {
     const sessionId = Number(params.id);
+    const authHeader = request.headers.get('Authorization');
+    const token = authHeader?.replace('Bearer ', '');
+
+    if (!authHeader || !token) {
+      return HttpResponse.json({ message: '인증 토큰 누락' }, { status: 401 });
+    }
 
     if (isNaN(sessionId)) {
       return HttpResponse.json({ message: 'ID 형식이 잘못되었습니다.' }, { status: 400 });
@@ -177,7 +220,14 @@ export const chatHandlers = [
       return HttpResponse.json({ message: '세션을 찾을 수 없습니다.' }, { status: 404 });
     }
 
+    const session = chatSessions_allView[index];
+
+    // ❗ 실제 프로젝트에서는 userId 비교
+    // if (session.userId !== 'me') {
+    //   return HttpResponse.json({ message: '권한이 없습니다.' }, { status: 403 });
+    // }
+
     chatSessions_allView.splice(index, 1); // 삭제
-    return HttpResponse.json({ message: '세션이 삭제되었습니다.' }, { status: 200 });
+    return new HttpResponse(null, { status: 204 }); // ✅ 204 No Content
   }),
 ];
