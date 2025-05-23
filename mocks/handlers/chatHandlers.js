@@ -165,8 +165,14 @@ export const chatHandlers = [
   }),
 
   // 세션 삭제
-  http.delete('/api/chat/sessions/:id', ({ params }) => {
+  http.delete('/api/chat/sessions/:id', ({ params, request }) => {
     const sessionId = Number(params.id);
+    const authHeader = request.headers.get('Authorization');
+    const token = authHeader?.replace('Bearer ', '');
+
+    if (!authHeader || !token) {
+      return HttpResponse.json({ message: '인증 토큰 누락' }, { status: 401 });
+    }
 
     if (isNaN(sessionId)) {
       return HttpResponse.json({ message: 'ID 형식이 잘못되었습니다.' }, { status: 400 });
@@ -177,7 +183,14 @@ export const chatHandlers = [
       return HttpResponse.json({ message: '세션을 찾을 수 없습니다.' }, { status: 404 });
     }
 
+    const session = chatSessions_allView[index];
+
+    // ❗ 실제 프로젝트에서는 userId 비교
+    // if (session.userId !== 'me') {
+    //   return HttpResponse.json({ message: '권한이 없습니다.' }, { status: 403 });
+    // }
+
     chatSessions_allView.splice(index, 1); // 삭제
-    return HttpResponse.json({ message: '세션이 삭제되었습니다.' }, { status: 200 });
+    return new HttpResponse(null, { status: 204 }); // ✅ 204 No Content
   }),
 ];

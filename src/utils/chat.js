@@ -63,9 +63,13 @@ export const getChatMessages = async (sessionId) => {
 };
 
 // 세션 삭제
-export const deleteChatSession = async (sessionId) => {
+export const deleteChatSession = async (sessionId, accessToken) => {
   try {
-    await api.delete(`/api/chat/sessions/${sessionId}`);
+    await api.delete(`/api/chat/sessions/${sessionId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
     return { success: true };
   } catch (error) {
     const message = error.response?.data?.message || '세션 삭제 중 오류 발생';
