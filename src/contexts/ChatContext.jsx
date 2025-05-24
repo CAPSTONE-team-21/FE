@@ -88,8 +88,10 @@ export const ChatProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    fetchChatSessions();
-  }, []);
+    if (isLoggedIn) {
+      fetchChatSessions();
+    }
+  }, [isLoggedIn]);
 
   const createChatSession = async () => {
     const result = await createChatSessionAPI();

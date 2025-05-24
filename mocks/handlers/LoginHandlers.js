@@ -14,6 +14,7 @@ export const loginHandlers = [
       return HttpResponse.json({
         accessToken: 'fake-access-token',
         refreshToken: 'fake-refresh-token',
+        nickname: '테스트',
       });
     }
 
